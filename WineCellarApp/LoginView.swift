@@ -6,15 +6,10 @@
 //
 
 import SwiftUI
-import WineCellar
 
 struct LoginView: View {
     @State var uname: String = ""
     @State var password: String = ""
-    private let cellar = WineCellar()
-
-
-
     let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
 
     var body: some View {
@@ -24,17 +19,14 @@ struct LoginView: View {
                 .background(lightGreyColor)
                 .cornerRadius(5.0)
                 .padding(.bottom, 20)
-            TextField("Password", text: $password)
+            SecureField("Password", text: $password)
                 .padding()
                 .background(lightGreyColor)
                 .cornerRadius(5.0)
                 .padding(.bottom, 20)
 
             Button("Login") {
-                cellar.inventory.sink { results in
-                    print(results)
-                }
-                cellar.refreshCellar(uname: uname, password: password)
+                print("hi")
             }
         }.padding()
     }
