@@ -19,6 +19,8 @@
 		5F835366256D9B3100C2345F /* WineBottleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835365256D9B3100C2345F /* WineBottleList.swift */; };
 		5F83536B256DB5E800C2345F /* BottleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83536A256DB5E800C2345F /* BottleRow.swift */; };
 		5F835378256DC9EE00C2345F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835377256DC9EE00C2345F /* ContentView.swift */; };
+		5F835381256E1B1C00C2345F /* BottleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835380256E1B1C00C2345F /* BottleDetail.swift */; };
+		5F835386256E1DAC00C2345F /* BottleTextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835385256E1DAC00C2345F /* BottleTextContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		5F835365256D9B3100C2345F /* WineBottleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineBottleList.swift; sourceTree = "<group>"; };
 		5F83536A256DB5E800C2345F /* BottleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleRow.swift; sourceTree = "<group>"; };
 		5F835377256DC9EE00C2345F /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5F835380256E1B1C00C2345F /* BottleDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleDetail.swift; sourceTree = "<group>"; };
+		5F835385256E1DAC00C2345F /* BottleTextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleTextContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,16 +111,13 @@
 		5F835328256D96A600C2345F /* WineCellarApp */ = {
 			isa = PBXGroup;
 			children = (
-				5F835377256DC9EE00C2345F /* ContentView.swift */,
+				5F83537C256E1B1100C2345F /* Views */,
 				5F835329256D96A600C2345F /* AppDelegate.swift */,
 				5F83532B256D96A600C2345F /* SceneDelegate.swift */,
-				5F83532D256D96A600C2345F /* LoginView.swift */,
 				5F83532F256D96AA00C2345F /* Assets.xcassets */,
 				5F835334256D96AA00C2345F /* LaunchScreen.storyboard */,
 				5F835337256D96AA00C2345F /* Info.plist */,
 				5F835331256D96AA00C2345F /* Preview Content */,
-				5F835365256D9B3100C2345F /* WineBottleList.swift */,
-				5F83536A256DB5E800C2345F /* BottleRow.swift */,
 			);
 			path = WineCellarApp;
 			sourceTree = "<group>";
@@ -145,6 +146,19 @@
 				5F83534D256D96AA00C2345F /* Info.plist */,
 			);
 			path = WineCellarAppUITests;
+			sourceTree = "<group>";
+		};
+		5F83537C256E1B1100C2345F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5F835377256DC9EE00C2345F /* ContentView.swift */,
+				5F83532D256D96A600C2345F /* LoginView.swift */,
+				5F835365256D9B3100C2345F /* WineBottleList.swift */,
+				5F83536A256DB5E800C2345F /* BottleRow.swift */,
+				5F835380256E1B1C00C2345F /* BottleDetail.swift */,
+				5F835385256E1DAC00C2345F /* BottleTextContent.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,7 +301,9 @@
 				5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */,
 				5F835378256DC9EE00C2345F /* ContentView.swift in Sources */,
 				5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */,
+				5F835386256E1DAC00C2345F /* BottleTextContent.swift in Sources */,
 				5F83532E256D96A600C2345F /* LoginView.swift in Sources */,
+				5F835381256E1B1C00C2345F /* BottleDetail.swift in Sources */,
 				5F83536B256DB5E800C2345F /* BottleRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
