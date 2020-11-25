@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }.store(in: &disposables)
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView =  ContentView(cellar: cellar).environmentObject(auth)
+        let contentView =  ContentView().environmentObject(auth).environmentObject(cellar)
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)

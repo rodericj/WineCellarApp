@@ -20,13 +20,13 @@ class UserAuth: ObservableObject {
 struct ContentView: View {
 
     @EnvironmentObject var userAuth: UserAuth
-    let cellar: WineCellar // TODO maybe this is an environment
+    @EnvironmentObject var cellar: WineCellar
 
     var body: some View {
         if !userAuth.isLoggedin {
-            return AnyView(LoginView(cellar: cellar))
+            return AnyView(LoginView())
         } else {
-            return AnyView(WineBottleList(cellar: cellar))
+            return AnyView(WineBottleList())
         }
 
     }
