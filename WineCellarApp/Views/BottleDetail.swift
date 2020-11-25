@@ -9,6 +9,11 @@ import SwiftUI
 import WineCellar
 import MapKit
 
+extension Bottle {
+    var searchQuery: String {
+        [country, region, subRegion].filter { $0 != "Unknown" } .joined(separator: " ")
+    }
+}
 struct BottleDetail: View {
     let bottle: Bottle
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
@@ -16,32 +21,26 @@ struct BottleDetail: View {
     var body: some View {
         VStack (alignment: .center) {
             Map(coordinateRegion: $region)
-            VStack (alignment: .leading) {
-                Text("\(bottle.vintage) \(bottle.title) ")
-                    .bold()
-                    .font(.body)
-                    .foregroundColor(.blue) +
-                    Text(bottle.varietal)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-
-                if bottle.ct != nil {
-                    Text("CT\(String(format: "%.2f", bottle.ct!))")
-                }
-                if bottle.beginConsume != nil && bottle.endConsume != nil {
-                    Text("Drink \(String(bottle.beginConsume!))-\(String(bottle.endConsume!))")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-                Text("\(bottle.quantity) bottle (\(bottle.size)) - v $\(String(format: "%.2f", bottle.valuation))")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                Text("\(String(bottle.location)): (\(bottle.quantity))")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-
-            }
+            BottleTextContent(bottle: bottle)
             Spacer()
+        }.onAppear(perform: {
+           performSearch()
+        })
+    }
+}
+
+extension BottleDetail {
+    func performSearch() {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = bottle.searchQuery
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            if let error = error {
+                print(error)
+            } else if let response = response {
+                region = response.boundingRegion
+                print(response.boundingRegion)
+            }
         }
     }
 }
