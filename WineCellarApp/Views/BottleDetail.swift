@@ -18,12 +18,17 @@ struct BottleDetail: View {
     let bottle: Bottle
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
 
+    @State var error: Error? = nil
+    @State public var isShowingError: Bool = false
     var body: some View {
         VStack (alignment: .center) {
             Map(coordinateRegion: $region)
             BottleTextContent(bottle: bottle).padding()
         }.onAppear(perform: {
            performSearch()
+        })
+        .alert(isPresented: $isShowingError, content: {
+            Alert(title: Text(error?.localizedDescription ?? "Unknown Error"))
         })
     }
 }
@@ -36,6 +41,8 @@ extension BottleDetail {
         search.start { (response, error) in
             if let error = error {
                 print(error)
+                self.error = error
+                isShowingError = true
             } else if let response = response {
                 region = response.boundingRegion
                 print(response.boundingRegion)
