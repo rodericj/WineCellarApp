@@ -36,6 +36,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+
+        cellar.refreshAuthStatus()
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CSV.swift",
+        "repositoryURL": "https://github.com/yaslab/CSV.swift",
+        "state": {
+          "branch": null,
+          "revision": "81d2874c51db364d7e1d71b0d99018a294c87ac1",
+          "version": "2.4.3"
+        }
+      },
+      {
+        "package": "ISO8859",
+        "repositoryURL": "https://github.com/Cosmo/ISO8859.git",
+        "state": {
+          "branch": null,
+          "revision": "843b4fae6c0a3691121492a6d9ef22e34c6953a9",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "WineCellar",
+        "repositoryURL": "https://github.com/rodericj/WineCellar.git",
+        "state": {
+          "branch": "main",
+          "revision": "c445bc227297ea6ef6b36fc43c0795b0ebf7fd10",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
