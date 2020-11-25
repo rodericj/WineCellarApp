@@ -18,6 +18,7 @@
 		5F83535E256D98A800C2345F /* WineCellar in Frameworks */ = {isa = PBXBuildFile; productRef = 5F83535D256D98A800C2345F /* WineCellar */; };
 		5F835366256D9B3100C2345F /* WineBottleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835365256D9B3100C2345F /* WineBottleList.swift */; };
 		5F83536B256DB5E800C2345F /* BottleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83536A256DB5E800C2345F /* BottleRow.swift */; };
+		5F835378256DC9EE00C2345F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835377256DC9EE00C2345F /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		5F83534D256D96AA00C2345F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F835365256D9B3100C2345F /* WineBottleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineBottleList.swift; sourceTree = "<group>"; };
 		5F83536A256DB5E800C2345F /* BottleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleRow.swift; sourceTree = "<group>"; };
+		5F835377256DC9EE00C2345F /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 		5F835328256D96A600C2345F /* WineCellarApp */ = {
 			isa = PBXGroup;
 			children = (
+				5F835377256DC9EE00C2345F /* ContentView.swift */,
 				5F835329256D96A600C2345F /* AppDelegate.swift */,
 				5F83532B256D96A600C2345F /* SceneDelegate.swift */,
 				5F83532D256D96A600C2345F /* LoginView.swift */,
@@ -282,6 +285,7 @@
 			files = (
 				5F835366256D9B3100C2345F /* WineBottleList.swift in Sources */,
 				5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */,
+				5F835378256DC9EE00C2345F /* ContentView.swift in Sources */,
 				5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */,
 				5F83532E256D96A600C2345F /* LoginView.swift in Sources */,
 				5F83536B256DB5E800C2345F /* BottleRow.swift in Sources */,

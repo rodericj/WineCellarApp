@@ -22,11 +22,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         let cellar = WineCellar()
+        let auth = UserAuth()
+        cellar.$authenticatedSuccessfully.sink { isAuthenticated in
+            print("is authenticated \(isAuthenticated)")
+            auth.isLoggedin = isAuthenticated
+        }.store(in: &disposables)
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = WineBottleList(cellar: cellar)
-        cellar.refreshCellar(uname: "roderic", password: "")
-        // Use a UIHostingController as window root view controller.
+        let contentView =  ContentView(cellar: cellar).environmentObject(auth)
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)

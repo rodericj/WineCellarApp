@@ -8,40 +8,26 @@
 import SwiftUI
 import WineCellar
 
-struct LoginView: View {
-    @State var uname: String = ""
-    @State var password: String = ""
-    private let cellar = WineCellar()
+class UserAuth: ObservableObject {
+    @Published var isLoggedin:Bool = false
 
-
-
-    let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
-
-    var body: some View {
-        VStack {
-            TextField("User name", text: $uname)
-                .padding()
-                .background(lightGreyColor)
-                .cornerRadius(5.0)
-                .padding(.bottom, 20)
-            TextField("Password", text: $password)
-                .padding()
-                .background(lightGreyColor)
-                .cornerRadius(5.0)
-                .padding(.bottom, 20)
-
-            Button("Login") {
-                cellar.inventory.sink { results in
-                    print(results)
-                }
-                cellar.refreshCellar(uname: uname, password: password)
-            }
-        }.padding()
+    func login() {
+        self.isLoggedin = true
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
+
+struct ContentView: View {
+
+    @EnvironmentObject var userAuth: UserAuth
+    let cellar: WineCellar // TODO maybe this is an environment
+
+    var body: some View {
+        if !userAuth.isLoggedin {
+            return AnyView(LoginView(cellar: cellar))
+        } else {
+            return AnyView(WineBottleList(cellar: cellar))
+        }
+
     }
 }
