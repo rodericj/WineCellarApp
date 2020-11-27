@@ -20,11 +20,20 @@
         }
       },
       {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
+        "state": {
+          "branch": null,
+          "revision": "8d33ffd6f74b3bcfc99af759d4204c6395a3f918",
+          "version": "3.2.1"
+        }
+      },
+      {
         "package": "WineCellar",
         "repositoryURL": "https://github.com/rodericj/WineCellar.git",
         "state": {
-          "branch": "main",
-          "revision": "c445bc227297ea6ef6b36fc43c0795b0ebf7fd10",
+          "branch": null,
+          "revision": "2c0269681089c4f280faee1cfa1e841c09295638",
           "version": null
         }
       }
