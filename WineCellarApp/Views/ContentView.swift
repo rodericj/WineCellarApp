@@ -26,7 +26,7 @@ struct ContentView: View {
         if !userAuth.isLoggedin {
             return AnyView(LoginView())
         } else {
-            return AnyView(WineBottleList())
+            return AnyView(WineBottleNav())
         }
 
     }

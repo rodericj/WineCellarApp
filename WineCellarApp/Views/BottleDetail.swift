@@ -21,9 +21,10 @@ struct BottleDetail: View {
     @State var error: Error? = nil
     @State public var isShowingError: Bool = false
     var body: some View {
-        VStack (alignment: .center) {
+        VStack (alignment: .leading) {
             Map(coordinateRegion: $region)
-            BottleTextContent(bottle: bottle).padding()
+            BottleTextContent(bottle: bottle)
+                .padding()
         }.onAppear(perform: {
            performSearch()
         })
