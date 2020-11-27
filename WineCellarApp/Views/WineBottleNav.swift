@@ -8,20 +8,34 @@
 import SwiftUI
 import WineCellar
 
-
 struct WineBottleList: View {
     @EnvironmentObject var cellar: WineCellar
 
+    @State var searchText: String = ""
+
+    var bottles: [Bottle] {
+        if searchText.isEmpty {
+            return cellar.bottles
+        }
+        return cellar.bottles.filter({ bottle -> Bool in
+            bottle.title.contains(searchText)
+        })
+    }
+
     var body: some View {
-        ScrollView {
-            LazyVStack(content: {
-                ForEach(cellar.bottles, id: \.wineID) { bottle in
-                    NavigationLink(destination: BottleDetail(bottle: bottle)
-                                    .navigationBarTitle("", displayMode: .inline)) {
-                        BottleRow(bottle: bottle).padding(.bottom, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+        VStack {
+            ScrollView {
+                SearchBar(placeholder: "Search", text: $searchText)
+                    .padding()
+                LazyVStack(content: {
+                    ForEach(bottles, id: \.wineID) { bottle in
+                        NavigationLink(destination: BottleDetail(bottle: bottle)
+                                        .navigationBarTitle("", displayMode: .inline)) {
+                            BottleRow(bottle: bottle).padding(.bottom, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
 }
