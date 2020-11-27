@@ -31,8 +31,7 @@ struct LoginView: View {
 
             Button("Login") {
                 cellar.refreshCellar(uname: uname,
-                                     password: password,
-                                     forceRefresh: true)
+                                     password: password)
             }
         }.padding()
     }

@@ -18,16 +18,16 @@ struct WineBottleList: View {
                                 .navigationBarTitle("", displayMode: .inline)) {
                     BottleRow(bottle: bottle)
                 }
-            }.navigationBarTitle(Text("Bottles"))
+            }
+            .navigationBarTitle(Text("Bottles"))
+            .navigationBarItems(trailing:
+                            Button("Logout") {
+                                cellar.logout()
+                            }
+                        )
         }
     }
 }
-
-let coolCellar: WineCellar = {
-    let cellar = WineCellar()
-    cellar.bottles = [.first, .second]
-    return cellar
-}()
 
 struct WineBottleList_Previews: PreviewProvider {
 
