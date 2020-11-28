@@ -21,6 +21,9 @@
 		5F835378256DC9EE00C2345F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835377256DC9EE00C2345F /* ContentView.swift */; };
 		5F835381256E1B1C00C2345F /* BottleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835380256E1B1C00C2345F /* BottleDetail.swift */; };
 		5F835386256E1DAC00C2345F /* BottleTextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835385256E1DAC00C2345F /* BottleTextContent.swift */; };
+		5FB238152572023100F69FE5 /* codes_postaux_v5.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 5FB238142572023100F69FE5 /* codes_postaux_v5.geojson */; };
+		5FB2381A2572025100F69FE5 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB238192572025100F69FE5 /* MapData.swift */; };
+		5FB2381F2572228400F69FE5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapView.swift */; };
 		5FE9A0B42570D98D00DB353B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9A0B32570D98D00DB353B /* SearchBar.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +64,9 @@
 		5F835377256DC9EE00C2345F /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5F835380256E1B1C00C2345F /* BottleDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleDetail.swift; sourceTree = "<group>"; };
 		5F835385256E1DAC00C2345F /* BottleTextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleTextContent.swift; sourceTree = "<group>"; };
+		5FB238142572023100F69FE5 /* codes_postaux_v5.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = codes_postaux_v5.geojson; sourceTree = "<group>"; };
+		5FB238192572025100F69FE5 /* MapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
+		5FB2381E2572228300F69FE5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		5FE9A0B32570D98D00DB353B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +119,7 @@
 		5F835328256D96A600C2345F /* WineCellarApp */ = {
 			isa = PBXGroup;
 			children = (
+				5FB238132572020F00F69FE5 /* MapData */,
 				5F83537C256E1B1100C2345F /* Views */,
 				5F835329256D96A600C2345F /* AppDelegate.swift */,
 				5F83532B256D96A600C2345F /* SceneDelegate.swift */,
@@ -160,8 +167,18 @@
 				5F835380256E1B1C00C2345F /* BottleDetail.swift */,
 				5F835385256E1DAC00C2345F /* BottleTextContent.swift */,
 				5FE9A0B32570D98D00DB353B /* SearchBar.swift */,
+				5FB2381E2572228300F69FE5 /* MapView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5FB238132572020F00F69FE5 /* MapData */ = {
+			isa = PBXGroup;
+			children = (
+				5FB238142572023100F69FE5 /* codes_postaux_v5.geojson */,
+				5FB238192572025100F69FE5 /* MapData.swift */,
+			);
+			path = MapData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +292,7 @@
 			files = (
 				5F835336256D96AA00C2345F /* LaunchScreen.storyboard in Resources */,
 				5F835333256D96AA00C2345F /* Preview Assets.xcassets in Resources */,
+				5FB238152572023100F69FE5 /* codes_postaux_v5.geojson in Resources */,
 				5F835330256D96AA00C2345F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,11 +321,13 @@
 				5F835366256D9B3100C2345F /* WineBottleNav.swift in Sources */,
 				5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */,
 				5F835378256DC9EE00C2345F /* ContentView.swift in Sources */,
+				5FB2381F2572228400F69FE5 /* MapView.swift in Sources */,
 				5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */,
 				5F835386256E1DAC00C2345F /* BottleTextContent.swift in Sources */,
 				5FE9A0B42570D98D00DB353B /* SearchBar.swift in Sources */,
 				5F83532E256D96A600C2345F /* LoginView.swift in Sources */,
 				5F835381256E1B1C00C2345F /* BottleDetail.swift in Sources */,
+				5FB2381A2572025100F69FE5 /* MapData.swift in Sources */,
 				5F83536B256DB5E800C2345F /* BottleRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
