@@ -33,7 +33,7 @@ struct WineBottleList: View {
     @EnvironmentObject var cellar: WineCellar
 
     @State var searchText: String = ""
-
+    let mapData = MapData()
     var bottles: [Bottle] {
         if searchText.isEmpty {
             return cellar.bottles
@@ -48,14 +48,16 @@ struct WineBottleList: View {
                     .padding()
                 LazyVStack(content: {
                     ForEach(bottles, id: \.wineID) { bottle in
-                        NavigationLink(destination: BottleDetail(bottle: bottle)
+                        NavigationLink(destination: BottleDetail(bottle: bottle, mapData: mapData)
                                         .navigationBarTitle("", displayMode: .inline)) {
                             BottleRow(bottle: bottle).padding(.bottom, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                         }
                     }
                 })
             }
-        }
+        }.onAppear(perform: {
+            mapData.fetchMaps()
+        })
     }
 }
 struct WineBottleNavButtons: View {

@@ -86,42 +86,39 @@ public enum WineRegion {
 
 }
 
+class MapData {
+    var githubFetchedJSONFeatures: [MKGeoJSONFeature] = []
 
-struct MapData {
-    func regionPolygons(with describable: WineRegionDescribable) -> [MKPolygon] {
-        let jsonDecoder = JSONDecoder()
-        return geoJSONFeatures.filter { feature -> Bool in
-            do {
-                if let data = feature.properties {
-                    let props = try jsonDecoder.decode(RegionProperties.self, from: data)
-                    return describable.codes.contains(props.id)
-                }
-            } catch {
-                print(error)
-            }
-            return false
-        }.map { feature in
-            feature.geometry
-                .map { $0 as? MKPolygon  }
-                .compactMap { $0 }
-        }.reduce([], +)
-    }
-
-    private let geoJSONFeatures: [MKGeoJSONFeature] = {
-        guard let franceURL = Bundle.main.url(forResource: "codes_postaux_v5", withExtension: "geojson") else {
-            fatalError("missing codes_postaux_v5 for the france data")
+    func fetchMaps() {
+        guard let base = URL(string: "https://raw.githubusercontent.com/rodericj/WineRegionMaps/main/France/Bordeaux/Medoc/") else {
+            fatalError("unable to create a URL")
         }
         let decoder = MKGeoJSONDecoder()
-        let jsonDecoder = JSONDecoder()
-        do {
-            let data = try Data(contentsOf: franceURL)
-            let shapes = try decoder.decode(data)
-            return shapes
-                .map { $0 as? MKGeoJSONFeature }
-                .compactMap { $0 }
-        } catch {
-            print(error)
-            return []
-        }
-    }()
+        let first = base.appendingPathComponent("Pauillac.geojson", isDirectory: false)
+        print(first)
+        githubFetchedJSONFeatures = [base.appendingPathComponent("Saint-Estephe.geojson", isDirectory: false),
+                                     base.appendingPathComponent("Saint-Julien.geojson", isDirectory: false),
+                                     base.appendingPathComponent("Saint-Yzans-de-Medoc.geojson", isDirectory: false)]
+            .map { try? Data(contentsOf: $0) }
+            .compactMap { $0 }
+            .map { try? decoder.decode($0) }
+            .compactMap { $0 }
+            .map({ mkGeoJSONObjects in
+                mkGeoJSONObjects
+                    .map { $0 as? MKGeoJSONFeature }
+                    .compactMap { $0 }
+            }).reduce([], +)
+    }
+
+    func regionPolygons(with describable: WineRegionDescribable) -> [MKPolygon] {
+        print("hit the file system")
+        return githubFetchedJSONFeatures
+            .map { feature in
+                feature.geometry
+                    .map({ $0 as? MKMultiPolygon })
+                    .compactMap { $0 }
+                    .map { $0.polygons }
+                    .reduce([], +)
+            }.reduce([], +)
+    }
 }

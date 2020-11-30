@@ -24,7 +24,7 @@ extension Bottle {
     }
 }
 struct MapView: UIViewRepresentable {
-    func fetchRegions(for bottle: Bottle) {
+    func fetchRegions(for bottle: Bottle, data: MapData) {
         let polygons = data.regionPolygons(with: bottle.regionPostalCodes)
         mapView.addOverlays(polygons)
 
@@ -44,7 +44,6 @@ struct MapView: UIViewRepresentable {
         mapView.delegate = context.coordinator
         return mapView
     }
-    var data = MapData()
 
     let mapView = MKMapView()
 
@@ -60,10 +59,14 @@ struct MapView: UIViewRepresentable {
             self.parent = parent
         }
 
-        func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let colors: [UIColor] = [.red, .yellow, .blue, .white, .purple, .green]
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if overlay is MKPolygon {
+                let index = mapView.overlays.firstIndex { $0 === overlay } ?? 0
+                print(mapView.overlays)
+                print(overlay)
                 let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-                renderer.fillColor = UIColor.purple.withAlphaComponent(0.5)
+                renderer.fillColor = colors[index % mapView.overlays.count].withAlphaComponent(0.3)
                 renderer.lineWidth = 1
                 return renderer
             }
