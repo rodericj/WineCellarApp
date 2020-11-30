@@ -13,3 +13,4 @@ A more native way of viewing information about bottles in your cellar from Cella
 #Dependencies
 
 - [WineCellar](https://github.com/rodericj/WineCellar)
+- [WineRegionMaps](https://github.com/rodericj/WineRegionMaps)
