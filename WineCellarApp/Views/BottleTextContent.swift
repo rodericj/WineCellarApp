@@ -22,7 +22,7 @@ struct BottleTextContent: View {
                 .foregroundColor(.gray)
 
             if bottle.ct != nil {
-                Text("CT\(String(format: "%.2f", bottle.ct!))")
+                Text("CT\(String(format: "%2.1f", Float(bottle.ct!)!))")
             }
             if bottle.beginConsume != nil && bottle.endConsume != nil {
                 Text("Drink \(String(bottle.beginConsume!))-\(String(bottle.endConsume!))")
