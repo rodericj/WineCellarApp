@@ -126,7 +126,7 @@ struct WineBottleNavButtons: View {
     var body: some View {
         HStack {
             Button(action: {
-                cellar.refresh()
+                cellar.refresh(forceRefresh: true)
             }) {
                 Image(systemName: "arrow.clockwise")
             }
