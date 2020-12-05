@@ -62,36 +62,6 @@ extension Bottle {
         }
     }
 }
-extension Bottle {
-    private func bordeauxSubRegion() -> WineRegionDescribable? {
-        let ret = BordeauxSubRegion(rawValue: subRegion)
-        return ret
-    }
-    private func burgundySubRegion() -> WineRegionDescribable? { // TODO make this burgundy
-        BordeauxSubRegion(rawValue: subRegion)
-    }
-
-    private func frenchRegion() -> WineRegionDescribable? {
-        switch region {
-        case "Bordeaux":
-            let bordeaux = bordeauxSubRegion()
-            print(bordeaux)
-            return bordeaux
-        case "Burgundy":
-            return burgundySubRegion() // TODO this always returns bordeaux for now
-        default:
-            return nil
-        }
-    }
-    var libRegion: WineRegionDescribable? {
-        switch country {
-        case "France":
-            return frenchRegion()
-        default:
-            return nil
-        }
-    }
-}
 
 struct WineBottleList: View {
     @EnvironmentObject var cellar: WineCellar
