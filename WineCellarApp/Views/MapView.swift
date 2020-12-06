@@ -15,7 +15,10 @@ class Coordinator: NSObject, MKMapViewDelegate {
     var parent: MapView
     private var finalRect: MKMapRect?
 
-    private let padding = UIEdgeInsets(top: 200, left: 200, bottom: 200, right: 200)
+    private let padding: UIEdgeInsets = {
+        let inset = UIScreen.main.bounds.size.width * 0.05
+        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    }()
 
     init(_ parent: MapView) {
         self.parent = parent
