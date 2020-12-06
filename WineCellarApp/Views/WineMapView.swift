@@ -45,10 +45,11 @@ class WineMapView: MKMapView {
     init(wineRegionLib: WineRegion) {
         self.wineRegionLib = wineRegionLib
         super.init(frame: .zero)
-        cancellable = wineRegionLib.$regionMaps.sink { _ in
+        cancellable = wineRegionLib.$regionMaps
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
             debugPrint("completed")
         } receiveValue: { mapMapping in
-
             let values = mapMapping.map { $0.value }
             if values.isEmpty { return }
             debugPrint(values)
