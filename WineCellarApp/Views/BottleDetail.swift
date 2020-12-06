@@ -15,19 +15,21 @@ extension Bottle {
     }
 }
 struct BottleDetail: View {
-    let bottle: Bottle
+    let bottle: Bottle?
     let wineMapView: WineMapView
 
     var body: some View {
         VStack (alignment: .leading) {
             MapView(mapView: wineMapView)
                 .onAppear(perform: {
-                if let region = bottle.libAppelation {
-                    wineMapView.showAppelationRegions([region])
-                }
+                    if let region = bottle?.libAppelation {
+                        wineMapView.showAppelationRegions([region])
+                    }
             })
-            BottleTextContent(bottle: bottle)
-                .padding()
+            if bottle != nil {
+                BottleTextContent(bottle: bottle!)
+                    .padding()
+            }
         }
     }
 }

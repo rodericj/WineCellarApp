@@ -10,7 +10,7 @@ import WineCellar
 import WineRegionLib
 struct WineBottleList: View {
     @EnvironmentObject var cellar: WineCellar
-    let wineMapView = WineMapView(wineRegionLib: WineRegionLib.WineRegion()) // TODO this seems like an awkward way to initiate this
+    let wineMapView: WineMapView
     @State var searchText: String = ""
     var bottles: [Bottle] {
         if searchText.isEmpty {
@@ -58,13 +58,18 @@ struct WineBottleNavButtons: View {
 }
 
 struct WineBottleNav: View {
+    let wineMapView = WineMapView(wineRegionLib: WineRegionLib.WineRegion()) // TODO this seems like an awkward way to initiate this
     var body: some View {
         NavigationView {
-            WineBottleList()
-            .navigationBarTitle(Text("Bottles"))
+            WineBottleList(wineMapView: wineMapView)
+            .navigationBarTitle(Text("Cellar"))
             .navigationBarItems(trailing: WineBottleNavButtons() )
                 .navigationViewStyle(StackNavigationViewStyle())
+
+            // Detail view
+            BottleDetail(bottle: nil, wineMapView: wineMapView)
         }
+
     }
 }
 
