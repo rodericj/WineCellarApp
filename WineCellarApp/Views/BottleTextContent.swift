@@ -30,7 +30,7 @@ struct BottleTextContent: View {
                     .foregroundColor(.gray)
             }
             if bottle.valuation != nil {
-                Text("\(bottle.quantity) bottle (\(bottle.size)) - v $\(String(format: "%.2f", bottle.valuation!))")
+                Text("\(bottle.quantity) bottle (\(bottle.size) - v $\(String(format: "%.2f", bottle.valuation!))")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             } else {
