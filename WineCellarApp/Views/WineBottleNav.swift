@@ -8,64 +8,9 @@
 import SwiftUI
 import WineCellar
 import WineRegionLib
-extension Bottle {
-    func filter(on searchText: String) -> Bool {
-        appellation.contains(searchText) ||
-            country.contains(searchText) ||
-            description.contains(searchText) ||
-            designation.contains(searchText) ||
-            locale.contains(searchText) ||
-            location.contains(searchText) ||
-            masterVarietal.contains(searchText) ||
-            String(price).contains(searchText) ||
-            producer.contains(searchText) ||
-            region.contains(searchText) ||
-            sortProducer.contains(searchText) ||
-            subRegion.contains(searchText) ||
-            title.contains(searchText) ||
-            type.rawValue.contains(searchText) ||
-            varietal.contains(searchText) ||
-            vineyard.contains(searchText) ||
-            vintage.contains(searchText)
-    }
-}
-
-extension Bottle {
-
-    private func usaRegion() -> AppelationDescribable? {
-        switch region {
-        case WineCountry.USA.California.title:
-            return WineCountry.USA.California.Appelation(rawValue: appellation)
-        default:
-            return nil
-        }
-    }
-    private func frenchRegion() -> AppelationDescribable? {
-        switch region {
-        case WineCountry.France.Bordeaux.title:
-            return WineCountry.France.Bordeaux.Medoc.Appelation(rawValue: appellation)
-        case WineCountry.France.Burgundy.title:
-            print("Burgundy region is not yet understood")
-            return nil
-        default:
-            return nil
-        }
-    }
-    var libAppelation: AppelationDescribable? {
-        switch country {
-        case WineCountry.France.title:
-            return frenchRegion()
-        case WineCountry.USA.title:
-            return usaRegion()
-        default:
-            return nil
-        }
-    }
-}
-
 struct WineBottleList: View {
     @EnvironmentObject var cellar: WineCellar
-    let wineRegion = WineRegion()
+    let wineMapView = WineMapView(wineRegionLib: WineRegionLib.WineRegion()) // TODO this seems like an awkward way to initiate this
     @State var searchText: String = ""
     var bottles: [Bottle] {
         if searchText.isEmpty {
@@ -81,7 +26,8 @@ struct WineBottleList: View {
                     .padding()
                 LazyVStack(content: {
                     ForEach(bottles, id: \.wineID) { bottle in
-                        NavigationLink(destination: BottleDetail(bottle: bottle)
+                        NavigationLink(destination: BottleDetail(bottle: bottle,
+                                                                 wineMapView: wineMapView)
                                         .navigationBarTitle("", displayMode: .inline)) {
                             BottleRow(bottle: bottle).padding(.bottom, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                         }
@@ -117,6 +63,7 @@ struct WineBottleNav: View {
             WineBottleList()
             .navigationBarTitle(Text("Bottles"))
             .navigationBarItems(trailing: WineBottleNavButtons() )
+                .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

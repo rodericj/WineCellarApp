@@ -11,97 +11,77 @@ import SwiftUI
 import WineRegionLib
 import Combine
 
+class Coordinator: NSObject, MKMapViewDelegate {
+    var parent: MapView
+    private var finalRect: MKMapRect?
+
+    private let padding = UIEdgeInsets(top: 200, left: 200, bottom: 200, right: 200)
+
+    init(_ parent: MapView) {
+        self.parent = parent
+    }
+
+    // Handles the zooming out to a common rect, before zooming to the final destination
+    func handleNewMapping(features: [MKGeoJSONFeature], mapView: WineMapView) {
+        mapView.removeOverlays(mapView.overlays)
+        mapView.add(features: features)
+
+        var mapRect: MKMapRect = .null
+        mapView.overlays.forEach { overlay in
+            mapRect = mapRect.union(overlay.boundingMapRect)
+        }
+        let finalMapRect = mapRect
+        let mapRectOfAllNewOverlays = mapRect
+
+        if (!mapRect.intersects(mapView.visibleMapRect)) {
+            let unionmapRect = mapRect.union(mapView.visibleMapRect);
+            if let coordinator = mapView.delegate as? Coordinator {
+                coordinator.finalRect = finalMapRect
+            }
+            setMapRect(unionmapRect, on: mapView)
+        } else {
+            setMapRect(mapRectOfAllNewOverlays, on: mapView)
+        }
+    }
+
+    private func setMapRect(_ rect: MKMapRect, on mapView: MKMapView ) {
+        mapView.setVisibleMapRect(rect,
+                                  edgePadding: padding,
+                                  animated: true)
+    }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if let finalRect = finalRect {
+            self.finalRect = nil
+            setMapRect(finalRect, on: mapView)
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKPolygon {
+            let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
+            renderer.fillColor = UIColor.orange.withAlphaComponent(0.2)
+            renderer.strokeColor = .orange
+            renderer.lineWidth = 1
+            return renderer
+        }
+        return MKOverlayRenderer()
+    }
+}
+
 struct MapView: UIViewRepresentable {
+    let mapView: MKMapView
+
     private let wineRegionLib = WineRegionLib.WineRegion()
-
-    func showAppelationRegions(_ appelations: [AppelationDescribable]) {
-        wineRegionLib.getRegionsStruct(regions: appelations)
-        var cancellable: AnyCancellable? = wineRegionLib.$regionMaps.sink { _ in
-            print("completed")
-        } receiveValue: { mapMapping in
-            let values = mapMapping.map { $0.value }
-            print(values)
-            add(features: values)
-            var zoomRect:MKMapRect = .null
-            mapView.overlays.forEach { overlay in
-                zoomRect = zoomRect.union(overlay.boundingMapRect)
-            }
-            mapView.setVisibleMapRect(zoomRect, animated: true)
-        }
-    }
-    func showLibRegion(_ regions: [WineRegionDescribable]) {
-//        guard let regions = regions else { return }
-        fatalError()
-        wineRegionLib.getRegions(regions: regions)
-        let cancellable = wineRegionLib.$regionMaps.sink { _ in
-            print("completed")
-            var zoomRect:MKMapRect = .null
-            mapView.overlays.forEach { overlay in
-                zoomRect = zoomRect.union(overlay.boundingMapRect)
-            }
-            mapView.setVisibleMapRect(zoomRect, animated: true)
-        } receiveValue: { mapMapping in
-            let values = mapMapping.map { $0.value }
-            print(values)
-            add(features: values)
-        }
-
-    }
-
-    private func add(features: [MKGeoJSONFeature]) {
-        features.forEach { feature in
-            feature.geometry
-                .map { $0 as? MKPolygon  }
-                .compactMap { $0 }
-                .forEach { multiPolygon in
-                    print("polygon")
-                    mapView.addOverlay(multiPolygon)
-                }
-
-            print("The feature \(feature.geometry)")
-            feature.geometry
-                .map { $0 as? MKMultiPolygon }
-                .compactMap { $0 }
-                .forEach { multiPolygon in
-                    print("polygon")
-                    multiPolygon.polygons.forEach {
-                        print("polygon \($0)")
-                        mapView.addOverlay($0)
-                    }
-                }
-        }
-    }
 
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
         return mapView
     }
-//    var data: MapData?
 
-    let mapView = MKMapView()
     func updateUIView(_ mapView: MKMapView, context _: Context) {}
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
-    }
-
-    class Coordinator: NSObject, MKMapViewDelegate {
-        var parent: MapView
-
-        init(_ parent: MapView) {
-            self.parent = parent
-        }
-
-        let colors: [UIColor] = [.red, .yellow, .blue, .white, .purple, .green]
-        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            if overlay is MKPolygon {
-                let index = mapView.overlays.firstIndex { $0 === overlay } ?? 0
-                let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-                renderer.fillColor = colors[index % colors.count].withAlphaComponent(0.3)
-                renderer.lineWidth = 1
-                return renderer
-            }
-            return MKOverlayRenderer()
-        }
     }
 }

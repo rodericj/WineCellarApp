@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F58CDB5257AAE2B005C4F5A /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5F58CDB4257AAE2B005C4F5A /* WineRegionLib */; };
-		5F6845092570C22400F59FDF /* WineCellar in Frameworks */ = {isa = PBXBuildFile; productRef = 5F6845082570C22400F59FDF /* WineCellar */; };
+		5F58CDCD257B61AF005C4F5A /* BottleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */; };
+		5F58CDD5257C9181005C4F5A /* WineMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDD4257C9180005C4F5A /* WineMapView.swift */; };
+		5F58CDE1257C92B5005C4F5A /* WineCellar in Frameworks */ = {isa = PBXBuildFile; productRef = 5F58CDE0257C92B5005C4F5A /* WineCellar */; };
 		5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835329256D96A600C2345F /* AppDelegate.swift */; };
 		5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83532B256D96A600C2345F /* SceneDelegate.swift */; };
 		5F83532E256D96A600C2345F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83532D256D96A600C2345F /* LoginView.swift */; };
@@ -44,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleHelper.swift; sourceTree = "<group>"; };
+		5F58CDD4257C9180005C4F5A /* WineMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineMapView.swift; sourceTree = "<group>"; };
 		5F835326256D96A600C2345F /* WineCellarApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WineCellarApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F835329256D96A600C2345F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F83532B256D96A600C2345F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,8 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F6845092570C22400F59FDF /* WineCellar in Frameworks */,
-				5F58CDB5257AAE2B005C4F5A /* WineRegionLib in Frameworks */,
+				5F58CDE1257C92B5005C4F5A /* WineCellar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +103,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5F58CDCB257B61A4005C4F5A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		5F83531D256D96A600C2345F = {
 			isa = PBXGroup;
 			children = (
@@ -125,7 +135,7 @@
 		5F835328256D96A600C2345F /* WineCellarApp */ = {
 			isa = PBXGroup;
 			children = (
-				5FB238132572020F00F69FE5 /* MapData */,
+				5F58CDCB257B61A4005C4F5A /* Helpers */,
 				5F83537C256E1B1100C2345F /* Views */,
 				5F835329256D96A600C2345F /* AppDelegate.swift */,
 				5F83532B256D96A600C2345F /* SceneDelegate.swift */,
@@ -174,15 +184,9 @@
 				5F835385256E1DAC00C2345F /* BottleTextContent.swift */,
 				5FE9A0B32570D98D00DB353B /* SearchBar.swift */,
 				5FB2381E2572228300F69FE5 /* MapView.swift */,
+				5F58CDD4257C9180005C4F5A /* WineMapView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		5FB238132572020F00F69FE5 /* MapData */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MapData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,8 +206,7 @@
 			);
 			name = WineCellarApp;
 			packageProductDependencies = (
-				5F6845082570C22400F59FDF /* WineCellar */,
-				5F58CDB4257AAE2B005C4F5A /* WineRegionLib */,
+				5F58CDE0257C92B5005C4F5A /* WineCellar */,
 			);
 			productName = WineCellarApp;
 			productReference = 5F835326256D96A600C2345F /* WineCellarApp.app */;
@@ -277,8 +280,7 @@
 			);
 			mainGroup = 5F83531D256D96A600C2345F;
 			packageReferences = (
-				5F6845072570C22400F59FDF /* XCRemoteSwiftPackageReference "WineCellar" */,
-				5F58CDB3257AAE2B005C4F5A /* XCRemoteSwiftPackageReference "WineRegionLib" */,
+				5F58CDDF257C92B5005C4F5A /* XCRemoteSwiftPackageReference "WineCellar" */,
 			);
 			productRefGroup = 5F835327256D96A600C2345F /* Products */;
 			projectDirPath = "";
@@ -331,6 +333,8 @@
 				5F835386256E1DAC00C2345F /* BottleTextContent.swift in Sources */,
 				5FE9A0B42570D98D00DB353B /* SearchBar.swift in Sources */,
 				5F83532E256D96A600C2345F /* LoginView.swift in Sources */,
+				5F58CDD5257C9181005C4F5A /* WineMapView.swift in Sources */,
+				5F58CDCD257B61AF005C4F5A /* BottleHelper.swift in Sources */,
 				5F835381256E1B1C00C2345F /* BottleDetail.swift in Sources */,
 				5F83536B256DB5E800C2345F /* BottleRow.swift in Sources */,
 			);
@@ -663,33 +667,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5F58CDB3257AAE2B005C4F5A /* XCRemoteSwiftPackageReference "WineRegionLib" */ = {
+		5F58CDDF257C92B5005C4F5A /* XCRemoteSwiftPackageReference "WineCellar" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:rodericj/WineRegionLib.git";
+			repositoryURL = "git@github.com:rodericj/WineCellar.git";
 			requirement = {
 				branch = main;
 				kind = branch;
 			};
 		};
-		5F6845072570C22400F59FDF /* XCRemoteSwiftPackageReference "WineCellar" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rodericj/WineCellar.git";
-			requirement = {
-				kind = revision;
-				revision = 2c0269681089c4f280faee1cfa1e841c09295638;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5F58CDB4257AAE2B005C4F5A /* WineRegionLib */ = {
+		5F58CDE0257C92B5005C4F5A /* WineCellar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5F58CDB3257AAE2B005C4F5A /* XCRemoteSwiftPackageReference "WineRegionLib" */;
-			productName = WineRegionLib;
-		};
-		5F6845082570C22400F59FDF /* WineCellar */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5F6845072570C22400F59FDF /* XCRemoteSwiftPackageReference "WineCellar" */;
+			package = 5F58CDDF257C92B5005C4F5A /* XCRemoteSwiftPackageReference "WineCellar" */;
 			productName = WineCellar;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -9,7 +9,7 @@ import SwiftUI
 import WineCellar
 
 class UserAuth: ObservableObject {
-    @Published var isLoggedin:Bool = false
+    @Published var isLoggedin: Bool = false
 
     func login() {
         self.isLoggedin = true
