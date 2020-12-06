@@ -33,7 +33,16 @@
         "repositoryURL": "git@github.com:rodericj/WineCellar.git",
         "state": {
           "branch": "main",
-          "revision": "2c0269681089c4f280faee1cfa1e841c09295638",
+          "revision": "095c09aff8fb8b9564fce57c82e578fab19279d2",
+          "version": null
+        }
+      },
+      {
+        "package": "WineRegionLib",
+        "repositoryURL": "https://github.com/rodericj/WineRegionLib.git",
+        "state": {
+          "branch": "main",
+          "revision": "b7f5939cb01411b4e8fc1da4ce1ecdde3b3f4691",
           "version": null
         }
       }
