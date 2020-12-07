@@ -24,11 +24,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
         self.parent = parent
     }
 
-    // Handles the zooming out to a common rect, before zooming to the final destination
-    func handleNewMapping(features: [MKGeoJSONFeature], mapView: WineMapView) {
-        mapView.removeOverlays(mapView.overlays)
-        mapView.add(features: features)
-
+    private func doTheUnionTrick(mapView: MKMapView) {
         var mapRect: MKMapRect = .null
         mapView.overlays.forEach { overlay in
             mapRect = mapRect.union(overlay.boundingMapRect)
@@ -45,6 +41,18 @@ class Coordinator: NSObject, MKMapViewDelegate {
         } else {
             setMapRect(mapRectOfAllNewOverlays, on: mapView)
         }
+    }
+    func handleNewPolygons(_ polygons: [MKPolygon], mapView: WineMapView) {
+        mapView.removeOverlays(mapView.overlays)
+        mapView.addOverlays(polygons)
+        doTheUnionTrick(mapView: mapView)
+  }
+
+    // Handles the zooming out to a common rect, before zooming to the final destination
+    func handleNewMapping(features: [MKGeoJSONFeature], mapView: WineMapView) {
+        mapView.removeOverlays(mapView.overlays)
+        mapView.add(features: features)
+        doTheUnionTrick(mapView: mapView)
     }
 
     private func setMapRect(_ rect: MKMapRect, on mapView: MKMapView ) {

@@ -12,6 +12,7 @@ import WineRegionLib
 class WineMapView: MKMapView {
 
     var cancellable: AnyCancellable? = nil
+    var secondCancellable: AnyCancellable? = nil
     let wineRegionLib: WineRegion
 
     public func showAppelationRegions(_ appelations: [AppelationDescribable]) {
@@ -54,6 +55,17 @@ class WineMapView: MKMapView {
             if values.isEmpty { return }
             debugPrint(values)
             (self.delegate as? Coordinator)?.handleNewMapping(features: values, mapView: self)
+        }
+
+        secondCancellable = wineRegionLib.$regionPolygons
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            debugPrint("completed")
+        } receiveValue: { mapMapping in
+            let values = mapMapping.map { $0.value }
+            if values.isEmpty { return }
+            debugPrint(values)
+            (self.delegate as? Coordinator)?.handleNewPolygons(values, mapView: self)
         }
     }
 
