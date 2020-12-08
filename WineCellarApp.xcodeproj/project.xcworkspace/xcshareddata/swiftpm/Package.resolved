@@ -30,10 +30,10 @@
       },
       {
         "package": "WineCellar",
-        "repositoryURL": "git@github.com:rodericj/WineCellar.git",
+        "repositoryURL": "https://github.com/rodericj/WineCellar.git",
         "state": {
           "branch": "main",
-          "revision": "095c09aff8fb8b9564fce57c82e578fab19279d2",
+          "revision": "67a93215d92ea4793fd6af87d5314c1789cfcd20",
           "version": null
         }
       },
