@@ -36,6 +36,15 @@
           "revision": "095c09aff8fb8b9564fce57c82e578fab19279d2",
           "version": null
         }
+      },
+      {
+        "package": "WineRegionLib",
+        "repositoryURL": "https://github.com/rodericj/WineRegionLib.git",
+        "state": {
+          "branch": "main",
+          "revision": "e225718061b96c9b4798004a74e61461ab6c1188",
+          "version": null
+        }
       }
     ]
   },
