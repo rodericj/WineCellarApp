@@ -16,7 +16,7 @@ class WineMapView: MKMapView {
     let wineRegionLib: WineRegion
 
     public func showAppelationRegions(_ appelations: [AppelationDescribable]) {
-        wineRegionLib.getRegionsStruct(regions: appelations)
+        wineRegionLib.getRegions(regions: appelations)
     }
     
     public func add(features: [MKGeoJSONFeature]) {
