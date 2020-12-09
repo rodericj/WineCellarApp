@@ -23,7 +23,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
         self.parent = parent
     }
 
-    private func doTheUnionTrick(mapView: MKMapView) {
+    private func smoothePanRegion(mapView: MKMapView) {
         var mapRect: MKMapRect = .null
         mapView.overlays.forEach { overlay in
             mapRect = mapRect.union(overlay.boundingMapRect)
@@ -44,14 +44,14 @@ class Coordinator: NSObject, MKMapViewDelegate {
     func handleNewPolygons(_ polygons: [MKPolygon], mapView: WineMapView) {
         mapView.removeOverlays(mapView.overlays)
         mapView.addOverlays(polygons)
-        doTheUnionTrick(mapView: mapView)
+        smoothePanRegion(mapView: mapView)
   }
 
     // Handles the zooming out to a common rect, before zooming to the final destination
     func handleNewMapping(features: [MKGeoJSONFeature], mapView: WineMapView) {
         mapView.removeOverlays(mapView.overlays)
         mapView.add(features: features)
-        doTheUnionTrick(mapView: mapView)
+        smoothePanRegion(mapView: mapView)
     }
 
     private func setMapRect(_ rect: MKMapRect, on mapView: MKMapView ) {
