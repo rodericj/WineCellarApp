@@ -48,7 +48,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
   }
 
     // Handles the zooming out to a common rect, before zooming to the final destination
-    func handleNewMapping(features: [MKGeoJSONFeature], mapView: WineMapView) {
+    func handleNewMapping(features: [MapKitOverlayable], mapView: WineMapView) {
         mapView.removeOverlays(mapView.overlays)
         mapView.add(features: features)
         smoothePanRegion(mapView: mapView)
@@ -67,11 +67,14 @@ class Coordinator: NSObject, MKMapViewDelegate {
         }
     }
 
+    let colors: [UIColor] = [.red, .orange, .yellow, .green, .blue, .purple]
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolygon {
+
             let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-            renderer.fillColor = UIColor.orange.withAlphaComponent(0.2)
-            renderer.strokeColor = .orange
+            let color = colors.randomElement()
+            renderer.fillColor = color?.withAlphaComponent(0.2)
+            renderer.strokeColor = color
             renderer.lineWidth = 1
             return renderer
         }

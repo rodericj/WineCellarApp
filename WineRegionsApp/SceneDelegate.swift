@@ -13,14 +13,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         let lib = WineRegionLib.WineRegion()
-        lib.getRegionsStruct(regions: [France.Bordeaux.Medoc.Appelation.medoc])
+        let bordeaux = France.Bordeaux.Medoc.Appelation.allCases
+        let california = USA.California.Appelation.allCases
+        let burgundy = France.Burgundy.Appelation.allCases
+        let regions: [AppelationDescribable] = bordeaux + california + burgundy
+        print("Adding count \(bordeaux.count) regions")
+        lib.getRegions(regions: bordeaux)
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView(wineMapView: WineMapView(wineRegionLib: lib))
 

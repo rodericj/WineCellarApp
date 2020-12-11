@@ -19,24 +19,26 @@ class WineMapView: MKMapView {
         wineRegionLib.getRegions(regions: appelations)
     }
     
-    public func add(features: [MKGeoJSONFeature]) {
-        features.forEach { feature in
+    public func add(features: [MapKitOverlayable]) {
+        print("Features count: \(features.count)")
+        features.compactMap { $0 as? MKGeoJSONFeature }
+            .forEach { feature in
             feature.geometry
                 .map { $0 as? MKPolygon  }
                 .compactMap { $0 }
                 .forEach { multiPolygon in
-                    debugPrint("polygon")
+//                    debugPrint("polygon")
                     self.addOverlay(multiPolygon)
                 }
 
-            debugPrint("The feature \(feature.geometry)")
+//            debugPrint("The feature \(feature.geometry)")
             feature.geometry
                 .map { $0 as? MKMultiPolygon }
                 .compactMap { $0 }
                 .forEach { multiPolygon in
-                    debugPrint("polygon")
+//                    debugPrint("polygon")
                     multiPolygon.polygons.forEach {
-                        debugPrint("polygon \($0)")
+//                        debugPrint("polygon \($0)")
                         self.addOverlay($0)
                     }
                 }
@@ -47,25 +49,15 @@ class WineMapView: MKMapView {
         self.wineRegionLib = wineRegionLib
         super.init(frame: .zero)
         cancellable = wineRegionLib.$regionMaps
+            .debounce(for: 1, scheduler: RunLoop.main)
             .receive(on: DispatchQueue.main)
             .sink { _ in
             debugPrint("completed")
         } receiveValue: { mapMapping in
-            let values = mapMapping.map { $0.value }
-            if values.isEmpty { return }
-            debugPrint(values)
-            (self.delegate as? Coordinator)?.handleNewMapping(features: values, mapView: self)
-        }
-
-        secondCancellable = wineRegionLib.$regionPolygons
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-            debugPrint("completed")
-        } receiveValue: { mapMapping in
-            let values = mapMapping.map { $0.value }
-            if values.isEmpty { return }
-            debugPrint(values)
-            (self.delegate as? Coordinator)?.handleNewPolygons(values, mapView: self)
+            print("we got mappings \(mapMapping.count)")
+            if mapMapping.isEmpty { return }
+            debugPrint("The mappings are \(mapMapping.count)")
+            (self.delegate as? Coordinator)?.handleNewMapping(features: mapMapping, mapView: self)
         }
     }
 
