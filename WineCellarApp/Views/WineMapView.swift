@@ -54,13 +54,28 @@ class WineMapView: MKMapView {
             .sink { _ in
             debugPrint("completed")
         } receiveValue: { mapMapping in
-            print("we got mappings \(mapMapping.count)")
-            if mapMapping.isEmpty { return }
-            debugPrint("The mappings are \(mapMapping.count)")
-            (self.delegate as? Coordinator)?.handleNewMapping(features: mapMapping, mapView: self)
+            switch mapMapping {
+
+            case .regions(let mapMapping):
+                self.handle(mapMapping: mapMapping)
+            case .loading(let percentage):
+                debugPrint("loading \(percentage)")
+            case .none:
+                debugPrint("nothing to report, maybe clear off the overlays?")
+            }
+
         }
     }
 
+    private func handle(mapMapping: [MapKitOverlayable]) {
+        debugPrint("we got mappings \(mapMapping.count)")
+        if mapMapping.isEmpty { return }
+        debugPrint("The mappings are \(mapMapping.count)")
+        if let poly = mapMapping.first as? MKPolygon {
+            print(poly)
+        }
+        (self.delegate as? Coordinator)?.handleNewMapping(features: mapMapping, mapView: self)
+    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
