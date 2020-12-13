@@ -22,9 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let bordeaux = France.Bordeaux.Medoc.Appelation.allCases
         let california = USA.California.Appelation.allCases
         let burgundy = France.Burgundy.Appelation.allCases
-        let regions: [AppelationDescribable] = bordeaux + california + burgundy
+        let italy = Italy.Tuscany.Appelation.allCases
+        let regions: [AppelationDescribable] = bordeaux + california + burgundy + italy
         print("Adding count \(bordeaux.count) regions")
-        lib.getRegions(regions: california + burgundy + bordeaux    )
+
+        lib.getRegions(regions: Array(italy.prefix(10)))
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView(wineMapView: WineMapView(wineRegionLib: lib), viewModel: lib)
 
