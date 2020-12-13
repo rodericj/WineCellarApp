@@ -65,12 +65,12 @@ extension Bottle {
         case France.Bordeaux.title:
             let bordeaux = France.Bordeaux.Medoc.Appelation(rawValue: appellation)
             print(appellation)
-            assert(bordeaux != nil, "must define \(appellation)")
+//            assert(bordeaux != nil, "must define \(appellation)")
             return bordeaux
         case France.Burgundy.title:
             let burgundy = France.Burgundy.Appelation(rawValue: appellation)
             print(appellation)
-            assert(burgundy != nil, "must define \(appellation)")
+//            assert(burgundy != nil, "must define \(appellation)")
             return burgundy
         default:
             return nil
