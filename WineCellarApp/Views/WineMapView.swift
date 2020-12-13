@@ -12,7 +12,6 @@ import WineRegionLib
 class WineMapView: MKMapView {
 
     var cancellable: AnyCancellable? = nil
-    var secondCancellable: AnyCancellable? = nil
     let wineRegionLib: WineRegion
 
     public func showAppelationRegions(_ appelations: [AppelationDescribable]) {
@@ -49,7 +48,6 @@ class WineMapView: MKMapView {
         self.wineRegionLib = wineRegionLib
         super.init(frame: .zero)
         cancellable = wineRegionLib.$regionMaps
-            .debounce(for: 1, scheduler: RunLoop.main)
             .receive(on: DispatchQueue.main)
             .sink { _ in
             debugPrint("completed")
@@ -58,10 +56,9 @@ class WineMapView: MKMapView {
 
             case .regions(let mapMapping):
                 self.handle(mapMapping: mapMapping)
-            case .loading(let percentage):
-                debugPrint("loading \(percentage)")
-            case .none:
-                debugPrint("nothing to report, maybe clear off the overlays?")
+            default:
+                break
+
             }
 
         }

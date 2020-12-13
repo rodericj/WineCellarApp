@@ -24,9 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let burgundy = France.Burgundy.Appelation.allCases
         let regions: [AppelationDescribable] = bordeaux + california + burgundy
         print("Adding count \(bordeaux.count) regions")
-        lib.getRegions(regions: bordeaux)
+        lib.getRegions(regions: california + burgundy + bordeaux    )
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView(wineMapView: WineMapView(wineRegionLib: lib))
+        let contentView = ContentView(wineMapView: WineMapView(wineRegionLib: lib), viewModel: lib)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

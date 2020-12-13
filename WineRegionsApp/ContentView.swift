@@ -10,10 +10,21 @@ import WineRegionLib
 
 struct ContentView: View {
     let wineMapView: WineMapView
-
+    @ObservedObject var viewModel: WineRegionLib.WineRegion
+            
     var body: some View {
-        MapView(mapView: wineMapView)
+        switch viewModel.regionMaps {
+        case .loading(let value):
+            ProgressView(value: value)
+            MapView(mapView: wineMapView)
+                .edgesIgnoringSafeArea(.all)
+
+        default:
+            MapView(mapView: wineMapView)
+                .edgesIgnoringSafeArea(.all)
+        }
     }
+
 }
 
 //struct ContentView_Previews: PreviewProvider {
