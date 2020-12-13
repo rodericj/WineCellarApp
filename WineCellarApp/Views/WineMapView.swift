@@ -23,15 +23,12 @@ class WineMapView: MKMapView {
         features
             .compactMap { $0 as? MKPolygon }
             .forEach { polygon in
-                print("we got some polygons")
                 self.addOverlay(polygon)
             }
         features
             .compactMap { $0 as? MKMultiPolygon }
             .forEach { multiPolygon in
-                print("we got some multi polygons")
                 multiPolygon.polygons.forEach {
-                    debugPrint("polygon in multipolygon \($0)")
                     self.addOverlay($0)
                 }
             }
@@ -42,7 +39,6 @@ class WineMapView: MKMapView {
                 .map { $0 as? MKPolygon  }
                 .compactMap { $0 }
                 .forEach { polygon in
-                    debugPrint("polygon")
                     self.addOverlay(polygon)
                 }
 
@@ -52,9 +48,7 @@ class WineMapView: MKMapView {
                 .map { $0 as? MKMultiPolygon }
                 .compactMap { $0 }
                 .forEach { multiPolygon in
-                    debugPrint("multiPolygon")
                     multiPolygon.polygons.forEach {
-                        debugPrint("polygon in multipolygon \($0)")
                         self.addOverlay($0)
                     }
                 }
@@ -84,10 +78,6 @@ class WineMapView: MKMapView {
     private func handle(mapMapping: [MapKitOverlayable]) {
         debugPrint("we got mappings \(mapMapping.count)")
         if mapMapping.isEmpty { return }
-        debugPrint("The mappings are \(mapMapping.count)")
-        if let poly = mapMapping.first as? MKPolygon {
-            print(poly)
-        }
         (self.delegate as? Coordinator)?.handleNewMapping(features: mapMapping, mapView: self)
     }
     required init?(coder: NSCoder) {
