@@ -8,15 +8,36 @@
 import SwiftUI
 import WineRegionLib
 
+struct RegionSection {
+    let title: String
+    let regions: [AppelationDescribable]
+
+    func filtered(string: String) -> [AppelationDescribable]{
+        print(regions)
+        if string.isEmpty {
+            return regions
+        }
+        return regions.filter { $0.description.contains(string) }
+    }
+}
+
 struct RegionList: View {
-    let allRegions = Italy.Tuscany.Appelation.allCases
+    let sections = [
+        RegionSection(title: "Italy 🇮🇹", regions: Italy.Tuscany.Appelation.allCases),
+        RegionSection(title: "France 🇫🇷", regions: France.Bordeaux.Appelation.allCases)
+    ]
     @State var searchText: String = ""
 
-    var regions: [AppelationDescribable] {
+
+    var filteredSection: [RegionSection] {
         if searchText.isEmpty {
-            return allRegions
+            return sections
         }
-        return allRegions.filter { $0.description.contains(searchText) }
+        return sections.filter { section -> Bool in
+            section.regions.filter { describable -> Bool in
+                describable.description.contains(searchText)
+            }.count > 0
+        }
     }
 
     let lib: WineRegionLib.WineRegion
@@ -26,18 +47,33 @@ struct RegionList: View {
             SearchBar(placeholder: "Search", text: $searchText)
                 .padding()
             LazyVStack(content: {
-                ForEach(regions, id: \.description) { region in
-                    Button(action: {
-                        lib.getRegions(regions: [region])
-                    }) {
-                        HStack {
-                            Text(region.description)
-                                .font(.title2)
-                            Spacer()
-                        }.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
+                ForEach(filteredSection, id: \.title) { section in
+                    HStack {
+                        Text(section.title).font(.title)
+                        Spacer()
+                    }.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
+                    ForEach(section.filtered(string: searchText), id: \.description) { region in
+                        RegionRow(lib: lib, region: region)
                     }
                 }
             })
+        }
+    }
+}
+
+struct RegionRow: View {
+    let lib: WineRegionLib.WineRegion
+
+    let region: AppelationDescribable
+    var body: some View {
+        Button(action: {
+            lib.getRegions(regions: [region])
+        }) {
+            HStack {
+                Text(region.description)
+                    .font(.title2)
+                Spacer()
+            }.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
         }
     }
 }
@@ -47,3 +83,4 @@ struct RegionList_Previews: PreviewProvider {
         RegionList(lib: WineRegion())
     }
 }
+
