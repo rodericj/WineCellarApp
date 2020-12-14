@@ -7,7 +7,6 @@
 
 import UIKit
 import SwiftUI
-import WineRegionLib
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,18 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        let lib = WineRegionLib.WineRegion()
-        let bordeaux = France.Bordeaux.Medoc.Appelation.allCases
-        let california = USA.California.Appelation.allCases
-        let burgundy = France.Burgundy.Appelation.allCases
-        let italy = Italy.Tuscany.Appelation.allCases
-        let regions: [AppelationDescribable] = bordeaux + california + burgundy + italy
-        print("Adding count \(bordeaux.count) regions")
-
-        lib.getRegions(regions: Array(italy.prefix(10)))
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView(wineMapView: WineMapView(wineRegionLib: lib), viewModel: lib)
-
+        let contentView = RegionNavigation()
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
