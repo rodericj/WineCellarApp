@@ -39,9 +39,11 @@ struct BottleTextContent: View {
                     .foregroundColor(.gray)
             }
 
-            Text("\(String(bottle.location)): (\(bottle.quantity))")
+            if bottle.location != nil {
+            Text("\(String(bottle.location!)): (\(bottle.quantity))")
                 .font(.footnote)
                 .foregroundColor(.gray)
+            }
         }
     }
 }

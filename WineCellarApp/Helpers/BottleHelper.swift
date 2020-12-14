@@ -16,7 +16,7 @@ extension Bottle {
             description.contains(searchText) ||
             designation.contains(searchText) ||
             locale.contains(searchText) ||
-            location.contains(searchText) ||
+//            location.contains(searchText) ||
             masterVarietal.contains(searchText) ||
             String(price).contains(searchText) ||
             producer.contains(searchText) ||
@@ -50,11 +50,7 @@ extension Bottle {
     private func italyRegion() -> AppelationDescribable? {
         switch region {
         case Italy.Tuscany.title:
-            let app =  Italy.Tuscany.Appelation(rawValue: appellation)
-            if app == nil {
-                print("No mapping for Italy appellation \(appellation)")
-            }
-            return app
+            return Italy.Tuscany.Appelation(appellation)
         default:
             return nil
         }
