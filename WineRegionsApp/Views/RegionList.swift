@@ -23,6 +23,7 @@ struct RegionSection {
 
 struct RegionList: View {
     let sections = [
+        RegionSection(title: "California 🇺🇸", regions: USA.California.Appelation.allCases),
         RegionSection(title: "Italy 🇮🇹", regions: Italy.Tuscany.Appelation.allCases),
         RegionSection(title: "France 🇫🇷", regions: France.Bordeaux.Appelation.allCases)
     ]
