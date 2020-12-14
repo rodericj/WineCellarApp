@@ -17,7 +17,7 @@ struct RegionSection {
         if string.isEmpty {
             return regions
         }
-        return regions.filter { $0.description.contains(string) }
+        return regions.filter { $0.description.uppercased().contains(string.uppercased()) }
     }
 }
 
@@ -36,7 +36,7 @@ struct RegionList: View {
         }
         return sections.filter { section -> Bool in
             section.regions.filter { describable -> Bool in
-                describable.description.contains(searchText)
+                describable.description.uppercased().contains(searchText.uppercased())
             }.count > 0
         }
     }
