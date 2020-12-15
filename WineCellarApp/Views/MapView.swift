@@ -10,17 +10,46 @@ import SwiftUI
 import WineRegionLib
 import Combine
 
+extension MapTypeSelection {
+    var mapType: MKMapType {
+        switch self.title {
+        case MapTypeSelection.normal.title:
+            return .standard
+        case MapTypeSelection.topo.title:
+            return .standard
+        case MapTypeSelection.sat.title:
+            return .satellite
+        default:
+            return .standard
+        }
+    }
+}
+
 class Coordinator: NSObject, MKMapViewDelegate {
     var parent: MapView
+    let mapView: MKMapView
     private var finalRect: MKMapRect?
-
+    let tileRenderer = MKTileOverlayRenderer(tileOverlay: OpenStreetMapTileOverlay())
     private let padding: UIEdgeInsets = {
         let inset = UIScreen.main.bounds.size.width * 0.05
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }()
 
-    init(_ parent: MapView) {
+    init(_ parent: MapView, mapView: MKMapView) {
         self.parent = parent
+        self.mapView = mapView
+    }
+
+    var openStreetMapsRendererEnabled: Bool = false
+
+    func updateMapType(selection: MapTypeSelection) {
+        openStreetMapsRendererEnabled = selection.title == MapTypeSelection.topo.title
+        mapView.mapType = selection.mapType
+
+        // This seems to be required in order to get the renderers to reload
+        let annotations = mapView.overlays
+        mapView.removeOverlays(annotations)
+        mapView.addOverlays(annotations)
     }
 
     private func smoothePanRegion(mapView: MKMapView) {
@@ -66,11 +95,14 @@ class Coordinator: NSObject, MKMapViewDelegate {
             setMapRect(finalRect, on: mapView)
         }
     }
-
     let colors: [UIColor] = [.red, .orange, .yellow, .green, .blue, .purple]
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if overlay is MKPolygon {
+        // use this tile renderer when the user selects it
+        if openStreetMapsRendererEnabled {
+            return tileRenderer
+        }
 
+        if overlay is MKPolygon {
             let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
             let color = colors.randomElement()
             renderer.fillColor = color?.withAlphaComponent(0.2)
@@ -84,6 +116,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
 
 struct MapView: UIViewRepresentable {
     let mapView: MKMapView
+    @Binding var selectedMapType: MapTypeSelection
 
     private let wineRegionLib = WineRegionLib.WineRegion()
 
@@ -92,9 +125,11 @@ struct MapView: UIViewRepresentable {
         return mapView
     }
 
-    func updateUIView(_ mapView: MKMapView, context _: Context) {}
+    func updateUIView(_ mapView: MKMapView, context: Context) {
+        context.coordinator.updateMapType(selection: selectedMapType)
+    }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
+        return Coordinator(self, mapView: mapView)
     }
 }

@@ -14,6 +14,9 @@
 		5F345CE325872D6400A88EF6 /* WineCellar in Frameworks */ = {isa = PBXBuildFile; productRef = 5F345CE225872D6400A88EF6 /* WineCellar */; };
 		5F58CDCD257B61AF005C4F5A /* BottleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */; };
 		5F58CDD5257C9181005C4F5A /* WineMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDD4257C9180005C4F5A /* WineMapView.swift */; };
+		5F6B6AF525886EF80078CE7A /* OpenStreetMapTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AF425886EF80078CE7A /* OpenStreetMapTileOverlay.swift */; };
+		5F6B6AF625886EF80078CE7A /* OpenStreetMapTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AF425886EF80078CE7A /* OpenStreetMapTileOverlay.swift */; };
+		5F6B6AFE258879130078CE7A /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
 		5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835329256D96A600C2345F /* AppDelegate.swift */; };
 		5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83532B256D96A600C2345F /* SceneDelegate.swift */; };
 		5F83532E256D96A600C2345F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83532D256D96A600C2345F /* LoginView.swift */; };
@@ -78,6 +81,8 @@
 		5F345CF8258737E000A88EF6 /* WineRegionLib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WineRegionLib; path = ../WineRegionLib; sourceTree = "<group>"; };
 		5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleHelper.swift; sourceTree = "<group>"; };
 		5F58CDD4257C9180005C4F5A /* WineMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineMapView.swift; sourceTree = "<group>"; };
+		5F6B6AF425886EF80078CE7A /* OpenStreetMapTileOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenStreetMapTileOverlay.swift; sourceTree = "<group>"; };
+		5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonPanel.swift; sourceTree = "<group>"; };
 		5F835326256D96A600C2345F /* WineCellarApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WineCellarApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F835329256D96A600C2345F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F83532B256D96A600C2345F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +173,7 @@
 			children = (
 				5F345CBD2587211E00A88EF6 /* RegionNavigation.swift */,
 				5F345CC62587219500A88EF6 /* RegionList.swift */,
+				5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -184,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */,
+				5F6B6AF425886EF80078CE7A /* OpenStreetMapTileOverlay.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -553,6 +560,7 @@
 				5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */,
 				5F835386256E1DAC00C2345F /* BottleTextContent.swift in Sources */,
 				5FE9A0B42570D98D00DB353B /* SearchBar.swift in Sources */,
+				5F6B6AF525886EF80078CE7A /* OpenStreetMapTileOverlay.swift in Sources */,
 				5F83532E256D96A600C2345F /* LoginView.swift in Sources */,
 				5F58CDD5257C9181005C4F5A /* WineMapView.swift in Sources */,
 				5F58CDCD257B61AF005C4F5A /* BottleHelper.swift in Sources */,
@@ -587,8 +595,10 @@
 				5F345CBE2587211E00A88EF6 /* RegionNavigation.swift in Sources */,
 				5FFBFF69257EA27D0088BFE2 /* SceneDelegate.swift in Sources */,
 				5F345CD425872AC000A88EF6 /* SearchBar.swift in Sources */,
+				5F6B6AFE258879130078CE7A /* ExpandableButtonPanel.swift in Sources */,
 				5FFBFF6B257EA27D0088BFE2 /* ContentView.swift in Sources */,
 				5F345CC72587219500A88EF6 /* RegionList.swift in Sources */,
+				5F6B6AF625886EF80078CE7A /* OpenStreetMapTileOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
