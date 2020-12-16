@@ -25,6 +25,11 @@ extension MapTypeSelection {
     }
 }
 
+extension MKMapItem: MKAnnotation {
+    public var coordinate: CLLocationCoordinate2D { placemark.coordinate }
+    public var title: String? { name }
+}
+
 class Coordinator: NSObject, MKMapViewDelegate {
     var parent: MapView
     let mapView: MKMapView
@@ -71,6 +76,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
         }
     }
     func handleNewPolygons(_ polygons: [MKPolygon], mapView: WineMapView) {
+        mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         mapView.addOverlays(polygons)
         smoothePanRegion(mapView: mapView)
@@ -78,6 +84,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
 
     // Handles the zooming out to a common rect, before zooming to the final destination
     func handleNewMapping(features: [MapKitOverlayable], mapView: WineMapView) {
+        mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         mapView.add(features: features)
         smoothePanRegion(mapView: mapView)
@@ -93,8 +100,41 @@ class Coordinator: NSObject, MKMapViewDelegate {
         if let finalRect = finalRect {
             self.finalRect = nil
             setMapRect(finalRect, on: mapView)
+        } else if mapView.overlays.count > 0 {
+            performLocalSearch()
         }
     }
+
+    private func performLocalSearch() {
+        let request = MKLocalSearch.Request()
+        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.winery])
+        request.region = mapView.region
+        let search = MKLocalSearch(request: request)
+        search.start { [weak self]  (response, error) in
+            if let error = error {
+                debugPrint("we got an error searching locally \(error)")
+                return
+            }
+            if let response = response, let strongSelf = self {
+                let currentOverlays = strongSelf.mapView.overlays
+                let annotations = response
+                    .mapItems
+                    .filter({ mapItem in
+                        currentOverlays
+                            .compactMap { $0 as? MKPolygon }
+//                            .compactMap { $0 }
+                            .first { polygon in
+                                let polygonRenderer = MKPolygonRenderer(polygon: polygon)
+                                let mapPoint = MKMapPoint(mapItem.placemark.coordinate)
+                                let polygonPoint = polygonRenderer.point(for: mapPoint)
+                                return polygonRenderer.path.contains(polygonPoint)
+                            } != nil
+                    })
+                strongSelf.mapView.addAnnotations(annotations)
+            }
+        }
+    }
+
     let colors: [UIColor] = [.red, .orange, .yellow, .green, .blue, .purple]
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         // use this tile renderer when the user selects it
