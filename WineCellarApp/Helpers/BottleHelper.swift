@@ -59,7 +59,7 @@ extension Bottle {
     private func frenchRegion() -> AppelationDescribable? {
         switch region {
         case France.Bordeaux.title:
-            let bordeaux = France.Bordeaux.Medoc.Appelation(rawValue: appellation)
+            let bordeaux = France.Bordeaux.Appelation(rawValue: appellation)
             print(appellation)
 //            assert(bordeaux != nil, "must define \(appellation)")
             return bordeaux

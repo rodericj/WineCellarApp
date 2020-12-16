@@ -17,10 +17,11 @@ extension Bottle {
 struct BottleDetail: View {
     let bottle: Bottle?
     let wineMapView: WineMapView
+    @State var selectedMapType: MapTypeSelection = .normal
 
     var body: some View {
         VStack (alignment: .leading) {
-            MapView(mapView: wineMapView)
+            MapView(mapView: wineMapView, selectedMapType: $selectedMapType)
                 .onAppear(perform: {
                     if let region = bottle?.libAppelation {
                         wineMapView.showAppelationRegions([region])
