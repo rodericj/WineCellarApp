@@ -105,32 +105,16 @@ class Coordinator: NSObject, MKMapViewDelegate {
         }
     }
 
+
     private func performLocalSearch() {
-        let request = MKLocalSearch.Request()
-        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.winery])
-        request.region = mapView.region
-        let search = MKLocalSearch(request: request)
+        let search = currentSearch
         search.start { [weak self]  (response, error) in
             if let error = error {
                 debugPrint("we got an error searching locally \(error)")
                 return
             }
             if let response = response, let strongSelf = self {
-                let currentOverlays = strongSelf.mapView.overlays
-                let annotations = response
-                    .mapItems
-                    .filter({ mapItem in
-                        currentOverlays
-                            .compactMap { $0 as? MKPolygon }
-//                            .compactMap { $0 }
-                            .first { polygon in
-                                let polygonRenderer = MKPolygonRenderer(polygon: polygon)
-                                let mapPoint = MKMapPoint(mapItem.placemark.coordinate)
-                                let polygonPoint = polygonRenderer.point(for: mapPoint)
-                                return polygonRenderer.path.contains(polygonPoint)
-                            } != nil
-                    })
-                strongSelf.mapView.addAnnotations(annotations)
+                strongSelf.handleSearch(response: response)
             }
         }
     }
@@ -151,6 +135,36 @@ class Coordinator: NSObject, MKMapViewDelegate {
             return renderer
         }
         return MKOverlayRenderer()
+    }
+}
+
+extension MKPolygon {
+    func contains(mapPoint: MKMapPoint) -> Bool {
+        let polygonRenderer = MKPolygonRenderer(polygon: self)
+        let polygonPoint = polygonRenderer.point(for: mapPoint)
+        return polygonRenderer.path.contains(polygonPoint)
+    }
+}
+extension Coordinator {
+    var currentSearch: MKLocalSearch {
+        let request = MKLocalSearch.Request()
+        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.winery])
+        request.region = mapView.region
+        return MKLocalSearch(request: request)
+    }
+
+    private func handleSearch(response: MKLocalSearch.Response) {
+        let currentOverlays = mapView.overlays
+        let annotations = response
+            .mapItems
+            .filter({ mapItem in
+                currentOverlays
+                    .compactMap { $0 as? MKPolygon }
+                    .first { polygon in
+                        polygon.contains(mapPoint: MKMapPoint(mapItem.placemark.coordinate))
+                    } != nil
+            })
+        mapView.addAnnotations(annotations)
     }
 }
 
