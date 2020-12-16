@@ -29,7 +29,7 @@ class Coordinator: NSObject, MKMapViewDelegate {
     var parent: MapView
     let mapView: MKMapView
     private var finalRect: MKMapRect?
-    let tileRenderer = MKTileOverlayRenderer(tileOverlay: OpenStreetMapTileOverlay())
+    let tileRenderer = MKTileOverlayRenderer(tileOverlay: ExternalTileOverlay(source: .openstreetMap))
     private let padding: UIEdgeInsets = {
         let inset = UIScreen.main.bounds.size.width * 0.05
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
