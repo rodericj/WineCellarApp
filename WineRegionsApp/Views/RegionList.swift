@@ -21,43 +21,69 @@ struct RegionSection {
     }
 }
 
-struct RegionList: View {
-    let sections = [
-        RegionSection(title: "California 🇺🇸", regions: USA.California.Appelation.allCases),
-        RegionSection(title: "Italy 🇮🇹", regions: Italy.Tuscany.Appelation.allCases),
-        RegionSection(title: "France 🇫🇷", regions: France.Bordeaux.Appelation.allCases)
-    ]
-    @State var searchText: String = ""
+struct NewRegionLineItem: Identifiable {
+    var id = UUID()
+    var name: String
+    var children : [NewRegionLineItem]?
+    var describable: AppelationDescribable?
+}
 
-
-    var filteredSection: [RegionSection] {
-        if searchText.isEmpty {
-            return sections
-        }
-        return sections.filter { section -> Bool in
-            section.regions.filter { describable -> Bool in
-                describable.description.uppercased().contains(searchText.uppercased())
-            }.count > 0
+extension France.Bordeaux {
+    static var asNewRegionLineItems: [NewRegionLineItem] {
+        Appelation.allCases.map { appelation in
+            NewRegionLineItem(name: appelation.description, children: nil, describable: appelation)
         }
     }
+}
+
+extension USA.California {
+    static var asNewRegionLineItems: [NewRegionLineItem] {
+
+        return [
+            NewRegionLineItem(name: "Napa",
+                              children: Napa.Appelation.allCases.map { appelation in
+                                NewRegionLineItem(name: appelation.description, children: nil, describable: appelation)
+                              }),
+            NewRegionLineItem(name: "Sonoma",
+                              children: Sonoma.Appelation.allCases.map { appelation in
+                                NewRegionLineItem(name: appelation.description, children: nil, describable: appelation)
+                              }),
+            NewRegionLineItem(name: "Central Coast",
+                              children: CentralCoast.Appelation.allCases.map { appelation in
+                                NewRegionLineItem(name: appelation.description, children: nil, describable: appelation)
+                              })
+        ]
+    }
+}
+
+extension Italy.Tuscany {
+    static var asNewRegionLineItems: [NewRegionLineItem] {
+        Appelation.allCases.map { appelation in
+            NewRegionLineItem(name: appelation.description, children: nil, describable: appelation)
+        }
+    }
+}
+
+
+
+struct RegionList: View {
+    let newRegionSections = [
+        NewRegionLineItem(name: "California 🇺🇸",
+                          children: USA.California.asNewRegionLineItems),
+        NewRegionLineItem(name: "Italy 🇮🇹",
+                          children: Italy.Tuscany.asNewRegionLineItems),
+        NewRegionLineItem(name: "France 🇫🇷",
+                          children: France.Bordeaux.asNewRegionLineItems)
+    ]
 
     let lib: WineRegionLib.WineRegion
 
     var body: some View {
-        ScrollView {
-            SearchBar(placeholder: "Search", text: $searchText)
-                .padding()
-            LazyVStack(content: {
-                ForEach(filteredSection, id: \.title) { section in
-                    HStack {
-                        Text(section.title).font(.title)
-                        Spacer()
-                    }.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
-                    ForEach(section.filtered(string: searchText), id: \.description) { region in
-                        RegionRow(lib: lib, region: region)
-                    }
-                }
-            })
+        List(newRegionSections, children: \.children){
+            item in
+            HStack{
+                RegionRow(lib: lib, region: item.describable, title: item.name)
+            }
         }
     }
 }
@@ -65,16 +91,23 @@ struct RegionList: View {
 struct RegionRow: View {
     let lib: WineRegionLib.WineRegion
 
-    let region: AppelationDescribable
+    let region: AppelationDescribable?
+    let title: String
     var body: some View {
-        Button(action: {
-            lib.getRegions(regions: [region])
-        }) {
-            HStack {
-                Text(region.description)
-                    .font(.title2)
-                Spacer()
-            }.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
+
+        if region != nil {
+                Button(action: {
+                    lib.getRegions(regions: [region!])
+                }) {
+                    HStack {
+                        Text(region!.description)
+                            .font(.title2)
+                        Spacer()
+                    }.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
+                }
+        } else {
+            Text(title)
+                .font(.title)
         }
     }
 }
