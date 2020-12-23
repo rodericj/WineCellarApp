@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5F08FA5C257EA3AB00D4DBF2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapView.swift */; };
+		5F0CC61D2592692D00DE2222 /* newCalifornia.json in Resources */ = {isa = PBXBuildFile; fileRef = 5F0CC61C2592692D00DE2222 /* newCalifornia.json */; };
 		5F2AB7A02589E65B00E776D2 /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
 		5F345CBE2587211E00A88EF6 /* RegionNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F345CBD2587211E00A88EF6 /* RegionNavigation.swift */; };
 		5F345CC72587219500A88EF6 /* RegionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F345CC62587219500A88EF6 /* RegionList.swift */; };
@@ -78,6 +79,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5F0CC61C2592692D00DE2222 /* newCalifornia.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = newCalifornia.json; path = media/newCalifornia.json; sourceTree = "<group>"; };
 		5F345CBD2587211E00A88EF6 /* RegionNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionNavigation.swift; sourceTree = "<group>"; };
 		5F345CC62587219500A88EF6 /* RegionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionList.swift; sourceTree = "<group>"; };
 		5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleHelper.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 		5F83531D256D96A600C2345F = {
 			isa = PBXGroup;
 			children = (
+				5F0CC61C2592692D00DE2222 /* newCalifornia.json */,
 				5F835328256D96A600C2345F /* WineCellarApp */,
 				5F83533F256D96AA00C2345F /* WineCellarAppTests */,
 				5F83534A256D96AA00C2345F /* WineCellarAppUITests */,
@@ -504,6 +507,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F0CC61D2592692D00DE2222 /* newCalifornia.json in Resources */,
 				5F835336256D96AA00C2345F /* LaunchScreen.storyboard in Resources */,
 				5F835333256D96AA00C2345F /* Preview Assets.xcassets in Resources */,
 				5F835330256D96AA00C2345F /* Assets.xcassets in Resources */,

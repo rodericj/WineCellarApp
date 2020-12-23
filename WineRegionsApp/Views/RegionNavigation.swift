@@ -7,9 +7,9 @@
 
 import SwiftUI
 import WineRegionLib
-
+import Combine
 struct RegionNavigation: View {
-    private let wineRegionLib = WineRegionLib.WineRegion()
+    @EnvironmentObject private var wineRegionLib: WineRegion
 
     var body: some View {
         NavigationView {
