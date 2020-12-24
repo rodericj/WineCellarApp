@@ -29,20 +29,16 @@ struct MakeView: View {
     }
 }
 
+class WineTreeWrapper: ObservableObject {
+    var tree: [RegionJson] = []
+}
 struct RegionList: View {
     let lib: WineRegion
+    @EnvironmentObject var treeWrapper: WineTreeWrapper
     var body: some View {
-        MakeView {
-            switch lib.regionsTree {
-            case .regions(let regions):
-
-                return AnyView(List(regions, children: \.children){ item in
-                    HStack{
-                        RegionRow(lib: lib, region: item, title: item.title)
-                    }
-                })
-            default:
-                return AnyView(Text("Loading"))
+        List(treeWrapper.tree, children: \.children){ item in
+            HStack{
+                RegionRow(lib: lib, region: item, title: item.title)
             }
         }
     }

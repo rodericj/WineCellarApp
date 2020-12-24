@@ -10,7 +10,7 @@ import WineRegionLib
 import Combine
 struct RegionNavigation: View {
     @EnvironmentObject private var wineRegionLib: WineRegion
-
+    let wineMapView: WineMapView
     var body: some View {
         NavigationView {
             RegionList(lib: wineRegionLib)
@@ -18,7 +18,7 @@ struct RegionNavigation: View {
                 .navigationViewStyle(StackNavigationViewStyle())
 
             // Detail view
-            ContentView(wineMapView: WineMapView(wineRegionLib: wineRegionLib),
+            ContentView(wineMapView: wineMapView,
                         viewModel: wineRegionLib)
         }
     }
@@ -26,6 +26,6 @@ struct RegionNavigation: View {
 
 struct RegionNavigation_Previews: PreviewProvider {
     static var previews: some View {
-        RegionNavigation()
+        RegionNavigation(wineMapView: WineMapView(wineRegionLib: WineRegion()))
     }
 }
