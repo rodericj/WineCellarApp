@@ -27,23 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = RegionNavigation(wineMapView: wineMapView!).environmentObject(wineRegionLib).environmentObject(treeWrapper)
-        do {
-            try wineRegionLib.getRegionTree()
-        }
-        catch {
-            print("error fetching region tree \(error)")
-        }
-        cancellable = wineRegionLib.$regionsTree.sink { result in
-            switch result {
 
-            case .regions(let tree):
-                self.treeWrapper.tree = tree
-            case .loading(_):
-                print("loading from scene delegate")
-            case .none:
-                print("no state for the tree")
-            }
-        }
+        wineRegionLib.getRegionTree()
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -51,6 +36,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.rootViewController = UIHostingController(rootView: contentView)
             self.window = window
             window.makeKeyAndVisible()
+        }
+
+        cancellable = wineRegionLib.$regionsTree
+            .receive(on: DispatchQueue.main)
+            .sink { result in
+            switch result {
+            case .regions(let tree):
+                self.treeWrapper.tree = tree
+            case .loading(let progress):
+                print("loading from scene delegate \(progress)")
+            case .none:
+                print("no state for the tree")
+            case .error(let error):
+                print("Error fetching regions tree, probably need to bubble this up \(error)")
+            }
         }
     }
 

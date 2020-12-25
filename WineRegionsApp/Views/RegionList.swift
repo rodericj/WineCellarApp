@@ -8,18 +8,6 @@
 import SwiftUI
 import WineRegionLib
 
-struct RegionSection {
-    let title: String
-    let regions: [AppelationDescribable]
-    
-    func filtered(string: String) -> [AppelationDescribable]{
-        print(regions)
-        if string.isEmpty {
-            return regions
-        }
-        return regions.filter { $0.description.uppercased().contains(string.uppercased()) }
-    }
-}
 
 
 struct MakeView: View {
@@ -30,7 +18,7 @@ struct MakeView: View {
 }
 
 class WineTreeWrapper: ObservableObject {
-    var tree: [RegionJson] = []
+    @Published var tree: [RegionJson] = []
 }
 
 struct RegionList: View {
