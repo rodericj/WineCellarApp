@@ -32,21 +32,21 @@ struct MakeView: View {
 class WineTreeWrapper: ObservableObject {
     var tree: [RegionJson] = []
 }
+
 struct RegionList: View {
     let lib: WineRegion
     @EnvironmentObject var treeWrapper: WineTreeWrapper
     var body: some View {
         List(treeWrapper.tree, children: \.children){ item in
             HStack{
-                RegionRow(lib: lib, region: item, title: item.title)
+                RegionRow(region: item, title: item.title)
             }
         }
     }
 }
 
 struct RegionRow: View {
-    let lib: WineRegionLib.WineRegion
-    
+    @EnvironmentObject var lib: WineRegion
     let region: RegionJson
     let title: String
     var body: some View {

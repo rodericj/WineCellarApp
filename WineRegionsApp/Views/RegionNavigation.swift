@@ -20,6 +20,7 @@ struct RegionNavigation: View {
             // Detail view
             ContentView(wineMapView: wineMapView,
                         viewModel: wineRegionLib)
+                .navigationBarHidden(true)
         }
     }
 }
