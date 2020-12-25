@@ -61,7 +61,7 @@
         {
             "title": "North Coast",
             "ava_id": " north_coast",
-            "url": "https://raw.githubusercontent.com/rodericj/ava/master/avas/ north_coast.geojson",
+            "url": "https://raw.githubusercontent.com/rodericj/ava/master/avas/north_coast.geojson",
             "children": [
                 {
                     "title": "Alexander Valley",
