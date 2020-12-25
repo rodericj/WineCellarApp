@@ -172,10 +172,9 @@ struct MapView: UIViewRepresentable {
     let mapView: MKMapView
     @Binding var selectedMapType: MapTypeSelection
 
-    private let wineRegionLib = WineRegionLib.WineRegion() // TODO use the environment variable one if there is one i think there should be. If we don't use the environment variable we won't get the updates we want
+    @EnvironmentObject var wineRegionLib: WineRegion
 
     func makeUIView(context: Context) -> MKMapView {
-
         mapView.delegate = context.coordinator
         return mapView
     }
