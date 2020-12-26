@@ -43,7 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .sink { result in
             switch result {
             case .regions(let tree):
-                self.treeWrapper.tree = tree
+                self.treeWrapper.tree = tree.sorted { $0.title < $1.title } 
             case .loading(let progress):
                 print("loading from scene delegate \(progress)")
             case .none:
