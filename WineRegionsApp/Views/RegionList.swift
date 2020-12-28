@@ -35,17 +35,22 @@ struct RegionList: View {
 
 struct RegionRow: View {
     @EnvironmentObject var lib: WineRegion
+    @EnvironmentObject var wineMapView: WineMapView
     let region: RegionJson
     let title: String
-    var body: some View {
+    @State private var isShowingDetailView = false
 
-        Button(action: {
-            lib.loadMap(for: region)
-        }) {
+    var body: some View {
+        NavigationLink(destination: ContentView(wineMapView: wineMapView, viewModel: lib),
+                       isActive: $isShowingDetailView) {
             HStack {
                 Text(region.title).font(.title3)
                 Spacer()
-            }.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
+            }.onTapGesture {
+                lib.loadMap(for: region)
+                isShowingDetailView = true
+            }
+            .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
         }
     }
 }

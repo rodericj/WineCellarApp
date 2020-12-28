@@ -9,7 +9,7 @@ import Combine
 import MapKit
 import WineRegionLib
 
-class WineMapView: MKMapView {
+class WineMapView: MKMapView, ObservableObject {
 
     var cancellable: AnyCancellable? = nil
     let wineRegionLib: WineRegion
