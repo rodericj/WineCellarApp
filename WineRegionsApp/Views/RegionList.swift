@@ -25,7 +25,7 @@ struct RegionList: View {
     let lib: WineRegion
     @EnvironmentObject var treeWrapper: WineTreeWrapper
     var body: some View {
-        List(treeWrapper.tree, children: \.children){ item in
+        List(treeWrapper.tree, children: \.children) { item in
             HStack{
                 RegionRow(region: item, title: item.title)
             }
