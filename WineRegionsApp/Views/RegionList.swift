@@ -44,7 +44,7 @@ struct RegionRow: View {
         NavigationLink(destination: ContentView(wineMapView: wineMapView, viewModel: lib),
                        isActive: $isShowingDetailView) {
             HStack {
-                Text(region.title).font(.title3)
+                Text(region.title.capitalized).font(.title3)
                 Spacer()
             }.onTapGesture {
                 lib.loadMap(for: region)
