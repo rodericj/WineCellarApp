@@ -8,8 +8,6 @@
 import SwiftUI
 import WineRegionLib
 
-
-
 struct MakeView: View {
     let make: () -> AnyView
     var body: some View {
@@ -23,9 +21,16 @@ class WineTreeWrapper: ObservableObject {
 
 struct RegionList: View {
     let lib: WineRegion
+    @State var searchText: String = ""
+    var regionsResults: [RegionJson] {
+        return treeWrapper.tree.filter(searchString: searchText)
+    }
     @EnvironmentObject var treeWrapper: WineTreeWrapper
     var body: some View {
-        List(treeWrapper.tree, children: \.children) { item in
+        SearchBar(placeholder: "Search", text: $searchText)
+            .padding()
+
+        List(regionsResults, children: \.children) { item in
             HStack{
                 RegionRow(region: item, title: item.title)
             }
