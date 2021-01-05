@@ -17,6 +17,7 @@ struct MakeView: View {
 
 class WineTreeWrapper: ObservableObject {
     @Published var tree: [RegionJson] = []
+    @Published var loadingProgress: Float = 0
 }
 
 struct RegionList: View {
@@ -25,15 +26,15 @@ struct RegionList: View {
     var regionsResults: [RegionJson] {
         return treeWrapper.tree.filter(searchString: searchText)
     }
+
     @EnvironmentObject var treeWrapper: WineTreeWrapper
+
     var body: some View {
         SearchBar(placeholder: "Search", text: $searchText)
             .padding()
 
         List(regionsResults, children: \.children) { item in
-            HStack{
-                RegionRow(region: item, title: item.title)
-            }
+            RegionRow(region: item, title: item.title)
         }
     }
 }

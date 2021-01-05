@@ -28,17 +28,13 @@ struct ContentView: View {
     let wineMapView: WineMapView
     @ObservedObject var viewModel: WineRegion
     @State var selectedMapType: MapTypeSelection = .normal
+
     var body: some View {
-        ZStack {
-            VStack {
-                if viewModel.loadingValue > 0 && viewModel.loadingValue < 1 {
-                    ProgressView(value: viewModel.loadingValue)
-                }
+            ZStack {
                 MapView(mapView: wineMapView, selectedMapType: $selectedMapType)
                     .edgesIgnoringSafeArea(.all)
+                MapSelectionControl(selectedMapType: $selectedMapType)
             }
-            MapSelectionControl(selectedMapType: $selectedMapType)
-        }
     }
 }
 

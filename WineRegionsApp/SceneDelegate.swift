@@ -15,7 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let wineRegionLib = WineRegion()
     let treeWrapper = WineTreeWrapper()
-    var cancellable: AnyCancellable? = nil
+    var treeCancellable: AnyCancellable? = nil
+    var mapsCancellable: AnyCancellable? = nil
     lazy var wineMapView = WineMapView(wineRegionLib: wineRegionLib)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -37,17 +38,41 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
-        cancellable = wineRegionLib.$regionsTree
+
+
+        mapsCancellable = wineRegionLib.$regionMaps
+            .receive(on: DispatchQueue.main)
+            .sink { result in
+            switch result {
+            case .regions:
+                self.treeWrapper.loadingProgress = 0
+            case .loading(let progress):
+                self.treeWrapper.loadingProgress = progress
+                print("loading from scene delegate \(progress)")
+            case .none:
+                self.treeWrapper.loadingProgress = 0
+                print("no state for the tree")
+            case .error(let error):
+                self.treeWrapper.loadingProgress = 0
+                print("Error fetching regions tree, probably need to bubble this up \(error)")
+            }
+        }
+
+        treeCancellable = wineRegionLib.$regionsTree
             .receive(on: DispatchQueue.main)
             .sink { result in
             switch result {
             case .regions(let tree):
                 self.treeWrapper.tree = tree.sorted { $0.title < $1.title } 
+                self.treeWrapper.loadingProgress = 0
             case .loading(let progress):
+                self.treeWrapper.loadingProgress = progress
                 print("loading from scene delegate \(progress)")
             case .none:
+                self.treeWrapper.loadingProgress = 0
                 print("no state for the tree")
             case .error(let error):
+                self.treeWrapper.loadingProgress = 0
                 print("Error fetching regions tree, probably need to bubble this up \(error)")
             }
         }
