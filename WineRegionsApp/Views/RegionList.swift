@@ -32,7 +32,6 @@ struct RegionList: View {
     var body: some View {
         SearchBar(placeholder: "Search", text: $searchText)
             .padding()
-
         List(regionsResults, children: \.children) { item in
             RegionRow(region: item, title: item.title)
         }
@@ -54,7 +53,9 @@ struct RegionRow: View {
                                isActive: $isShowingDetailView) {
                     EmptyView()
                 }.hidden()
-            }.onTapGesture {
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
                 lib.loadMap(for: region)
                 isShowingDetailView = true
             }
