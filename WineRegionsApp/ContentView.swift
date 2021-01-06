@@ -17,8 +17,11 @@ struct ContentView: View {
         ZStack {
             MapView(mapView: wineMapView, selectedMapType: $selectedMapType)
                 .edgesIgnoringSafeArea(.all)
-            MapSelectionControl(selectedMapType: $selectedMapType)
-            SearchControl()
+            VStack {
+                Spacer()
+                MapSelectionControl(selectedMapType: $selectedMapType)
+                SearchControl()
+            }.padding() 
         }
     }
 }

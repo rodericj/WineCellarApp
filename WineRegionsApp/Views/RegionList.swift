@@ -31,7 +31,6 @@ struct RegionList: View {
 
     var body: some View {
         SearchBar(placeholder: "Search", text: $searchText)
-            .padding()
         List(regionsResults, children: \.children) { item in
             RegionRow(region: item, title: item.title)
         }

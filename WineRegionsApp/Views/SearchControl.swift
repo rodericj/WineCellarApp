@@ -16,7 +16,6 @@ struct SearchControl: View {
                 Spacer()
                 if isShowingSearch {
                     SearchBar(placeholder: "Search for Chateaux", text: $searchText)
-                        .padding()
                 }
                 Button(action: {
                     print("Button was tapped")
@@ -29,7 +28,6 @@ struct SearchControl: View {
                 .accentColor(.primary)
                 .padding()
             }
-            Spacer()
         }
     }
 }
