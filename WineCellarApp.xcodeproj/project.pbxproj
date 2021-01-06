@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F017AA02595A62300AE92A8 /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5F017A9F2595A62300AE92A8 /* WineRegionLib */; };
 		5F017AA92595A71600AE92A8 /* WineCellar in Frameworks */ = {isa = PBXBuildFile; productRef = 5F017AA82595A71600AE92A8 /* WineCellar */; };
+		5F043E9625A59A9700100D5C /* SearchControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F043E9525A59A9700100D5C /* SearchControl.swift */; };
 		5F08FA5C257EA3AB00D4DBF2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapView.swift */; };
 		5F2AB7A02589E65B00E776D2 /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
 		5F345CBE2587211E00A88EF6 /* RegionNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F345CBD2587211E00A88EF6 /* RegionNavigation.swift */; };
@@ -78,6 +79,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5F043E9525A59A9700100D5C /* SearchControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControl.swift; sourceTree = "<group>"; };
 		5F345CBD2587211E00A88EF6 /* RegionNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionNavigation.swift; sourceTree = "<group>"; };
 		5F345CC62587219500A88EF6 /* RegionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionList.swift; sourceTree = "<group>"; };
 		5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleHelper.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				5F345CBD2587211E00A88EF6 /* RegionNavigation.swift */,
 				5F345CC62587219500A88EF6 /* RegionList.swift */,
 				5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */,
+				5F043E9525A59A9700100D5C /* SearchControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				5F345CBE2587211E00A88EF6 /* RegionNavigation.swift in Sources */,
 				5FFBFF69257EA27D0088BFE2 /* SceneDelegate.swift in Sources */,
 				5F345CD425872AC000A88EF6 /* SearchBar.swift in Sources */,
+				5F043E9625A59A9700100D5C /* SearchControl.swift in Sources */,
 				5F6B6AFE258879130078CE7A /* ExpandableButtonPanel.swift in Sources */,
 				5FFBFF6B257EA27D0088BFE2 /* ContentView.swift in Sources */,
 				5F345CC72587219500A88EF6 /* RegionList.swift in Sources */,

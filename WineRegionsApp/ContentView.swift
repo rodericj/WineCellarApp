@@ -8,33 +8,18 @@
 import SwiftUI
 import WineRegionLib
 
-struct MapSelectionControl: View {
-    @Binding var selectedMapType: MapTypeSelection
-    var body: some View {
-        HStack {
-            Spacer()
-            VStack {
-                Spacer()
-                ExpandableButtonPanel(primaryItem: $selectedMapType,
-                                      secondaryItems: [.sat, .topo, .normal])
-                    .padding()
-
-            }
-        }
-    }
-}
-
 struct ContentView: View {
     let wineMapView: WineMapView
     @ObservedObject var viewModel: WineRegion
     @State var selectedMapType: MapTypeSelection = .normal
 
     var body: some View {
-            ZStack {
-                MapView(mapView: wineMapView, selectedMapType: $selectedMapType)
-                    .edgesIgnoringSafeArea(.all)
-                MapSelectionControl(selectedMapType: $selectedMapType)
-            }
+        ZStack {
+            MapView(mapView: wineMapView, selectedMapType: $selectedMapType)
+                .edgesIgnoringSafeArea(.all)
+            MapSelectionControl(selectedMapType: $selectedMapType)
+            SearchControl()
+        }
     }
 }
 

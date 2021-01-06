@@ -7,6 +7,22 @@
 
 import SwiftUI
 
+struct MapSelectionControl: View {
+    @Binding var selectedMapType: MapTypeSelection
+    var body: some View {
+        HStack {
+            Spacer()
+            VStack {
+                Spacer()
+                ExpandableButtonPanel(primaryItem: $selectedMapType,
+                                      secondaryItems: [.sat, .topo, .normal])
+                    .padding()
+
+            }
+        }
+    }
+}
+
 struct MapTypeSelection: Identifiable {
     static let sat = MapTypeSelection(title: "satelite", image: Image("SateliteMap"))
     static let topo = MapTypeSelection(title: "topo", image: Image("OpenStreetMap"))
