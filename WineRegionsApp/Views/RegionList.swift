@@ -47,18 +47,19 @@ struct RegionRow: View {
     @State private var isShowingDetailView = false
 
     var body: some View {
-        NavigationLink(destination: ContentView(wineMapView: wineMapView, viewModel: lib),
-                       isActive: $isShowingDetailView) {
             HStack {
                 Text(region.title.capitalized).font(.title3)
                 Spacer()
+                NavigationLink(destination: ContentView(wineMapView: wineMapView, viewModel: lib),
+                               isActive: $isShowingDetailView) {
+                    EmptyView()
+                }.hidden()
             }.onTapGesture {
                 lib.loadMap(for: region)
                 isShowingDetailView = true
             }
             .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
         }
-    }
 }
 
 struct RegionList_Previews: PreviewProvider {
