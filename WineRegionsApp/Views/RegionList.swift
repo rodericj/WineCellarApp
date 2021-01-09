@@ -15,10 +15,6 @@ struct MakeView: View {
     }
 }
 
-class WineTreeWrapper: ObservableObject {
-    @Published var tree: [RegionJson] = []
-    @Published var loadingProgress: Float = 0
-}
 
 struct RegionList: View {
     let lib: WineRegion

@@ -10,25 +10,25 @@ import SwiftUI
 struct SearchBar: View {
     var placeholder: String
 
-    @EnvironmentObject var chateauxSearch: ChateauxSearch
+    @EnvironmentObject var dataStore: DataStore
 
     var body: some View {
         HStack {
-            TextField(placeholder, text: $chateauxSearch.searchString)
+            TextField(placeholder, text: $dataStore.chateauxSearch.searchString)
                 .padding(.all, 15)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.primary.opacity(0.2), lineWidth: 5)
                 )
 
-            if chateauxSearch.searchString != "" {
+            if dataStore.chateauxSearch.searchString != "" {
                 Image(systemName: "xmark.circle.fill")
                     .imageScale(.medium)
                     .foregroundColor(Color(.systemGray3))
                     .padding(3)
                     .onTapGesture {
                         withAnimation {
-                            self.chateauxSearch.searchString = ""
+                            self.dataStore.chateauxSearch.searchString = ""
                         }
                     }
             }
