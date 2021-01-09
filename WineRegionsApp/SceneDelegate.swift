@@ -12,37 +12,78 @@ import WineRegionLib
 
 class DataStore: ObservableObject {
     var searchCancellable: AnyCancellable? = nil
+    var treeCancellable: AnyCancellable? = nil
+    var mapsCancellable: AnyCancellable? = nil
+
     var chateauxSearch = ChateauxSearch()
+    let wineRegionLib = WineRegion()
 
     @Published var regionTree: [RegionJson] = []
     @Published var regionTreeLoadingProgress: Float = 0
+
+    init() {
+        mapsCancellable = wineRegionLib.$regionMaps
+            .receive(on: DispatchQueue.main)
+            .sink { result in
+            switch result {
+            case .regions:
+                self.regionTreeLoadingProgress = 0
+            case .loading(let progress):
+                self.regionTreeLoadingProgress = progress
+                print("loading from scene delegate \(progress)")
+            case .none:
+                self.regionTreeLoadingProgress = 0
+                print("no state for the tree")
+            case let .error(error, string):
+                self.regionTreeLoadingProgress = 0
+                print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No error")")
+            }
+        }
+
+        treeCancellable = wineRegionLib.$regionsTree
+            .receive(on: DispatchQueue.main)
+            .sink { result in
+            switch result {
+            case .regions(let tree):
+                self.regionTree = tree.sorted { $0.title < $1.title }
+                self.regionTreeLoadingProgress = 0
+            case .loading(let progress):
+                self.regionTreeLoadingProgress = progress
+                print("loading from scene delegate \(progress)")
+            case .none:
+                self.regionTreeLoadingProgress = 0
+                print("no state for the tree")
+            case .error(let error, let string):
+                self.regionTreeLoadingProgress = 0
+                print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No Error")")
+            }
+        }
+    }
 }
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    let wineRegionLib = WineRegion()
-    var treeCancellable: AnyCancellable? = nil
-    var mapsCancellable: AnyCancellable? = nil
+
     let dataStore = DataStore()
-
-    lazy var wineMapView = WineMapView(wineRegionLib: wineRegionLib)
-
+    var wineMapView: WineMapView?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        wineMapView = WineMapView(wineRegionLib: wineRegionLib)
+        wineMapView = WineMapView(wineRegionLib: dataStore.wineRegionLib)
+        guard let wineMapView = wineMapView else { return }
+
         wineMapView.translatesAutoresizingMaskIntoConstraints = false
         // Create the SwiftUI view that provides the window contents.
         let contentView = RegionNavigation(wineMapView: wineMapView)
-            .environmentObject(wineRegionLib)
+            .environmentObject(dataStore.wineRegionLib)
             .environmentObject(wineMapView)
             .environmentObject(dataStore)
 
-        wineRegionLib.getRegionTree()
+        dataStore.wineRegionLib.getRegionTree()
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -56,44 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .debounce(for: 0.2, scheduler: DispatchQueue.main)
             .sink { string in
             print("new search string \(string)")
-                self.wineMapView.performLocalSearch(query: string)
-        }
-
-        mapsCancellable = wineRegionLib.$regionMaps
-            .receive(on: DispatchQueue.main)
-            .sink { result in
-            switch result {
-            case .regions:
-                self.dataStore.regionTreeLoadingProgress = 0
-            case .loading(let progress):
-                self.dataStore.regionTreeLoadingProgress = progress
-                print("loading from scene delegate \(progress)")
-            case .none:
-                self.dataStore.regionTreeLoadingProgress = 0
-                print("no state for the tree")
-            case let .error(error, string):
-                self.dataStore.regionTreeLoadingProgress = 0
-                print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No error")")
-            }
-        }
-
-        treeCancellable = wineRegionLib.$regionsTree
-            .receive(on: DispatchQueue.main)
-            .sink { result in
-            switch result {
-            case .regions(let tree):
-                self.dataStore.regionTree = tree.sorted { $0.title < $1.title }
-                self.dataStore.regionTreeLoadingProgress = 0
-            case .loading(let progress):
-                self.dataStore.regionTreeLoadingProgress = progress
-                print("loading from scene delegate \(progress)")
-            case .none:
-                self.dataStore.regionTreeLoadingProgress = 0
-                print("no state for the tree")
-            case .error(let error, let string):
-                self.dataStore.regionTreeLoadingProgress = 0
-                print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No Error")")
-            }
+                self.wineMapView?.performLocalSearch(query: string)
         }
     }
 
