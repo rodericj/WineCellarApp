@@ -77,7 +77,6 @@ class DataStore: ObservableObject {
         if let query = query, !query.isEmpty {
             request.naturalLanguageQuery = query
         }
-//        removeAnnotations(annotations)
         request.region = region
         currentSearch = MKLocalSearch(request: request)
         currentSearch?.start { [weak self]  (response, error) in

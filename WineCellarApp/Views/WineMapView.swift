@@ -79,6 +79,7 @@ class WineMapView: MKMapView, ObservableObject {
         // We need to observe changes on the data store at this point
         annotationsCancellable = dataStore.$mapItems.sink { mapItems in
             print("got map items \(mapItems.count)")
+            self.removeAnnotations(self.annotations)
             let newAnnotations = mapItems.filter({ mapItem in
                 self.overlays
                     .compactMap { $0 as? MKPolygon }
