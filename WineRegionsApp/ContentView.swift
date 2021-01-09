@@ -12,7 +12,6 @@ struct ContentView: View {
     let wineMapView: WineMapView
     @ObservedObject var viewModel: WineRegion
     @State var selectedMapType: MapTypeSelection = .normal
-
     var body: some View {
         ZStack {
             MapView(mapView: wineMapView, selectedMapType: $selectedMapType)
@@ -20,7 +19,7 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 MapSelectionControl(selectedMapType: $selectedMapType)
-                SearchControl()
+                ChateauxSearchControl()
             }.padding() 
         }
     }

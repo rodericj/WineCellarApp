@@ -22,7 +22,7 @@ struct WineBottleList: View {
     var body: some View {
         VStack {
             ScrollView {
-                SearchBar(placeholder: "Search", text: $searchText)
+                SearchBar(placeholder: "Search")
                     .padding()
                 LazyVStack(content: {
                     ForEach(bottles, id: \.wineID) { bottle in

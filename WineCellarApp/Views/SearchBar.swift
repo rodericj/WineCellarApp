@@ -10,36 +10,34 @@ import SwiftUI
 struct SearchBar: View {
     var placeholder: String
 
-    @Binding var text: String
+    @EnvironmentObject var chateauxSearch: ChateauxSearch
 
     var body: some View {
         HStack {
-            TextField(placeholder, text: $text)
+            TextField(placeholder, text: $chateauxSearch.searchString)
                 .padding(.all, 15)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.primary.opacity(0.2), lineWidth: 5)
                 )
 
-            if text != "" {
+            if chateauxSearch.searchString != "" {
                 Image(systemName: "xmark.circle.fill")
                     .imageScale(.medium)
                     .foregroundColor(Color(.systemGray3))
                     .padding(3)
                     .onTapGesture {
                         withAnimation {
-                            self.text = ""
+                            self.chateauxSearch.searchString = ""
                         }
                     }
             }
-
         }
     }
 }
 
 struct SearchBar_Previews: PreviewProvider {
-
     static var previews: some View {
-        SearchBar(placeholder: "Search", text: .constant("hi"))
+        SearchBar(placeholder: "Search")
     }
 }

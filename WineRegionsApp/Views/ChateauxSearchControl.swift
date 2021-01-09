@@ -6,19 +6,18 @@
 //
 
 import SwiftUI
+import Combine
 
-struct SearchControl: View {
+struct ChateauxSearchControl: View {
     @State var isShowingSearch = false
-    @State var searchText = ""
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 if isShowingSearch {
-                    SearchBar(placeholder: "Search for Chateaux", text: $searchText)
+                    SearchBar(placeholder: "Search for Chateaux")
                 }
                 Button(action: {
-                    print("Button was tapped")
                     isShowingSearch.toggle()
                 }) {
                     Image(systemName: "magnifyingglass.circle")
@@ -34,6 +33,6 @@ struct SearchControl: View {
 
 struct SearchControl_Previews: PreviewProvider {
     static var previews: some View {
-        SearchControl()
+        ChateauxSearchControl()
     }
 }

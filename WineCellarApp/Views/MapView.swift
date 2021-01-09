@@ -101,20 +101,8 @@ class Coordinator: NSObject, MKMapViewDelegate {
             self.finalRect = nil
             setMapRect(finalRect, on: mapView)
         } else if mapView.overlays.count > 0 {
-            performLocalSearch()
-        }
-    }
-
-
-    private func performLocalSearch() {
-        let search = currentSearch
-        search.start { [weak self]  (response, error) in
-            if let error = error {
-                debugPrint("we got an error searching locally \(error)")
-                return
-            }
-            if let response = response, let strongSelf = self {
-                strongSelf.handleSearch(response: response)
+            if let wineMapView = mapView as? WineMapView {
+                wineMapView.performLocalSearch()
             }
         }
     }
@@ -145,33 +133,10 @@ extension MKPolygon {
         return polygonRenderer.path.contains(polygonPoint)
     }
 }
-extension Coordinator {
-    var currentSearch: MKLocalSearch {
-        let request = MKLocalSearch.Request()
-        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.winery])
-        request.region = mapView.region
-        return MKLocalSearch(request: request)
-    }
-
-    private func handleSearch(response: MKLocalSearch.Response) {
-        let currentOverlays = mapView.overlays
-        let annotations = response
-            .mapItems
-            .filter({ mapItem in
-                currentOverlays
-                    .compactMap { $0 as? MKPolygon }
-                    .first { polygon in
-                        polygon.contains(mapPoint: MKMapPoint(mapItem.placemark.coordinate))
-                    } != nil
-            })
-        mapView.addAnnotations(annotations)
-    }
-}
 
 struct MapView: UIViewRepresentable {
     let mapView: MKMapView
     @Binding var selectedMapType: MapTypeSelection
-
     @EnvironmentObject var wineRegionLib: WineRegion
 
     func makeUIView(context: Context) -> MKMapView {

@@ -8,11 +8,13 @@
 import Combine
 import MapKit
 import WineRegionLib
+import SwiftUI
 
 class WineMapView: MKMapView, ObservableObject {
 
     var cancellable: AnyCancellable? = nil
     let wineRegionLib: WineRegion
+    var currentSearch: MKLocalSearch?
 
     public func showAppelationRegions(_ appelations: [AppelationDescribable]) {
         wineRegionLib.getRegions(regions: appelations)
@@ -42,7 +44,6 @@ class WineMapView: MKMapView, ObservableObject {
                     self.addOverlay(polygon)
                 }
 
-//            debugPrint("The feature \(feature.geometry)")
             feature
                 .geometry
                 .map { $0 as? MKMultiPolygon }
@@ -58,6 +59,7 @@ class WineMapView: MKMapView, ObservableObject {
     init(wineRegionLib: WineRegion) {
         self.wineRegionLib = wineRegionLib
         super.init(frame: .zero)
+
         cancellable = wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
             .sink { _ in
@@ -82,5 +84,40 @@ class WineMapView: MKMapView, ObservableObject {
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func performLocalSearch(query: String? = nil) {
+        let request = MKLocalSearch.Request()
+        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.winery])
+        if let query = query, !query.isEmpty {
+            request.naturalLanguageQuery = query
+        }
+        removeAnnotations(annotations)
+        request.region = region
+        currentSearch = MKLocalSearch(request: request)
+        currentSearch?.start { [weak self]  (response, error) in
+            if let error = error {
+                debugPrint("we got an error searching locally \(error)")
+                return
+            }
+            if let response = response, let strongSelf = self {
+                strongSelf.handleSearch(response: response)
+            }
+        }
+    }
+
+    private func handleSearch(response: MKLocalSearch.Response) {
+        let currentOverlays = overlays
+        let annotations = response
+            .mapItems
+            // Filter out the mapItems from the response that are not in the polygon we are showing
+            .filter({ mapItem in
+                currentOverlays
+                    .compactMap { $0 as? MKPolygon }
+                    .first { polygon in
+                        polygon.contains(mapPoint: MKMapPoint(mapItem.placemark.coordinate))
+                    } != nil
+            })
+        addAnnotations(annotations)
     }
 }

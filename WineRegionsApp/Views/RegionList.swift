@@ -22,15 +22,14 @@ class WineTreeWrapper: ObservableObject {
 
 struct RegionList: View {
     let lib: WineRegion
-    @State var searchText: String = ""
+    @State var text: String = ""
     var regionsResults: [RegionJson] {
-        return treeWrapper.tree.filter(searchString: searchText)
+        return treeWrapper.tree.filter(searchString: text)
     }
 
     @EnvironmentObject var treeWrapper: WineTreeWrapper
 
     var body: some View {
-        SearchBar(placeholder: "Search", text: $searchText)
         List(regionsResults, children: \.children) { item in
             RegionRow(region: item, title: item.title)
         }
@@ -48,7 +47,8 @@ struct RegionRow: View {
             HStack {
                 Text(region.title.capitalized).font(.title3)
                 Spacer()
-                NavigationLink(destination: ContentView(wineMapView: wineMapView, viewModel: lib),
+                NavigationLink(destination: ContentView(wineMapView: wineMapView,
+                                                        viewModel: lib),
                                isActive: $isShowingDetailView) {
                     EmptyView()
                 }.hidden()

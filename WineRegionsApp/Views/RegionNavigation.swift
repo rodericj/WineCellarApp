@@ -19,7 +19,6 @@ struct RegionListNavButtons: View {
     }
 }
 
-
 struct RegionNavigation: View {
     @EnvironmentObject private var wineRegionLib: WineRegion
     let wineMapView: WineMapView

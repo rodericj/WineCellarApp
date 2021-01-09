@@ -17,8 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let treeWrapper = WineTreeWrapper()
     var treeCancellable: AnyCancellable? = nil
     var mapsCancellable: AnyCancellable? = nil
+    var searchCancellable: AnyCancellable? = nil
     lazy var wineMapView = WineMapView(wineRegionLib: wineRegionLib)
 
+    let chateauxSearch = ChateauxSearch()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -27,7 +30,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         wineMapView = WineMapView(wineRegionLib: wineRegionLib)
         wineMapView.translatesAutoresizingMaskIntoConstraints = false
         // Create the SwiftUI view that provides the window contents.
-        let contentView = RegionNavigation(wineMapView: wineMapView).environmentObject(wineRegionLib).environmentObject(treeWrapper).environmentObject(wineMapView)
+        let contentView = RegionNavigation(wineMapView: wineMapView)
+            .environmentObject(wineRegionLib)
+            .environmentObject(treeWrapper)
+            .environmentObject(wineMapView)
+            .environmentObject(chateauxSearch)
 
         wineRegionLib.getRegionTree()
 
@@ -39,6 +46,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
 
+        searchCancellable = chateauxSearch.$searchString
+            .debounce(for: 0.2, scheduler: DispatchQueue.main)
+            .sink { string in
+            print("new search string \(string)")
+                self.wineMapView.performLocalSearch(query: string)
+        }
 
         mapsCancellable = wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
@@ -52,9 +65,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             case .none:
                 self.treeWrapper.loadingProgress = 0
                 print("no state for the tree")
-            case .error(let error):
+            case let .error(error, string):
                 self.treeWrapper.loadingProgress = 0
-                print("Error fetching regions tree, probably need to bubble this up \(error)")
+                print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No error")")
             }
         }
 
@@ -71,9 +84,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             case .none:
                 self.treeWrapper.loadingProgress = 0
                 print("no state for the tree")
-            case .error(let error):
+            case .error(let error, let string):
                 self.treeWrapper.loadingProgress = 0
-                print("Error fetching regions tree, probably need to bubble this up \(error)")
+                print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No Error")")
             }
         }
     }
