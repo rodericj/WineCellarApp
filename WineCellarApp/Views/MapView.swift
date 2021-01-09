@@ -30,9 +30,11 @@ extension MKMapItem: MKAnnotation {
     public var title: String? { name }
 }
 
-class Coordinator: NSObject, MKMapViewDelegate {
+class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
     var parent: MapView
     let mapView: MKMapView
+    let dataStore: DataStore
+
     private var finalRect: MKMapRect?
     let tileRenderer = MKTileOverlayRenderer(tileOverlay: ExternalTileOverlay(source: .openstreetMap))
     private let padding: UIEdgeInsets = {
@@ -40,9 +42,10 @@ class Coordinator: NSObject, MKMapViewDelegate {
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }()
 
-    init(_ parent: MapView, mapView: MKMapView) {
+    init(_ parent: MapView, mapView: MKMapView, dataStore: DataStore) {
         self.parent = parent
         self.mapView = mapView
+        self.dataStore = dataStore
     }
 
     var openStreetMapsRendererEnabled: Bool = false
@@ -97,12 +100,13 @@ class Coordinator: NSObject, MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        dataStore.region = mapView.region
         if let finalRect = finalRect {
             self.finalRect = nil
             setMapRect(finalRect, on: mapView)
         } else if mapView.overlays.count > 0 {
             if let wineMapView = mapView as? WineMapView {
-                wineMapView.performLocalSearch()
+                dataStore.performLocalSearch()
             }
         }
     }
@@ -137,7 +141,7 @@ extension MKPolygon {
 struct MapView: UIViewRepresentable {
     let mapView: MKMapView
     @Binding var selectedMapType: MapTypeSelection
-    @EnvironmentObject var wineRegionLib: WineRegion
+    @EnvironmentObject var dataStore: DataStore
 
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
@@ -149,6 +153,6 @@ struct MapView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(self, mapView: mapView)
+        return Coordinator(self, mapView: mapView, dataStore: dataStore)
     }
 }

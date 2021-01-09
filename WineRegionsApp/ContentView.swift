@@ -27,7 +27,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(wineMapView: WineMapView(wineRegionLib: WineRegion()),
+        ContentView(wineMapView: WineMapView(dataStore: DataStore()),
                     viewModel: WineRegion())
     }
 }

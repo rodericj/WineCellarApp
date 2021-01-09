@@ -13,11 +13,12 @@ import SwiftUI
 class WineMapView: MKMapView, ObservableObject {
 
     var cancellable: AnyCancellable? = nil
-    let wineRegionLib: WineRegion
+    var annotationsCancellable: AnyCancellable? = nil
+    let dataStore: DataStore
     var currentSearch: MKLocalSearch?
 
     public func showAppelationRegions(_ appelations: [AppelationDescribable]) {
-        wineRegionLib.getRegions(regions: appelations)
+        dataStore.wineRegionLib.getRegions(regions: appelations)
     }
     
     public func add(features: [MapKitOverlayable]) {
@@ -56,11 +57,11 @@ class WineMapView: MKMapView, ObservableObject {
         }
     }
 
-    init(wineRegionLib: WineRegion) {
-        self.wineRegionLib = wineRegionLib
+    init(dataStore: DataStore) {
+        self.dataStore = dataStore
         super.init(frame: .zero)
 
-        cancellable = wineRegionLib.$regionMaps
+        cancellable = dataStore.wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
             .sink { _ in
             debugPrint("completed")
@@ -73,7 +74,19 @@ class WineMapView: MKMapView, ObservableObject {
                 break
 
             }
+        }
 
+        // We need to observe changes on the data store at this point
+        annotationsCancellable = dataStore.$mapItems.sink { mapItems in
+            print("got map items \(mapItems.count)")
+            let newAnnotations = mapItems.filter({ mapItem in
+                self.overlays
+                    .compactMap { $0 as? MKPolygon }
+                    .first { polygon in
+                        polygon.contains(mapPoint: MKMapPoint(mapItem.placemark.coordinate))
+                    } != nil
+            })
+            self.addAnnotations(newAnnotations)
         }
     }
 
@@ -84,40 +97,5 @@ class WineMapView: MKMapView, ObservableObject {
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func performLocalSearch(query: String? = nil) {
-        let request = MKLocalSearch.Request()
-        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.winery])
-        if let query = query, !query.isEmpty {
-            request.naturalLanguageQuery = query
-        }
-        removeAnnotations(annotations)
-        request.region = region
-        currentSearch = MKLocalSearch(request: request)
-        currentSearch?.start { [weak self]  (response, error) in
-            if let error = error {
-                debugPrint("we got an error searching locally \(error)")
-                return
-            }
-            if let response = response, let strongSelf = self {
-                strongSelf.handleSearch(response: response)
-            }
-        }
-    }
-
-    private func handleSearch(response: MKLocalSearch.Response) {
-        let currentOverlays = overlays
-        let annotations = response
-            .mapItems
-            // Filter out the mapItems from the response that are not in the polygon we are showing
-            .filter({ mapItem in
-                currentOverlays
-                    .compactMap { $0 as? MKPolygon }
-                    .first { polygon in
-                        polygon.contains(mapPoint: MKMapPoint(mapItem.placemark.coordinate))
-                    } != nil
-            })
-        addAnnotations(annotations)
     }
 }

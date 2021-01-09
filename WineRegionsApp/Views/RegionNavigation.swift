@@ -39,6 +39,6 @@ struct RegionNavigation: View {
 
 struct RegionNavigation_Previews: PreviewProvider {
     static var previews: some View {
-        RegionNavigation(wineMapView: WineMapView(wineRegionLib: WineRegion()))
+        RegionNavigation(wineMapView: WineMapView(dataStore: DataStore()))
     }
 }
