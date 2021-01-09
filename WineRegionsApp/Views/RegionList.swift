@@ -18,12 +18,13 @@ struct MakeView: View {
 
 struct RegionList: View {
     let lib: WineRegion
+    @EnvironmentObject var dataStore: DataStore
+
     @State var text: String = ""
     var regionsResults: [RegionJson] {
-        return treeWrapper.tree.filter(searchString: text)
+        return dataStore.regionTree//.filter(searchString: text)
     }
 
-    @EnvironmentObject var treeWrapper: WineTreeWrapper
 
     var body: some View {
         List(regionsResults, children: \.children) { item in

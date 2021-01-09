@@ -13,17 +13,15 @@ import WineRegionLib
 class DataStore: ObservableObject {
     var searchCancellable: AnyCancellable? = nil
     var chateauxSearch = ChateauxSearch()
+
+    @Published var regionTree: [RegionJson] = []
+    @Published var regionTreeLoadingProgress: Float = 0
 }
 
-class WineTreeWrapper: ObservableObject {
-    @Published var tree: [RegionJson] = []
-    @Published var loadingProgress: Float = 0
-}
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     let wineRegionLib = WineRegion()
-    let treeWrapper = WineTreeWrapper()
     var treeCancellable: AnyCancellable? = nil
     var mapsCancellable: AnyCancellable? = nil
     let dataStore = DataStore()
@@ -41,7 +39,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         let contentView = RegionNavigation(wineMapView: wineMapView)
             .environmentObject(wineRegionLib)
-            .environmentObject(treeWrapper)
             .environmentObject(wineMapView)
             .environmentObject(dataStore)
 
@@ -67,15 +64,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .sink { result in
             switch result {
             case .regions:
-                self.treeWrapper.loadingProgress = 0
+                self.dataStore.regionTreeLoadingProgress = 0
             case .loading(let progress):
-                self.treeWrapper.loadingProgress = progress
+                self.dataStore.regionTreeLoadingProgress = progress
                 print("loading from scene delegate \(progress)")
             case .none:
-                self.treeWrapper.loadingProgress = 0
+                self.dataStore.regionTreeLoadingProgress = 0
                 print("no state for the tree")
             case let .error(error, string):
-                self.treeWrapper.loadingProgress = 0
+                self.dataStore.regionTreeLoadingProgress = 0
                 print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No error")")
             }
         }
@@ -85,16 +82,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .sink { result in
             switch result {
             case .regions(let tree):
-                self.treeWrapper.tree = tree.sorted { $0.title < $1.title } 
-                self.treeWrapper.loadingProgress = 0
+                self.dataStore.regionTree = tree.sorted { $0.title < $1.title }
+                self.dataStore.regionTreeLoadingProgress = 0
             case .loading(let progress):
-                self.treeWrapper.loadingProgress = progress
+                self.dataStore.regionTreeLoadingProgress = progress
                 print("loading from scene delegate \(progress)")
             case .none:
-                self.treeWrapper.loadingProgress = 0
+                self.dataStore.regionTreeLoadingProgress = 0
                 print("no state for the tree")
             case .error(let error, let string):
-                self.treeWrapper.loadingProgress = 0
+                self.dataStore.regionTreeLoadingProgress = 0
                 print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No Error")")
             }
         }

@@ -9,9 +9,9 @@ import SwiftUI
 import WineRegionLib
 import Combine
 struct RegionListNavButtons: View {
-    @EnvironmentObject var treeWrapper: WineTreeWrapper
+    @EnvironmentObject var dataStore: DataStore
     var body: some View {
-        if treeWrapper.loadingProgress < 1 && treeWrapper.loadingProgress > 0 {
+        if dataStore.regionTreeLoadingProgress < 1 && dataStore.regionTreeLoadingProgress > 0 {
             ProgressView()
         } else {
             EmptyView()
