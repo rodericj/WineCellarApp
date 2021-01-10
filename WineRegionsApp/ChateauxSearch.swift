@@ -10,3 +10,8 @@ import Foundation
 class ChateauxSearch: ObservableObject {
     @Published var searchString: String = ""
 }
+
+
+class RegionFilter: ObservableObject {
+    @Published var filterString: String = ""
+}

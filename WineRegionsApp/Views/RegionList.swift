@@ -20,13 +20,13 @@ struct RegionList: View {
     let lib: WineRegion
     @EnvironmentObject var dataStore: DataStore
 
-    @State var text: String = ""
     var regionsResults: [RegionJson] {
-        return dataStore.regionTree//.filter(searchString: text)
+        dataStore.filteredRegionTree
     }
 
-
     var body: some View {
+        SearchBar(placeholder: "Search", searchEntry: $dataStore.regionFilter.filterString)
+            .padding()
         List(regionsResults, children: \.children) { item in
             RegionRow(region: item, title: item.title)
         }

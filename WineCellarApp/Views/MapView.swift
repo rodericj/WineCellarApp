@@ -105,9 +105,7 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
             self.finalRect = nil
             setMapRect(finalRect, on: mapView)
         } else if mapView.overlays.count > 0 {
-            if let wineMapView = mapView as? WineMapView {
-                dataStore.performLocalSearch()
-            }
+            dataStore.performLocalSearch()
         }
     }
 

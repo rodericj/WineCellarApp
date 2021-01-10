@@ -14,19 +14,31 @@ class DataStore: ObservableObject {
     var searchCancellable: AnyCancellable? = nil
     var treeCancellable: AnyCancellable? = nil
     var mapsCancellable: AnyCancellable? = nil
+    var filterCancellable: AnyCancellable? = nil
 
     var chateauxSearch = ChateauxSearch()
-    let wineRegionLib = WineRegion()
+    var regionFilter = RegionFilter()
 
+
+    let wineRegionLib = WineRegion()
     var currentSearch: MKLocalSearch?
 
-    @Published var regionTree: [RegionJson] = []
+    @Published private var regionTree: [RegionJson] = []
+
+    @Published var filteredRegionTree: [RegionJson] = []
     @Published var regionTreeLoadingProgress: Float = 0
     @Published var mapItems: [MKMapItem] = []
 
     var region: MKCoordinateRegion = .init()
 
     init() {
+        filterCancellable = regionFilter.$filterString.combineLatest($regionTree)
+            .receive(on: DispatchQueue.main)
+            .sink { filterString, tree in
+                self.filteredRegionTree = self.regionTree.filter(searchString: filterString)
+                print(self.filteredRegionTree.count)
+            }
+
         mapsCancellable = wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
             .sink { result in
