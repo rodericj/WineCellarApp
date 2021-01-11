@@ -10,7 +10,6 @@ import SwiftUI
 import WineCellar
 import Combine
 
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -28,8 +27,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             auth.isLoggedin = isAuthenticated
         }.store(in: &disposables)
 
+        let dataStore = BottleDataStore()
         // Create the SwiftUI view that provides the window contents.
-        let contentView =  ContentView().environmentObject(auth).environmentObject(cellar)
+        let contentView =  ContentView()
+            .environmentObject(auth)
+            .environmentObject(cellar)
+            .environmentObject(dataStore)
+        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)

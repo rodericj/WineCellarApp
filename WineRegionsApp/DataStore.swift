@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 import WineRegionLib
 
-class DataStore: ObservableObject {
+class DataStore: ObservableObject, WineRegionProviding {
     var searchCancellable: AnyCancellable? = nil
     var treeCancellable: AnyCancellable? = nil
     var mapsCancellable: AnyCancellable? = nil
@@ -18,7 +18,6 @@ class DataStore: ObservableObject {
 
     var chateauxSearch = ChateauxSearch()
     var regionFilter = RegionFilter()
-
 
     let wineRegionLib = WineRegion()
     var currentSearch: MKLocalSearch?
@@ -28,7 +27,8 @@ class DataStore: ObservableObject {
     @Published var filteredRegionTree: [RegionJson] = []
     @Published var regionTreeLoadingProgress: Float = 0
     @Published var mapItems: [MKMapItem] = []
-
+    var mapItemsPublisher: Published<[MKMapItem]>.Publisher { $mapItems }
+    
     var region: MKCoordinateRegion = .init()
 
     init() {

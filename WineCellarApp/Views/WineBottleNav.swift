@@ -22,7 +22,7 @@ struct WineBottleList: View {
     var body: some View {
         VStack {
             ScrollView {
-                SearchBar(placeholder: "Search")
+                SearchBar(placeholder: "Search", searchEntry: $searchText)
                     .padding()
                 LazyVStack(content: {
                     ForEach(bottles, id: \.wineID) { bottle in
@@ -58,7 +58,7 @@ struct WineBottleNavButtons: View {
 }
 
 struct WineBottleNav: View {
-    let wineMapView = WineMapView(wineRegionLib: WineRegionLib.WineRegion()) // TODO this seems like an awkward way to initiate this
+    let wineMapView = WineMapView(dataStore: BottleDataStore()) // TODO this seems like an awkward way to initiate this
     var body: some View {
         NavigationView {
             WineBottleList(wineMapView: wineMapView)

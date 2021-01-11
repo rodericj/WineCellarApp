@@ -18,10 +18,11 @@ struct BottleDetail: View {
     let bottle: Bottle?
     let wineMapView: WineMapView
     @State var selectedMapType: MapTypeSelection = .normal
+    @EnvironmentObject var dataStore: BottleDataStore
 
     var body: some View {
         VStack (alignment: .leading) {
-            MapView(mapView: wineMapView, selectedMapType: $selectedMapType)
+            MapView(mapView: wineMapView, selectedMapType: $selectedMapType, dataStore: dataStore)
                 .onAppear(perform: {
                     if let region = bottle?.libAppelation {
                         wineMapView.showAppelationRegions([region])
@@ -39,6 +40,6 @@ struct BottleDetail_Previews: PreviewProvider {
     static let first = Bottle(wineID: "123", title: "Domain Sylvain Langoureau Saint Aubin 1er Cru En Remilly", location: "The cellar", price: 123.4, vintage: "2018", quantity: 1, wineBarcode: "101010", size: "750ml", valuation: 123.4, currency: "USD", locale: "what is locale", country: "France", region: "Burgundy", subRegion: "Fancy Burgundy", appellation: "fanciest appellation", producer: "Jean Luke", sortProducer: "Producer", type: .red, varietal: "Pinot Noir", masterVarietal: "Master Pinot Noir", designation: "Designation", vineyard: "Left Vineyard")
 
     static var previews: some View {
-        BottleDetail(bottle: first, wineMapView: WineMapView(wineRegionLib: WineRegionLib.WineRegion()))
+        BottleDetail(bottle: first, wineMapView: WineMapView(dataStore: BottleDataStore()))
     }
 }

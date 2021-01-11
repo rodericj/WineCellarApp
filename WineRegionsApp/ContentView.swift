@@ -11,10 +11,11 @@ import WineRegionLib
 struct ContentView: View {
     let wineMapView: WineMapView
     @ObservedObject var viewModel: WineRegion
+    @EnvironmentObject var dataStore: DataStore
     @State var selectedMapType: MapTypeSelection = .normal
     var body: some View {
         ZStack {
-            MapView(mapView: wineMapView, selectedMapType: $selectedMapType)
+            MapView(mapView: wineMapView, selectedMapType: $selectedMapType, dataStore: dataStore)
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()

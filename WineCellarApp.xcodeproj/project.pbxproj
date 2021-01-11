@@ -14,6 +14,9 @@
 		5F05D1FD25A982B9007C32E8 /* ChateauxSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */; };
 		5F05D1FE25A982B9007C32E8 /* ChateauxSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */; };
 		5F05D20625A98DEF007C32E8 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20525A98DEF007C32E8 /* DataStore.swift */; };
+		5F05D20E25AB7A72007C32E8 /* WineRegionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */; };
+		5F05D21525AB7AB8007C32E8 /* WineRegionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */; };
+		5F05D21D25ABD014007C32E8 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D21C25ABD014007C32E8 /* DataStore.swift */; };
 		5F08FA5C257EA3AB00D4DBF2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapView.swift */; };
 		5F2AB7A02589E65B00E776D2 /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
 		5F345CBE2587211E00A88EF6 /* RegionNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F345CBD2587211E00A88EF6 /* RegionNavigation.swift */; };
@@ -85,6 +88,8 @@
 		5F043E9525A59A9700100D5C /* ChateauxSearchControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChateauxSearchControl.swift; sourceTree = "<group>"; };
 		5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChateauxSearch.swift; sourceTree = "<group>"; };
 		5F05D20525A98DEF007C32E8 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineRegionProviding.swift; sourceTree = "<group>"; };
+		5F05D21C25ABD014007C32E8 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		5F345CBD2587211E00A88EF6 /* RegionNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionNavigation.swift; sourceTree = "<group>"; };
 		5F345CC62587219500A88EF6 /* RegionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionList.swift; sourceTree = "<group>"; };
 		5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleHelper.swift; sourceTree = "<group>"; };
@@ -200,6 +205,7 @@
 			children = (
 				5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */,
 				5F6B6AF425886EF80078CE7A /* ExternalTileOverlay.swift */,
+				5F05D21C25ABD014007C32E8 /* DataStore.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -301,6 +307,7 @@
 				5F345CC52587217900A88EF6 /* Views */,
 				5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */,
 				5F05D20525A98DEF007C32E8 /* DataStore.swift */,
+				5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */,
 			);
 			path = WineRegionsApp;
 			sourceTree = "<group>";
@@ -568,6 +575,7 @@
 			files = (
 				5F2AB7A02589E65B00E776D2 /* ExpandableButtonPanel.swift in Sources */,
 				5F835366256D9B3100C2345F /* WineBottleNav.swift in Sources */,
+				5F05D21D25ABD014007C32E8 /* DataStore.swift in Sources */,
 				5F05D1FD25A982B9007C32E8 /* ChateauxSearch.swift in Sources */,
 				5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */,
 				5F835378256DC9EE00C2345F /* ContentView.swift in Sources */,
@@ -579,6 +587,7 @@
 				5F83532E256D96A600C2345F /* LoginView.swift in Sources */,
 				5F58CDD5257C9181005C4F5A /* WineMapView.swift in Sources */,
 				5F58CDCD257B61AF005C4F5A /* BottleHelper.swift in Sources */,
+				5F05D21525AB7AB8007C32E8 /* WineRegionProviding.swift in Sources */,
 				5F835381256E1B1C00C2345F /* BottleDetail.swift in Sources */,
 				5F83536B256DB5E800C2345F /* BottleRow.swift in Sources */,
 			);
@@ -605,6 +614,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F05D20625A98DEF007C32E8 /* DataStore.swift in Sources */,
+				5F05D20E25AB7A72007C32E8 /* WineRegionProviding.swift in Sources */,
 				5FFBFFA2257EA3240088BFE2 /* WineMapView.swift in Sources */,
 				5FFBFF67257EA27D0088BFE2 /* AppDelegate.swift in Sources */,
 				5F08FA5C257EA3AB00D4DBF2 /* MapView.swift in Sources */,

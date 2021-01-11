@@ -14,7 +14,7 @@ class WineMapView: MKMapView, ObservableObject {
 
     var cancellable: AnyCancellable? = nil
     var annotationsCancellable: AnyCancellable? = nil
-    let dataStore: DataStore
+    let dataStore: WineRegionProviding
     var currentSearch: MKLocalSearch?
 
     public func showAppelationRegions(_ appelations: [AppelationDescribable]) {
@@ -57,7 +57,7 @@ class WineMapView: MKMapView, ObservableObject {
         }
     }
 
-    init(dataStore: DataStore) {
+    init(dataStore: WineRegionProviding) {
         self.dataStore = dataStore
         super.init(frame: .zero)
 
@@ -77,7 +77,7 @@ class WineMapView: MKMapView, ObservableObject {
         }
 
         // We need to observe changes on the data store at this point
-        annotationsCancellable = dataStore.$mapItems.sink { mapItems in
+        annotationsCancellable = dataStore.mapItemsPublisher.sink { mapItems in
             print("got map items \(mapItems.count)")
             self.removeAnnotations(self.annotations)
             let newAnnotations = mapItems.filter({ mapItem in

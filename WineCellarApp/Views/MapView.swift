@@ -33,7 +33,7 @@ extension MKMapItem: MKAnnotation {
 class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
     var parent: MapView
     let mapView: MKMapView
-    let dataStore: DataStore
+    var dataStore: WineRegionProviding
 
     private var finalRect: MKMapRect?
     let tileRenderer = MKTileOverlayRenderer(tileOverlay: ExternalTileOverlay(source: .openstreetMap))
@@ -42,7 +42,7 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }()
 
-    init(_ parent: MapView, mapView: MKMapView, dataStore: DataStore) {
+    init(_ parent: MapView, mapView: MKMapView, dataStore: WineRegionProviding) {
         self.parent = parent
         self.mapView = mapView
         self.dataStore = dataStore
@@ -104,8 +104,6 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
         if let finalRect = finalRect {
             self.finalRect = nil
             setMapRect(finalRect, on: mapView)
-        } else if mapView.overlays.count > 0 {
-            dataStore.performLocalSearch()
         }
     }
 
@@ -139,7 +137,7 @@ extension MKPolygon {
 struct MapView: UIViewRepresentable {
     let mapView: MKMapView
     @Binding var selectedMapType: MapTypeSelection
-    @EnvironmentObject var dataStore: DataStore
+    var dataStore: WineRegionProviding
 
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator

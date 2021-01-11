@@ -18,10 +18,7 @@ class UserAuth: ObservableObject {
 
 
 struct ContentView: View {
-
     @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var cellar: WineCellar
-
     var body: some View {
         if !userAuth.isLoggedin {
             return AnyView(LoginView())
