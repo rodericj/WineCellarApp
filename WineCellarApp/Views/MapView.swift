@@ -114,10 +114,10 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
             return tileRenderer
         }
 
-        if overlay is MKPolygon {
-            let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-            let color = colors.randomElement()
-            renderer.fillColor = color?.withAlphaComponent(0.2)
+        if let overlay = overlay as? MKPolygon {
+            let renderer = MKPolygonRenderer(polygon: overlay)
+            let color = colors[overlay.pointCount % colors.count]
+            renderer.fillColor = color.withAlphaComponent(0.2)
             renderer.strokeColor = color
             renderer.lineWidth = 1
             return renderer
