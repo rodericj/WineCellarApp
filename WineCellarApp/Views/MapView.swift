@@ -78,12 +78,6 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
             setMapRect(mapRectOfAllNewOverlays, on: mapView)
         }
     }
-    func handleNewPolygons(_ polygons: [MKPolygon], mapView: WineMapView) {
-        mapView.removeAnnotations(mapView.annotations)
-        mapView.removeOverlays(mapView.overlays)
-        mapView.addOverlays(polygons)
-        smoothePanRegion(mapView: mapView)
-  }
 
     // Handles the zooming out to a common rect, before zooming to the final destination
     func handleNewMapping(features: [MapKitOverlayable], mapView: WineMapView) {

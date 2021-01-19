@@ -16,13 +16,8 @@ class WineMapView: MKMapView, ObservableObject {
     var annotationsCancellable: AnyCancellable? = nil
     let dataStore: WineRegionProviding
     var currentSearch: MKLocalSearch?
-
-    public func showAppelationRegions(_ appelations: [AppelationDescribable]) {
-        dataStore.wineRegionLib.getRegions(regions: appelations)
-    }
     
     public func add(features: [MapKitOverlayable]) {
-        print("Features count: \(features.count)")
         features
             .compactMap { $0 as? MKPolygon }
             .forEach { polygon in
@@ -38,15 +33,15 @@ class WineMapView: MKMapView, ObservableObject {
         features
             .compactMap { $0 as? MKGeoJSONFeature }
             .forEach { feature in
-            feature.geometry
-                .map { $0 as? MKPolygon  }
-                .compactMap { $0 }
-                .forEach { polygon in
-                    self.addOverlay(polygon)
-                }
+                feature.geometry
+                    .map { $0 as? MKPolygon  }
+                    .compactMap { $0 }
+                    .forEach { polygon in
+                        self.addOverlay(polygon)
+                    }
 
-            feature
-                .geometry
+                feature
+                    .geometry
                 .map { $0 as? MKMultiPolygon }
                 .compactMap { $0 }
                 .forEach { multiPolygon in
