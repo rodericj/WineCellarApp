@@ -20,12 +20,12 @@ struct RegionList: View {
     @EnvironmentObject var dataStore: DataStore
 
     var regionsResults: [RegionJson] {
-        dataStore.filteredRegionTree
+        dataStore.regionTree
     }
 
     var body: some View {
-        SearchBar(placeholder: "Search", searchEntry: $dataStore.regionFilter.filterString)
-            .padding()
+//        SearchBar(placeholder: "Search", searchEntry: $dataStore.regionFilter.filterString)
+//            .padding()
         List(regionsResults, children: \.children) { item in
             RegionRow(region: item, title: item.title, dataStore: dataStore)
         }
