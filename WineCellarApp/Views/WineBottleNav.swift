@@ -62,8 +62,8 @@ struct WineBottleNav: View {
     var body: some View {
         NavigationView {
             WineBottleList(wineMapView: wineMapView)
-            .navigationBarTitle(Text("Cellar"))
-            .navigationBarItems(trailing: WineBottleNavButtons() )
+                .navigationBarTitle(Text("Cellar"))
+                .navigationBarItems(trailing: WineBottleNavButtons() )
                 .navigationViewStyle(StackNavigationViewStyle())
 
             // Detail view
