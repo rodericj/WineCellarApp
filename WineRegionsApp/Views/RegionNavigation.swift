@@ -10,11 +10,19 @@ import WineRegionLib
 import Combine
 struct RegionListNavButtons: View {
     @EnvironmentObject var dataStore: DataStore
+    @EnvironmentObject private var wineRegionLib: WineRegion
     var body: some View {
-        if dataStore.regionTreeLoadingProgress < 1 && dataStore.regionTreeLoadingProgress > 0 {
-            ProgressView()
-        } else {
-            EmptyView()
+        HStack {
+            if dataStore.regionTreeLoadingProgress < 1 && dataStore.regionTreeLoadingProgress > 0 {
+                ProgressView()
+            } else {
+                EmptyView()
+            }
+            Button(action: {
+                wineRegionLib.getRegionTree()
+            }) {
+                Image(systemName: "arrow.clockwise")
+            }
         }
     }
 }
