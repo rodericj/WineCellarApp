@@ -10,7 +10,6 @@ import WineRegionLib
 
 fileprivate extension DataStore {
     func create(region: SubregionCreation.NewRegion) {
-        newRegionCancellable?.cancel()
         subregionCreation.newRegion = region
     }
 }
