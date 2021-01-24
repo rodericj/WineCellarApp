@@ -36,7 +36,7 @@
                                         <rightBarButtonItems>
                                             <barButtonItem title="👍" id="Q6u-uC-AqM">
                                                 <connections>
-                                                    <segue destination="Z1s-gO-Af2" kind="showDetail" id="AT9-hn-HSR"/>
+                                                    <segue destination="Z1s-gO-Af2" kind="show" id="wkD-oG-20b"/>
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem title="👎" id="35X-9P-yMi">
@@ -89,7 +89,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ymq-7P-HyV">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                                 <connections>
-                                    <segue destination="HoR-ha-UVc" kind="embed" destinationCreationSelector="test:" id="B2L-IR-DEA"/>
+                                    <segue destination="HoR-ha-UVc" kind="embed" destinationCreationSelector="embedRegionList:" id="B2L-IR-DEA"/>
                                 </connections>
                             </containerView>
                         </subviews>

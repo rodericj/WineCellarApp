@@ -109,8 +109,7 @@ class RegionListViewController: UIViewController {
     
     var newRegion: NewRegionData? = nil
     
-    // TODO change the name of this from test to something like embed region list controller
-    @IBSegueAction func test(_ coder: NSCoder) -> UIViewController? {
+    @IBSegueAction func embedRegionList(_ coder: NSCoder) -> UIViewController? {
         guard let newRegion = newRegion else { return nil }
         dataStore.wineRegionLib.getRegionTree()
         let regionList = ExtensionRegionList(dataStore: dataStore, newRegion: newRegion)
