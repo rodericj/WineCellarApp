@@ -12,10 +12,12 @@ import WineRegionLib
 
 class DataStore: ObservableObject, WineRegionProviding {
     var searchCancellable: AnyCancellable? = nil
+    var newRegionCancellable: AnyCancellable? = nil
     var treeCancellable: AnyCancellable? = nil
     var mapsCancellable: AnyCancellable? = nil
     var filterCancellable: AnyCancellable? = nil
 
+    var subregionCreation = SubregionCreation()
     var chateauxSearch = ChateauxSearch()
     var regionFilter = RegionFilter()
 
@@ -81,6 +83,13 @@ class DataStore: ObservableObject, WineRegionProviding {
             .debounce(for: 0.2, scheduler: DispatchQueue.main)
             .sink { string in
                 self.performLocalSearch(query: string)
+            }
+        
+        newRegionCancellable = subregionCreation
+            .$newRegion
+            .compactMap { $0 }
+            .sink { newRegion in
+                print("new region \(newRegion)")
             }
     }
 

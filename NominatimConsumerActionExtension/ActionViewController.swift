@@ -11,6 +11,13 @@ import WineRegionLib
 import MapKit
 class ActionViewController: UIViewController {
 
+    var newRegionData: NewRegionData? = nil
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let regionList = segue.destination as? RegionListViewController
+        regionList?.newRegion = newRegionData
+    }
+    
     @IBOutlet weak var mapView: MKMapView!
 
     override func viewDidLoad() {
@@ -18,13 +25,14 @@ class ActionViewController: UIViewController {
     
         // Get the item[s] we're handling from the extension context.
         
+        // TODO clean this all up, it is a mess
         for item in self.extensionContext!.inputItems as! [NSExtensionItem] { // TODO get rid of the !
             print(item)
             for provider in item.attachments! { // TODO get rid of the !
                 print(provider)
                 if provider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
                     weak var weakMapView = self.mapView
-                    provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: { (contentURL, error) in
+                    provider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: { [weak self] (contentURL, error) in
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
                         guard let url = contentURL as? URL else {
@@ -33,7 +41,9 @@ class ActionViewController: UIViewController {
                         do {
                             let data = try Data(contentsOf: url)
                             let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
+                            let name = jsonResponse!["localname"] as? String
                             let data1 =  try JSONSerialization.data(withJSONObject: jsonResponse!["geometry"]!, options: JSONSerialization.WritingOptions.prettyPrinted) // first of all convert json to the data
+                            self?.newRegionData = NewRegionData(title: name ?? "Unknown", geoJson: data1)
                             let convertedString = String(data: data1, encoding: String.Encoding.utf8) // the data will be converted to the string
                             print(convertedString ?? "defaultvalue")
                             
@@ -96,10 +106,15 @@ import SwiftUI
 
 class RegionListViewController: UIViewController {
     let dataStore = DataStore()
+    
+    var newRegion: NewRegionData? = nil
+    
+    // TODO change the name of this from test to something like embed region list controller
     @IBSegueAction func test(_ coder: NSCoder) -> UIViewController? {
+        guard let newRegion = newRegion else { return nil }
         dataStore.wineRegionLib.getRegionTree()
-        return UIHostingController(coder: coder,
-                                   rootView: ExtensionRegionList(dataStore: dataStore))
+        let regionList = ExtensionRegionList(dataStore: dataStore, newRegion: newRegion)
+        return UIHostingController(coder: coder,  rootView: regionList)
     }
     
 }
