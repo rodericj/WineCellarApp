@@ -16,7 +16,6 @@ struct MakeView: View {
 }
 
 struct RegionList: View {
-    let lib: WineRegion
     @EnvironmentObject var dataStore: DataStore
 
     var regionsResults: [RegionJson] {
@@ -60,7 +59,7 @@ struct RegionRow: View {
 
 struct RegionList_Previews: PreviewProvider {
     static var previews: some View {
-        RegionList(lib: WineRegion())
+        RegionList()
     }
 }
 

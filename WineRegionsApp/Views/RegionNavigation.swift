@@ -32,7 +32,7 @@ struct RegionNavigation: View {
     let wineMapView: WineMapView
     var body: some View {
         NavigationView {
-            RegionList(lib: wineRegionLib)
+            RegionList()
                 .navigationBarTitle(Text("Regions"))
                 .navigationViewStyle(StackNavigationViewStyle())
                 .navigationBarItems(trailing: RegionListNavButtons())

@@ -62,6 +62,7 @@ class DataStore: ObservableObject, WineRegionProviding {
             .sink { result in
             switch result {
             case .regions(let tree):
+                print("Got \(tree.count) items")
                 self.regionTree = tree.sorted { $0.title < $1.title }
                 self.regionTreeLoadingProgress = 0
             case .loading(let progress):

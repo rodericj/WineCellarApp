@@ -9,7 +9,6 @@ import UIKit
 import MobileCoreServices
 import WineRegionLib
 import MapKit
-
 class ActionViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
@@ -19,9 +18,6 @@ class ActionViewController: UIViewController {
     
         // Get the item[s] we're handling from the extension context.
         
-        // For example, look for an image and place it into an image view.
-        // Replace this with something appropriate for the type[s] your extension supports.
-        var imageFound = false
         for item in self.extensionContext!.inputItems as! [NSExtensionItem] { // TODO get rid of the !
             print(item)
             for provider in item.attachments! { // TODO get rid of the !
@@ -66,19 +62,10 @@ class ActionViewController: UIViewController {
                             print(error)
                             return
                         }
-                        
-                        
                     })
-                    
-                    imageFound = true
-                    break
                 }
             }
-            
-            if (imageFound) {
-                // We only handle one image, so stop looking for more.
-                break
-            }
+
         }
     }
 
@@ -96,7 +83,6 @@ extension ActionViewController: MKMapViewDelegate {
 
         if let overlay = overlay as? MKPolygon {
             let renderer = MKPolygonRenderer(polygon: overlay)
-//            let color = colors[overlay.pointCount % colors.count]
             renderer.fillColor = UIColor.red.withAlphaComponent(0.2)
             renderer.strokeColor = UIColor.red
             renderer.lineWidth = 1
@@ -104,4 +90,16 @@ extension ActionViewController: MKMapViewDelegate {
         }
         return MKOverlayRenderer()
     }
+}
+
+import SwiftUI
+
+class RegionListViewController: UIViewController {
+    let dataStore = DataStore()
+    @IBSegueAction func test(_ coder: NSCoder) -> UIViewController? {
+        dataStore.wineRegionLib.getRegionTree()
+        return UIHostingController(coder: coder,
+                                   rootView: ExtensionRegionList(dataStore: dataStore))
+    }
+    
 }
