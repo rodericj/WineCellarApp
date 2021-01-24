@@ -24,9 +24,10 @@ struct BottleDetail: View {
         VStack (alignment: .leading) {
             MapView(mapView: wineMapView, selectedMapType: $selectedMapType, dataStore: dataStore)
                 .onAppear(perform: {
-                    if let region = bottle?.libAppelation {
-                        wineMapView.showAppelationRegions([region])
-                    }
+                    print("TODO Should show the map region")
+//                    if let region = bottle?.libAppelation {
+//                        wineMapView.showAppelationRegions([region])
+//                    }
             })
             if bottle != nil {
                 BottleTextContent(bottle: bottle!)

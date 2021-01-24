@@ -38,6 +38,16 @@
                ReferencedContainer = "container:WineCellarApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5FFBFF83257EA27E0088BFE2"
+               BuildableName = "WineRegionsAppUITests.xctest"
+               BlueprintName = "WineRegionsAppUITests"
+               ReferencedContainer = "container:WineCellarApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

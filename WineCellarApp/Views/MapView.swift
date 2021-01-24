@@ -80,7 +80,7 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
     }
 
     // Handles the zooming out to a common rect, before zooming to the final destination
-    func handleNewMapping(features: [MapKitOverlayable], mapView: WineMapView) {
+    func handleNewMapping(features: [MapKitOverlayable], mapView: MKMapView) {
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         mapView.add(features: features)
