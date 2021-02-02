@@ -2,16 +2,7 @@
   "images" : [
     {
       "filename" : "Screen Shot 2020-12-14 at 8.58.14 PM.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "idiom" : "universal"
     }
   ],
   "info" : {

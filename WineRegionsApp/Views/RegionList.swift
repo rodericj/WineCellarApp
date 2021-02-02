@@ -42,8 +42,7 @@ struct RegionRow: View {
             HStack {
                 Text(region.title.capitalized).font(.title3)
                 Spacer()
-                NavigationLink(destination: ContentView(wineMapView: wineMapView,
-                                                        viewModel: lib),
+                NavigationLink(destination: ContentView(wineMapView: wineMapView),
                                isActive: $isShowingDetailView) {
                     EmptyView()
                 }.hidden()

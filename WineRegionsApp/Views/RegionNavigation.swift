@@ -38,8 +38,7 @@ struct RegionNavigation: View {
                 .navigationBarItems(trailing: RegionListNavButtons())
 
             // Detail view
-            ContentView(wineMapView: wineMapView,
-                        viewModel: wineRegionLib)
+            ContentView(wineMapView: wineMapView)
                 .navigationBarHidden(true)
         }
     }

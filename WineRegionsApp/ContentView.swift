@@ -10,7 +10,6 @@ import WineRegionLib
 
 struct ContentView: View {
     let wineMapView: WineMapView
-    @ObservedObject var viewModel: WineRegion
     @EnvironmentObject var dataStore: DataStore
     @State var selectedMapType: MapTypeSelection = .normal
     var body: some View {
@@ -28,7 +27,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(wineMapView: WineMapView(dataStore: DataStore()),
-                    viewModel: WineRegion())
+        ContentView(wineMapView: WineMapView(dataStore: DataStore()))
     }
 }
