@@ -32,7 +32,6 @@ struct RegionList: View {
 }
 
 struct RegionRow: View {
-    @EnvironmentObject var lib: WineRegion
     @EnvironmentObject var wineMapView: WineMapView
     let region: RegionJson
     let title: String
@@ -49,7 +48,7 @@ struct RegionRow: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                lib.loadMap(for: region)
+                dataStore.currentRegion.send(region)
                 isShowingDetailView = true
             }
             .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))

@@ -16,6 +16,7 @@ class DataStore: ObservableObject, WineRegionProviding {
     var treeCancellable: AnyCancellable? = nil
     var mapsCancellable: AnyCancellable? = nil
     var filterCancellable: AnyCancellable? = nil
+    var currentRegionCancellable: AnyCancellable? = nil
 
     var subregionCreation = SubregionCreation()
     var chateauxSearch = ChateauxSearch()
@@ -24,6 +25,7 @@ class DataStore: ObservableObject, WineRegionProviding {
     let wineRegionLib = WineRegion()
     var currentSearch: MKLocalSearch?
 
+    var currentRegion: CurrentValueSubject<RegionJson?, Never> = .init(nil)
     @Published var regionTree: [RegionJson] = []
 
     @Published var filteredRegionTree: [RegionJson] = []
@@ -91,6 +93,21 @@ class DataStore: ObservableObject, WineRegionProviding {
             .sink { newRegion in
                 print("new region \(newRegion)")
             }
+        
+        currentRegionCancellable = currentRegion
+            .compactMap { $0 }
+            .sink { [weak self] region in
+                print("current region: \(region.title)")
+                self?.wineRegionLib.loadMap(for: region)
+        }
+        
+//        postNewRegionRequestCancellable = postSubRegion
+//            .$searchString
+//            .compactMap { $0 }
+//            .sink { osmRegion in
+//                self.wineRegionLib.createRegion(osmID: osmRegion)
+//                print("new region osmID = \(osmRegion)")
+//            }
     }
 
     func performLocalSearch(query: String? = nil) {
