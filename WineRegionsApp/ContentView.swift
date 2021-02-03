@@ -17,6 +17,21 @@ struct ContentView: View {
             MapView(mapView: wineMapView, selectedMapType: $selectedMapType, dataStore: dataStore)
                 .edgesIgnoringSafeArea(.all)
             VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        if let searchString = UIPasteboard.general.string {
+                            dataStore.newRegionOSMID.send(searchString)
+                        }
+                        else {
+                            print("no search string in pasteboard")
+                            dataStore.newRegionOSMID.send("127321")
+                        }
+                    }) {
+                        Image(systemName: "calendar")
+                            .frame(width: 60, height: 60, alignment: .center)
+                    }
+                }
                 Spacer()
                 MapSelectionControl(selectedMapType: $selectedMapType)
                 ChateauxSearchControl()

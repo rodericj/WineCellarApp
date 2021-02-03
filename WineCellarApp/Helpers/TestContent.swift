@@ -8,11 +8,6 @@
 import SwiftUI
 import WineRegionLib
 
-fileprivate extension DataStore {
-    func create(region: SubregionCreation.NewRegion) {
-        subregionCreation.newRegion = region
-    }
-}
 
 struct NewRegionData {
     let title: String
@@ -31,11 +26,6 @@ struct ExtensionRegionList: View {
             HStack {
                 Text(item.title)
                 Spacer()
-                Button("+") {
-                    dataStore.create(region: .init(title: newRegion.title,
-                                                   parentRegion: item.id,
-                                                   geoJsonData: newRegion.geoJson))
-                }
             }
         }
     }

@@ -17,8 +17,8 @@ class DataStore: ObservableObject, WineRegionProviding {
     var mapsCancellable: AnyCancellable? = nil
     var filterCancellable: AnyCancellable? = nil
     var currentRegionCancellable: AnyCancellable? = nil
+    var newRegionOSMIDCancellable: AnyCancellable? = nil
 
-    var subregionCreation = SubregionCreation()
     var chateauxSearch = ChateauxSearch()
     var regionFilter = RegionFilter()
 
@@ -26,6 +26,8 @@ class DataStore: ObservableObject, WineRegionProviding {
     var currentSearch: MKLocalSearch?
 
     var currentRegion: CurrentValueSubject<RegionJson?, Never> = .init(nil)
+    var newRegionOSMID: CurrentValueSubject<String?, Never> = .init(nil)
+    
     @Published var regionTree: [RegionJson] = []
 
     @Published var filteredRegionTree: [RegionJson] = []
@@ -87,27 +89,20 @@ class DataStore: ObservableObject, WineRegionProviding {
                 self.performLocalSearch(query: string)
             }
         
-        newRegionCancellable = subregionCreation
-            .$newRegion
-            .compactMap { $0 }
-            .sink { newRegion in
-                print("new region \(newRegion)")
-            }
-        
         currentRegionCancellable = currentRegion
+            .dropFirst()
             .compactMap { $0 }
             .sink { [weak self] region in
                 print("current region: \(region.title)")
                 self?.wineRegionLib.loadMap(for: region)
         }
         
-//        postNewRegionRequestCancellable = postSubRegion
-//            .$searchString
-//            .compactMap { $0 }
-//            .sink { osmRegion in
-//                self.wineRegionLib.createRegion(osmID: osmRegion)
-//                print("new region osmID = \(osmRegion)")
-//            }
+        newRegionOSMIDCancellable = newRegionOSMID.compactMap { $0 }
+            .combineLatest(currentRegion.compactMap { $0})
+            .sink { [weak self] newOSMID, currentRegion in
+                print("attach \(newOSMID) to \(currentRegion)")
+                self?.wineRegionLib.createRegion(osmID: newOSMID, asChildTo: currentRegion)
+        }
     }
 
     func performLocalSearch(query: String? = nil) {
