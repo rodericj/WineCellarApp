@@ -90,13 +90,21 @@ class DataStore: ObservableObject, WineRegionProviding {
                 self?.wineRegionLib.loadMap(for: region)
             }.store(in: &cancellables)
         
+        // With the new osmID and a selected region,
+        // 1. create a new region,
+        // 2. then update with the selected region as the parent,
+        // 3. finally update the tree
         newRegionOSMID
             .removeDuplicates()
             .compactMap { $0 }
-            .combineLatest(currentRegion.compactMap { $0})
-            .sink { [weak self] newOSMID, currentRegion in
-                print("attach \(newOSMID) to \(currentRegion)")
-                self?.wineRegionLib.createRegion(osmID: newOSMID, asChildTo: currentRegion)
+            .combineLatest(currentRegion.compactMap { $0 })
+            .eraseToAnyPublisher()
+            .flatMap { newOSMID, currentRegion in
+                self.wineRegionLib.createRegion(osmID: newOSMID, asChildTo: currentRegion)
+            }.sink { completionValue in
+                print("completionValue")
+            } receiveValue: { regionJson in
+                self.wineRegionLib.getRegionTree()
             }.store(in: &cancellables)
     }
     
