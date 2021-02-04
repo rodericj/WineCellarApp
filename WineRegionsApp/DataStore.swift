@@ -11,32 +11,25 @@ import MapKit
 import WineRegionLib
 
 class DataStore: ObservableObject, WineRegionProviding {
-    var searchCancellable: AnyCancellable? = nil
-    var newRegionCancellable: AnyCancellable? = nil
-    var treeCancellable: AnyCancellable? = nil
-    var mapsCancellable: AnyCancellable? = nil
-    var filterCancellable: AnyCancellable? = nil
-    var currentRegionCancellable: AnyCancellable? = nil
-    var newRegionOSMIDCancellable: AnyCancellable? = nil
-
+    var cancellables: [AnyCancellable] = []
     var chateauxSearch = ChateauxSearch()
     var regionFilter = RegionFilter()
-
+    
     let wineRegionLib = WineRegion()
     var currentSearch: MKLocalSearch?
-
+    
     var currentRegion: CurrentValueSubject<RegionJson?, Never> = .init(nil)
     var newRegionOSMID: CurrentValueSubject<String?, Never> = .init(nil)
     
     @Published var regionTree: [RegionJson] = []
-
+    
     @Published var filteredRegionTree: [RegionJson] = []
     @Published var regionTreeLoadingProgress: Float = 0
     @Published var mapItems: [MKMapItem] = []
     var mapItemsPublisher: Published<[MKMapItem]>.Publisher { $mapItems }
     
     var region: MKCoordinateRegion = .init()
-
+    
     init() {
 //        filterCancellable = regionFilter.$filterString.combineLatest($regionTree)
 //            .receive(on: DispatchQueue.main)
@@ -45,66 +38,68 @@ class DataStore: ObservableObject, WineRegionProviding {
 //                print(self.filteredRegionTree.count)
 //            }
 
-        mapsCancellable = wineRegionLib.$regionMaps
+        wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
             .sink { result in
-            switch result {
-            case .regions:
-                self.regionTreeLoadingProgress = 0
-            case .loading(let progress):
-                self.regionTreeLoadingProgress = progress
-                print("loading from scene delegate \(progress)")
-            case .none:
-                self.regionTreeLoadingProgress = 0
-                print("no state for the tree")
-            case let .error(error, string):
-                self.regionTreeLoadingProgress = 0
-                print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No error")")
-            }
-        }
-
-        treeCancellable = wineRegionLib.$regionsTree
+                switch result {
+                case .regions:
+                    self.regionTreeLoadingProgress = 0
+                case .loading(let progress):
+                    self.regionTreeLoadingProgress = progress
+                    print("loading from scene delegate \(progress)")
+                case .none:
+                    self.regionTreeLoadingProgress = 0
+                    print("no state for the tree")
+                case let .error(error, string):
+                    self.regionTreeLoadingProgress = 0
+                    print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No error")")
+                }
+            }.store(in: &cancellables)
+        
+        wineRegionLib.$regionsTree
             .receive(on: DispatchQueue.main)
             .sink { result in
-            switch result {
-            case .regions(let tree):
-                print("Got \(tree.count) items")
-                self.regionTree = tree.sorted { $0.title < $1.title }
-                self.regionTreeLoadingProgress = 0
-            case .loading(let progress):
-                self.regionTreeLoadingProgress = progress
-                print("loading from scene delegate \(progress)")
-            case .none:
-                self.regionTreeLoadingProgress = 0
-                print("no state for the tree")
-            case .error(let error, let string):
-                self.regionTreeLoadingProgress = 0
-                print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No Error")")
-            }
-        }
-
-        searchCancellable = chateauxSearch.$searchString
+                switch result {
+                case .regions(let tree):
+                    print("Got \(tree.count) items")
+                    self.regionTree = tree.sorted { $0.title < $1.title }
+                    self.regionTreeLoadingProgress = 0
+                case .loading(let progress):
+                    self.regionTreeLoadingProgress = progress
+                    print("loading from scene delegate \(progress)")
+                case .none:
+                    self.regionTreeLoadingProgress = 0
+                    print("no state for the tree")
+                case .error(let error, let string):
+                    self.regionTreeLoadingProgress = 0
+                    print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No Error")")
+                }
+            }.store(in: &cancellables)
+        
+        chateauxSearch.$searchString
             .debounce(for: 0.2, scheduler: DispatchQueue.main)
             .sink { string in
                 self.performLocalSearch(query: string)
-            }
+            }.store(in: &cancellables)
         
-        currentRegionCancellable = currentRegion
+        currentRegion
             .dropFirst()
             .compactMap { $0 }
             .sink { [weak self] region in
                 print("current region: \(region.title)")
                 self?.wineRegionLib.loadMap(for: region)
-        }
+            }.store(in: &cancellables)
         
-        newRegionOSMIDCancellable = newRegionOSMID.compactMap { $0 }
+        newRegionOSMID
+            .removeDuplicates()
+            .compactMap { $0 }
             .combineLatest(currentRegion.compactMap { $0})
             .sink { [weak self] newOSMID, currentRegion in
                 print("attach \(newOSMID) to \(currentRegion)")
                 self?.wineRegionLib.createRegion(osmID: newOSMID, asChildTo: currentRegion)
-        }
+            }.store(in: &cancellables)
     }
-
+    
     func performLocalSearch(query: String? = nil) {
         let request = MKLocalSearch.Request()
         request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.winery])
