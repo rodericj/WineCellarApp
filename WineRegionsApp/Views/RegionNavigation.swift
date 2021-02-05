@@ -10,7 +10,6 @@ import WineRegionLib
 import Combine
 struct RegionListNavButtons: View {
     @EnvironmentObject var dataStore: DataStore
-    @EnvironmentObject private var wineRegionLib: WineRegion
     var body: some View {
         HStack {
             if dataStore.regionTreeLoadingProgress < 1 && dataStore.regionTreeLoadingProgress > 0 {
@@ -19,9 +18,16 @@ struct RegionListNavButtons: View {
                 EmptyView()
             }
             Button(action: {
-                wineRegionLib.getRegionTree()
+                dataStore.getRegionTree()
             }) {
                 Image(systemName: "arrow.clockwise")
+            }
+            if dataStore.currentRegion.value != nil && dataStore.currentRegion.value!.children!.isEmpty {
+                Button(action: {
+                    dataStore.deleteSelectedRegion()
+                }) {
+                    Image(systemName: "delete.right")
+                }
             }
         }
     }

@@ -26,17 +26,17 @@ struct RegionList: View {
 //        SearchBar(placeholder: "Search", searchEntry: $dataStore.regionFilter.filterString)
 //            .padding()
         List(regionsResults, children: \.children) { item in
-            RegionRow(region: item, title: item.title, dataStore: dataStore)
+            RegionRow(region: item, title: item.title)
         }
     }
 }
 
 struct RegionRow: View {
     @EnvironmentObject var wineMapView: WineMapView
+    @EnvironmentObject var dataStore: DataStore
     let region: RegionJson
     let title: String
     @State private var isShowingDetailView = false
-    let dataStore: WineRegionProviding
     var body: some View {
             HStack {
                 Text(region.title.capitalized).font(.title3)

@@ -107,6 +107,24 @@ class DataStore: ObservableObject, WineRegionProviding {
                 self.wineRegionLib.getRegionTree()
             }.store(in: &cancellables)
     }
+    public func getRegionTree() {
+        wineRegionLib.getRegionTree()
+    }
+    
+    public func deleteSelectedRegion() {
+        guard let unwrappedCurrentRegion = currentRegion.value else { return }
+        wineRegionLib
+            .delete(region: unwrappedCurrentRegion)
+            .sink { [weak self] completionState in
+                print(completionState)
+                self?.regionTree.removeAll { testRegionJson -> Bool in
+                    testRegionJson == unwrappedCurrentRegion
+                }
+                self?.currentRegion.send(nil)
+            } receiveValue: { regionJson in
+                print("regionJson")
+            }.store(in: &cancellables)
+    }
     
     func performLocalSearch(query: String? = nil) {
         let request = MKLocalSearch.Request()
