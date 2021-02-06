@@ -48,7 +48,7 @@ struct RegionRow: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                dataStore.currentRegion.send(region)
+                dataStore.currentRegion.send(.selected(region))
                 isShowingDetailView = true
             }
             .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))

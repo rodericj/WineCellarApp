@@ -18,8 +18,25 @@ class DataStore: ObservableObject, WineRegionProviding {
     let wineRegionLib = WineRegion()
     var currentSearch: MKLocalSearch?
     
-    var currentRegion: CurrentValueSubject<RegionJson?, Never> = .init(nil)
-    var newRegionOSMID: CurrentValueSubject<String?, Never> = .init(nil)
+    var currentRegion: CurrentValueSubject<SelectedRegion, Never> = .init(.noneSelected)
+    var newRegionOSMID: CurrentValueSubject<String, Never> = .init("")
+    
+    var isLeafNodeRegion: Bool {
+        switch currentRegion.value {
+        case .selected(let region):
+            return (region.children ?? []).isEmpty
+        case .noneSelected:
+            return false
+        }
+    }
+    var hasSelectedRegion: Bool {
+        switch currentRegion.value {
+        case .selected:
+            return true
+        case .noneSelected:
+            return false
+        }
+    }
     
     @Published var regionTree: [RegionJson] = []
     
@@ -83,11 +100,15 @@ class DataStore: ObservableObject, WineRegionProviding {
             }.store(in: &cancellables)
         
         currentRegion
-            .dropFirst()
-            .compactMap { $0 }
-            .sink { [weak self] region in
-                print("current region: \(region.title)")
-                self?.wineRegionLib.loadMap(for: region)
+            .sink { [weak self] selectedRegion in
+                switch selectedRegion {
+                case .selected(let region):
+                    print("current region: \(region.title)")
+                    self?.wineRegionLib.loadMap(for: region)
+
+                case .noneSelected:
+                    break
+                }
             }.store(in: &cancellables)
         
         // With the new osmID and a selected region,
@@ -95,14 +116,24 @@ class DataStore: ObservableObject, WineRegionProviding {
         // 2. then update with the selected region as the parent,
         // 3. finally update the tree
         newRegionOSMID
-            .removeDuplicates()
-            .compactMap { $0 }
-            .combineLatest(currentRegion.compactMap { $0 })
-            .eraseToAnyPublisher()
-            .flatMap { newOSMID, currentRegion in
-                self.wineRegionLib.createRegion(osmID: newOSMID, asChildTo: currentRegion)
+            .dropFirst()
+            .combineLatest(currentRegion
+                            .dropFirst()
+                            .compactMap({ selection in
+                                switch selection {
+                                case .selected(let region):
+                                    print("current region has changed \(region.title)")
+                                    return region
+                                case .noneSelected:
+                                    return nil
+                                }
+                            }
+                            )).eraseToAnyPublisher()
+            .flatMap { osmIDToAdd, selectedRegion in
+                //            print("we got new osmid and parent \(selectedRegion.title)")
+                return self.wineRegionLib.createRegion(osmID: osmIDToAdd, asChildTo: selectedRegion)
             }.sink { completionValue in
-                print("completionValue")
+                print("completionValue \(completionValue)")
             } receiveValue: { regionJson in
                 self.wineRegionLib.getRegionTree()
             }.store(in: &cancellables)
@@ -112,15 +143,15 @@ class DataStore: ObservableObject, WineRegionProviding {
     }
     
     public func deleteSelectedRegion() {
-        guard let unwrappedCurrentRegion = currentRegion.value else { return }
+        guard case let .selected(region) = currentRegion.value else {
+            print("no region selected, nothing to delete")
+            return
+        }
         wineRegionLib
-            .delete(region: unwrappedCurrentRegion)
+            .delete(region: region)
             .sink { [weak self] completionState in
-                print(completionState)
-                self?.regionTree.removeAll { testRegionJson -> Bool in
-                    testRegionJson == unwrappedCurrentRegion
-                }
-                self?.currentRegion.send(nil)
+                self?.wineRegionLib.getRegionTree()
+                self?.currentRegion.send(.noneSelected)
             } receiveValue: { regionJson in
                 print("regionJson")
             }.store(in: &cancellables)

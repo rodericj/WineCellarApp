@@ -22,7 +22,7 @@ struct RegionListNavButtons: View {
             }) {
                 Image(systemName: "arrow.clockwise")
             }
-            if dataStore.currentRegion.value != nil && dataStore.currentRegion.value!.children!.isEmpty {
+            if dataStore.isLeafNodeRegion {
                 Button(action: {
                     dataStore.deleteSelectedRegion()
                 }) {
@@ -45,7 +45,7 @@ struct RegionNavigation: View {
 
             // Detail view
             ContentView(wineMapView: wineMapView)
-                .navigationBarHidden(true)
+                .navigationBarHidden(false)
         }
     }
 }
