@@ -8,8 +8,11 @@
 import Foundation
 import MapKit
 import WineRegionLib
+import Combine
 
 class BottleDataStore: ObservableObject, WineRegionProviding {
+    var currentRegion: CurrentValueSubject<SelectedRegion, Never> = .init(.noneSelected)
+    
     var wineRegionLib: WineRegion = WineRegion()
 
     @Published var mapItems: [MKMapItem] = []
