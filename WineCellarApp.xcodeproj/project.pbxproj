@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		5F017AA92595A71600AE92A8 /* WineCellar in Frameworks */ = {isa = PBXBuildFile; productRef = 5F017AA82595A71600AE92A8 /* WineCellar */; };
 		5F043E9625A59A9700100D5C /* ChateauxSearchControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F043E9525A59A9700100D5C /* ChateauxSearchControl.swift */; };
-		5F05D1C825A9815D007C32E8 /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5F05D1C725A9815D007C32E8 /* WineRegionLib */; };
-		5F05D1D025A98189007C32E8 /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5F05D1CF25A98189007C32E8 /* WineRegionLib */; };
 		5F05D1FD25A982B9007C32E8 /* ChateauxSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */; };
 		5F05D1FE25A982B9007C32E8 /* ChateauxSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */; };
 		5F05D20625A98DEF007C32E8 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20525A98DEF007C32E8 /* DataStore.swift */; };
@@ -40,6 +38,8 @@
 		5F835378256DC9EE00C2345F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835377256DC9EE00C2345F /* ContentView.swift */; };
 		5F835381256E1B1C00C2345F /* BottleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835380256E1B1C00C2345F /* BottleDetail.swift */; };
 		5F835386256E1DAC00C2345F /* BottleTextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835385256E1DAC00C2345F /* BottleTextContent.swift */; };
+		5F8396D925D0A59100240E5D /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5F8396D825D0A59100240E5D /* WineRegionLib */; };
+		5F8396E225D0A62D00240E5D /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5F8396E125D0A62D00240E5D /* WineRegionLib */; };
 		5FB2381F2572228400F69FE5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapView.swift */; };
 		5FB3DAB025BBF83D00CE392C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FB3DAAF25BBF83D00CE392C /* Media.xcassets */; };
 		5FB3DAB225BBF83D00CE392C /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB3DAB125BBF83D00CE392C /* ActionViewController.swift */; };
@@ -49,7 +49,6 @@
 		5FB3DB0525BC0B7E00CE392C /* WineRegionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */; };
 		5FB3DB2625BC0C8900CE392C /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
 		5FB3DB2E25BC0C9500CE392C /* ExternalTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AF425886EF80078CE7A /* ExternalTileOverlay.swift */; };
-		5FB3DB5D25BC0E3A00CE392C /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5FB3DB5C25BC0E3A00CE392C /* WineRegionLib */; };
 		5FB3DB7725BD31AD00CE392C /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapView.swift */; };
 		5FB3DB8725BD31FC00CE392C /* MapKitOverlayableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */; };
 		5FB3DB8825BD31FC00CE392C /* MapKitOverlayableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */; };
@@ -171,6 +170,8 @@
 		5FB3DAC525BBFBE500CE392C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitOverlayableExtensions.swift; sourceTree = "<group>"; };
 		5FB3DBAE25BD3C0000CE392C /* TestContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestContent.swift; sourceTree = "<group>"; };
+		5FC09FBC25CA7A2900C0DA97 /* NominatimConsumerActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NominatimConsumerActionExtension.entitlements; sourceTree = "<group>"; };
+		5FC09FD225CA7A8400C0DA97 /* WineRegionsApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WineRegionsApp.entitlements; sourceTree = "<group>"; };
 		5FE9A0B32570D98D00DB353B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		5FFBFF64257EA27D0088BFE2 /* WineRegionsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WineRegionsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FFBFF66257EA27D0088BFE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -194,7 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F017AA92595A71600AE92A8 /* WineCellar in Frameworks */,
-				5F05D1C825A9815D007C32E8 /* WineRegionLib in Frameworks */,
+				5F8396D925D0A59100240E5D /* WineRegionLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +218,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FB3DAC625BBFBE500CE392C /* MapKit.framework in Frameworks */,
-				5FB3DB5D25BC0E3A00CE392C /* WineRegionLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F05D1D025A98189007C32E8 /* WineRegionLib in Frameworks */,
+				5F8396E225D0A62D00240E5D /* WineRegionLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +366,7 @@
 		5FB3DAAE25BBF83D00CE392C /* NominatimConsumerActionExtension */ = {
 			isa = PBXGroup;
 			children = (
+				5FC09FBC25CA7A2900C0DA97 /* NominatimConsumerActionExtension.entitlements */,
 				5FB3DAAF25BBF83D00CE392C /* Media.xcassets */,
 				5FB3DAB125BBF83D00CE392C /* ActionViewController.swift */,
 				5FB3DAB325BBF83D00CE392C /* MainInterface.storyboard */,
@@ -377,6 +378,7 @@
 		5FFBFF65257EA27D0088BFE2 /* WineRegionsApp */ = {
 			isa = PBXGroup;
 			children = (
+				5FC09FD225CA7A8400C0DA97 /* WineRegionsApp.entitlements */,
 				5FFBFF66257EA27D0088BFE2 /* AppDelegate.swift */,
 				5FFBFF68257EA27D0088BFE2 /* SceneDelegate.swift */,
 				5FFBFF6A257EA27D0088BFE2 /* ContentView.swift */,
@@ -437,7 +439,7 @@
 			name = WineCellarApp;
 			packageProductDependencies = (
 				5F017AA82595A71600AE92A8 /* WineCellar */,
-				5F05D1C725A9815D007C32E8 /* WineRegionLib */,
+				5F8396D825D0A59100240E5D /* WineRegionLib */,
 			);
 			productName = WineCellarApp;
 			productReference = 5F835326256D96A600C2345F /* WineCellarApp.app */;
@@ -493,7 +495,6 @@
 			);
 			name = NominatimConsumerActionExtension;
 			packageProductDependencies = (
-				5FB3DB5C25BC0E3A00CE392C /* WineRegionLib */,
 			);
 			productName = NominatimConsumerActionExtension;
 			productReference = 5FB3DAAD25BBF83D00CE392C /* NominatimConsumerActionExtension.appex */;
@@ -516,7 +517,7 @@
 			);
 			name = WineRegionsApp;
 			packageProductDependencies = (
-				5F05D1CF25A98189007C32E8 /* WineRegionLib */,
+				5F8396E125D0A62D00240E5D /* WineRegionLib */,
 			);
 			productName = WineRegionsApp;
 			productReference = 5FFBFF64257EA27D0088BFE2 /* WineRegionsApp.app */;
@@ -607,7 +608,7 @@
 			mainGroup = 5F83531D256D96A600C2345F;
 			packageReferences = (
 				5F017AA72595A71600AE92A8 /* XCRemoteSwiftPackageReference "WineCellar" */,
-				5F05D1C625A9815D007C32E8 /* XCRemoteSwiftPackageReference "WineRegionLib" */,
+				5F8396D725D0A59100240E5D /* XCRemoteSwiftPackageReference "WineRegionLib" */,
 			);
 			productRefGroup = 5F835327256D96A600C2345F /* Products */;
 			projectDirPath = "";
@@ -1087,6 +1088,7 @@
 		5FB3DABB25BBF83D00CE392C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NominatimConsumerActionExtension/NominatimConsumerActionExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F4WTN36U2F;
 				INFOPLIST_FILE = NominatimConsumerActionExtension/Info.plist;
@@ -1099,6 +1101,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.thumbworks.WineRegionsApp.NominatimConsumerActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1107,6 +1111,7 @@
 		5FB3DABC25BBF83D00CE392C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NominatimConsumerActionExtension/NominatimConsumerActionExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F4WTN36U2F;
 				INFOPLIST_FILE = NominatimConsumerActionExtension/Info.plist;
@@ -1119,6 +1124,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.thumbworks.WineRegionsApp.NominatimConsumerActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1130,6 +1137,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WineRegionsApp/WineRegionsApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"WineRegionsApp/Preview Content\"";
 				DEVELOPMENT_TEAM = F4WTN36U2F;
@@ -1141,8 +1149,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.thumbworks.WineRegionsApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -1152,6 +1162,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WineRegionsApp/WineRegionsApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"WineRegionsApp/Preview Content\"";
 				DEVELOPMENT_TEAM = F4WTN36U2F;
@@ -1163,8 +1174,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.thumbworks.WineRegionsApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};
@@ -1338,9 +1351,9 @@
 				kind = branch;
 			};
 		};
-		5F05D1C625A9815D007C32E8 /* XCRemoteSwiftPackageReference "WineRegionLib" */ = {
+		5F8396D725D0A59100240E5D /* XCRemoteSwiftPackageReference "WineRegionLib" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rodericj/WineRegionLib.git";
+			repositoryURL = "git@github.com:rodericj/WineRegionLib.git";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -1354,23 +1367,18 @@
 			package = 5F017AA72595A71600AE92A8 /* XCRemoteSwiftPackageReference "WineCellar" */;
 			productName = WineCellar;
 		};
-		5F05D1C725A9815D007C32E8 /* WineRegionLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5F05D1C625A9815D007C32E8 /* XCRemoteSwiftPackageReference "WineRegionLib" */;
-			productName = WineRegionLib;
-		};
-		5F05D1CF25A98189007C32E8 /* WineRegionLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5F05D1C625A9815D007C32E8 /* XCRemoteSwiftPackageReference "WineRegionLib" */;
-			productName = WineRegionLib;
-		};
 		5F227B2E258C6E5B00177EBA /* WineRegionLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WineRegionLib;
 		};
-		5FB3DB5C25BC0E3A00CE392C /* WineRegionLib */ = {
+		5F8396D825D0A59100240E5D /* WineRegionLib */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5F05D1C625A9815D007C32E8 /* XCRemoteSwiftPackageReference "WineRegionLib" */;
+			package = 5F8396D725D0A59100240E5D /* XCRemoteSwiftPackageReference "WineRegionLib" */;
+			productName = WineRegionLib;
+		};
+		5F8396E125D0A62D00240E5D /* WineRegionLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F8396D725D0A59100240E5D /* XCRemoteSwiftPackageReference "WineRegionLib" */;
 			productName = WineRegionLib;
 		};
 /* End XCSwiftPackageProductDependency section */
