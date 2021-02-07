@@ -70,6 +70,23 @@
             ReferencedContainer = "container:WineCellarApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "REGION_SERVICE_HOST"
+            value = "http://tranquil-garden-84812.herokuapp.com"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "REGION_SERVICE_HOST"
+            value = "http://locahost:3000"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "REGION_SERVICE_HOST"
+            value = "https://thumbworksbot.ngrok.io"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
