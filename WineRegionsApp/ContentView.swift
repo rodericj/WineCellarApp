@@ -8,14 +8,23 @@
 import SwiftUI
 import WineRegionLib
 
+import MapboxMaps
+
 struct ContentView: View {
-    let wineMapView: WineMapView
     @EnvironmentObject var dataStore: DataStore
+    @EnvironmentObject var wineMapView: WineMapView
+    @EnvironmentObject var mapboxMapView: MapboxMapView
     @State var selectedMapType: MapTypeSelection = .normal
+   
     var body: some View {
         ZStack {
-            MapView(mapView: wineMapView, selectedMapType: $selectedMapType, dataStore: dataStore)
-                .edgesIgnoringSafeArea(.all)
+            if selectedMapType.title != "topo" {
+                MapKitBasedMapView(mapView: wineMapView, selectedMapType: $selectedMapType)
+                    .edgesIgnoringSafeArea(.all)
+            } else {
+                MapboxMapBasedViewRepresentable(mapView: mapboxMapView,
+                                                selectedMapType: $selectedMapType)
+            }
             VStack {
                 HStack {
                     Spacer()
@@ -38,6 +47,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(wineMapView: WineMapView(dataStore: DataStore()))
+        ContentView()
     }
 }

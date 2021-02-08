@@ -9,6 +9,8 @@ import UIKit
 import SwiftUI
 import Combine
 import WineRegionLib
+import MapboxMaps
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,21 +18,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     let dataStore = DataStore()
     var wineMapView: WineMapView?
-
+    var mapboxMapView = MapboxMapView()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         wineMapView = WineMapView(dataStore: dataStore)
-
-        guard let wineMapView = wineMapView else { return }
+        
+        guard let wineMapView = wineMapView else {
+            print("the wine map view was not created.")
+            return
+        }
 
         wineMapView.translatesAutoresizingMaskIntoConstraints = false
         // Create the SwiftUI view that provides the window contents.
-        let contentView = RegionNavigation(wineMapView: wineMapView)
+        let contentView = RegionNavigation()
             .environmentObject(dataStore.wineRegionLib)
             .environmentObject(wineMapView)
+            .environmentObject(mapboxMapView)
             .environmentObject(dataStore)
 
         dataStore.wineRegionLib.getRegionTree()

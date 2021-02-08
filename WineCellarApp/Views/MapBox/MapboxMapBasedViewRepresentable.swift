@@ -5,11 +5,11 @@ class MapBoxMapCoordinator: NSObject, ObservableObject {
     
 }
 
-struct MapboxMapViewRepresentable: UIViewRepresentable {
+struct MapboxMapBasedViewRepresentable: UIViewRepresentable {
     
     let mapView: MapboxMaps.MapView
     @Binding var selectedMapType: MapTypeSelection
-    var dataStore: WineRegionProviding
+    @EnvironmentObject var dataStore: DataStore
 
     func makeUIView(context: Context) -> MapboxMaps.MapView {
 //        mapView.delegate = context.coordinator

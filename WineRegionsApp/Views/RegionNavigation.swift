@@ -35,7 +35,6 @@ struct RegionListNavButtons: View {
 
 struct RegionNavigation: View {
     @EnvironmentObject private var wineRegionLib: WineRegion
-    let wineMapView: WineMapView
     var body: some View {
         NavigationView {
             RegionList()
@@ -44,7 +43,7 @@ struct RegionNavigation: View {
                 .navigationBarItems(trailing: RegionListNavButtons())
 
             // Detail view
-            ContentView(wineMapView: wineMapView)
+            ContentView()
                 .navigationBarHidden(false)
         }
     }
@@ -52,6 +51,6 @@ struct RegionNavigation: View {
 
 struct RegionNavigation_Previews: PreviewProvider {
     static var previews: some View {
-        RegionNavigation(wineMapView: WineMapView(dataStore: DataStore()))
+        RegionNavigation()
     }
 }

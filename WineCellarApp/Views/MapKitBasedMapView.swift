@@ -131,7 +131,7 @@ extension MKPolygon {
 struct MapKitBasedMapView: UIViewRepresentable {
     let mapView: MKMapView
     @Binding var selectedMapType: MapTypeSelection
-    var dataStore: WineRegionProviding
+    @EnvironmentObject var dataStore: DataStore
 
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
