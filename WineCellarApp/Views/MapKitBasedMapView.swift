@@ -31,7 +31,7 @@ extension MKMapItem: MKAnnotation {
 }
 
 class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
-    var parent: MapView
+    var parent: MapKitBasedMapView
     let mapView: MKMapView
     var dataStore: WineRegionProviding
 
@@ -42,7 +42,7 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }()
 
-    init(_ parent: MapView, mapView: MKMapView, dataStore: WineRegionProviding) {
+    init(_ parent: MapKitBasedMapView, mapView: MKMapView, dataStore: WineRegionProviding) {
         self.parent = parent
         self.mapView = mapView
         self.dataStore = dataStore
@@ -128,7 +128,7 @@ extension MKPolygon {
     }
 }
 
-struct MapView: UIViewRepresentable {
+struct MapKitBasedMapView: UIViewRepresentable {
     let mapView: MKMapView
     @Binding var selectedMapType: MapTypeSelection
     var dataStore: WineRegionProviding
