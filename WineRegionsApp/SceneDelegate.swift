@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     let dataStore = DataStore()
     var wineMapView: WineMapView?
-    var mapboxMapView = MapboxMapView()
+    var mapboxMapView: MapboxMapView?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -26,9 +26,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         wineMapView = WineMapView(dataStore: dataStore)
-        
+        mapboxMapView = MapboxMapView(dataStore: dataStore)
         guard let wineMapView = wineMapView else {
             print("the wine map view was not created.")
+            return
+        }
+        
+        guard let mapboxMapView = mapboxMapView else {
+            print("the mapbox map view was not created.")
             return
         }
 

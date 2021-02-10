@@ -12,7 +12,7 @@ import SwiftUI
 
 class WineMapView: MKMapView, ObservableObject {
 
-    var cancellable: AnyCancellable? = nil
+    var cancellables: [AnyCancellable] = []
     var annotationsCancellable: AnyCancellable? = nil
     let dataStore: WineRegionProviding
     var currentSearch: MKLocalSearch?
@@ -21,7 +21,7 @@ class WineMapView: MKMapView, ObservableObject {
         self.dataStore = dataStore
         super.init(frame: .zero)
 
-        cancellable = dataStore.wineRegionLib.$regionMaps
+        dataStore.wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
             .sink { _ in
             debugPrint("completed")
@@ -34,10 +34,10 @@ class WineMapView: MKMapView, ObservableObject {
                 break
 
             }
-        }
+        }.store(in: &cancellables)
 
         // We need to observe changes on the data store at this point
-        annotationsCancellable = dataStore.mapItemsPublisher.sink { mapItems in
+        dataStore.mapItemsPublisher.sink { mapItems in
             print("got map items \(mapItems.count)")
             self.removeAnnotations(self.annotations)
             let newAnnotations = mapItems.filter({ mapItem in
@@ -48,7 +48,7 @@ class WineMapView: MKMapView, ObservableObject {
                     } != nil
             })
             self.addAnnotations(newAnnotations)
-        }
+        }.store(in: &cancellables)
     }
 
     private func handle(mapMapping: [MapKitOverlayable]) {
