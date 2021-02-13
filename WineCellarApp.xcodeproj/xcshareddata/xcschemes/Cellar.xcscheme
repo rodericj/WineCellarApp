@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5F835325256D96A600C2345F"
-               BuildableName = "WineCellarApp.app"
-               BlueprintName = "WineCellarApp"
+               BuildableName = "Cellar.app"
+               BlueprintName = "Cellar"
                ReferencedContainer = "container:WineCellarApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F835325256D96A600C2345F"
-            BuildableName = "WineCellarApp.app"
-            BlueprintName = "WineCellarApp"
+            BuildableName = "Cellar.app"
+            BlueprintName = "Cellar"
             ReferencedContainer = "container:WineCellarApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -82,8 +82,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F835325256D96A600C2345F"
-            BuildableName = "WineCellarApp.app"
-            BlueprintName = "WineCellarApp"
+            BuildableName = "Cellar.app"
+            BlueprintName = "Cellar"
             ReferencedContainer = "container:WineCellarApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
