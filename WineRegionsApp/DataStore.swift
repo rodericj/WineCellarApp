@@ -21,6 +21,7 @@ class DataStore: ObservableObject, WineRegionProviding {
     var currentRegion: CurrentValueSubject<SelectedRegion, Never> = .init(.noneSelected)
     var newRegionOSMID: CurrentValueSubject<String, Never> = .init("")
     
+    // Region List state
     var isLeafNodeRegion: Bool {
         switch currentRegion.value {
         case .selected(let region):
@@ -39,13 +40,23 @@ class DataStore: ObservableObject, WineRegionProviding {
     }
     
     @Published var regionTree: [RegionJson] = []
-    
     @Published var filteredRegionTree: [RegionJson] = []
     @Published var regionTreeLoadingProgress: Float = 0
     @Published var mapItems: [MKMapItem] = []
-    var mapItemsPublisher: Published<[MKMapItem]>.Publisher { $mapItems }
     
-    var region: MKCoordinateRegion = .init()
+    // Map View State
+    @Published var selectedMapType: MapTypeSelection = .topo // this changes defaults us to mapbox
+    var mapItemsPublisher: Published<[MKMapItem]>.Publisher { $mapItems }
+    var region: MKCoordinateRegion = .init() {
+        didSet {
+            print("the region in the dataStore has changed \(region)")
+        }
+    }
+    var mapZoom: CGFloat = 1 {
+        didSet {
+            print("the zoom in the dataStore has changed \(mapZoom)")
+        }
+    }
     
     init() {
 //        filterCancellable = regionFilter.$filterString.combineLatest($regionTree)

@@ -95,6 +95,10 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         dataStore.region = mapView.region
+        let zoomWidth = mapView.visibleMapRect.size.width
+        let zoomFactor = CGFloat(log2(zoomWidth)) - 9
+        dataStore.mapZoom = zoomFactor
+        
         if let finalRect = finalRect {
             self.finalRect = nil
             setMapRect(finalRect, on: mapView)
@@ -135,6 +139,9 @@ struct MapKitBasedMapView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
+        print("need to set the zoom and center coordinates")
+        mapView.region = dataStore.region
+        // TODO it seems as though the geojson does not persist between map type changes
         return mapView
     }
 

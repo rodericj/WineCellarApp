@@ -14,31 +14,18 @@ struct ContentView: View {
     @EnvironmentObject var dataStore: DataStore
     @EnvironmentObject var wineMapView: WineMapView
     @EnvironmentObject var mapboxMapView: MapboxMapView
-    @State var selectedMapType: MapTypeSelection = .normal
    
     var body: some View {
         ZStack {
-            if selectedMapType.title != "topo" {
-                MapKitBasedMapView(mapView: wineMapView, selectedMapType: $selectedMapType)
+            if dataStore.selectedMapType.title != "topo" {
+                MapKitBasedMapView(mapView: wineMapView, selectedMapType: $dataStore.selectedMapType)
                     .edgesIgnoringSafeArea(.all)
             } else {
                 MapboxMapBasedViewRepresentable(mapView: mapboxMapView,
-                                                selectedMapType: $selectedMapType)
+                                                selectedMapType: $dataStore.selectedMapType)
             }
             VStack {
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        if let searchString = UIPasteboard.general.string {
-                            dataStore.newRegionOSMID.send(searchString)
-                        }
-                    }) {
-                        Image(systemName: "calendar")
-                            .frame(width: 60, height: 60, alignment: .center)
-                    }
-                }
-                Spacer()
-                MapSelectionControl(selectedMapType: $selectedMapType)
+                MapSelectionControl(selectedMapType: $dataStore.selectedMapType)
                 ChateauxSearchControl()
             }.padding() 
         }

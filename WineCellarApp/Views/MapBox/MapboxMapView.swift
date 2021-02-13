@@ -3,14 +3,45 @@ import Combine
 import MapKit // for MKGeoJSONDecoder()
 import Turf // for FeatureCollection
 
+private enum MapStyle {
+    case topo
+    case hillShader
+    
+    var url: URL {
+        switch self {
+        case .topo:
+            return URL(string: "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32")!
+        case .hillShader:
+            return URL(string: "mapbox://styles/roderic/ckkz10f4v0aos17jtqk3gnqpw")!
+        }
+    }
+}
+
+extension MapboxMapView: CameraViewDelegate {
+    func cameraViewManipulated(for cameraView: CameraView) {
+        print("the camera view changed \(cameraView.visibleCoordinateBounds)")
+        
+        let bounds = cameraView.visibleCoordinateBounds
+        let latDelta = bounds.northeast.latitude - bounds.southwest.latitude
+        let lonDelta = bounds.northeast.longitude - bounds.southwest.longitude
+        let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
+        dataStore.region = MKCoordinateRegion(center: cameraView.centerCoordinate, span: span)
+        dataStore.mapZoom = cameraView.zoom
+    }
+}
+
 class MapboxMapView: MapboxMaps.MapView, ObservableObject {
+    var dataStore: WineRegionProviding
+    var cancellables: [AnyCancellable] = []
     
     init(dataStore: DataStore) {
         
         let myResourceOptions = ResourceOptions(accessToken: "pk.eyJ1Ijoicm9kZXJpYyIsImEiOiJja2t2ajNtMXMxZjdjMm9wNmYyZHR1ZWN3In0.mM6CghYW2Uil53LD5uQrGw")
         self.dataStore = dataStore
         super.init(with: .zero, resourceOptions: myResourceOptions)
-        style.styleURL = StyleURL.custom(url: URL(string: "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32")!)
+        self.cameraView.delegate = self
+//        style.styleURL = StyleURL.custom(url: MapStyle.topo.url)
+        style.styleURL = StyleURL.custom(url: MapStyle.hillShader.url)
         
         dataStore.wineRegionLib.$regionMapsData
             .receive(on: DispatchQueue.main)
@@ -22,7 +53,6 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
             case .regions(let mapArrayOfData):
                 mapArrayOfData.forEach { [weak self] data in
                     var geoJSONSource = GeoJSONSource()
-
                     do {
                         let parsedFeature = try GeoJSON.parse(FeatureCollection.self, from: data)
                         geoJSONSource.data = .featureCollection(parsedFeature)

@@ -13,6 +13,8 @@ struct MapboxMapBasedViewRepresentable: UIViewRepresentable {
     @EnvironmentObject var dataStore: DataStore
 
     func makeUIView(context: Context) -> MapboxMaps.MapView {
+        mapView.cameraManager.setCamera(centerCoordinate: dataStore.region.center,
+                                        zoom: dataStore.mapZoom)
         return mapView
     }
 
