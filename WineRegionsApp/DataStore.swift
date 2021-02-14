@@ -45,14 +45,14 @@ class DataStore: ObservableObject, WineRegionProviding {
     @Published var mapItems: [MKMapItem] = []
     
     // Map View State
-    @Published var selectedMapType: MapTypeSelection = .topo // this changes defaults us to mapbox
+    @Published var selectedMapType: WineMapType = WineMapType.MapKit(.standard) // this changes defaults us to mapbox
     var mapItemsPublisher: Published<[MKMapItem]>.Publisher { $mapItems }
     var region: MKCoordinateRegion = .init() {
         didSet {
-            print("the region in the dataStore has changed \(region)")
+            print("the region in the dataStore has changed:\n \(region.center.latitude) \(region.center.longitude)\n\(region.span.latitudeDelta) \(region.span.longitudeDelta)")
         }
     }
-    var mapZoom: CGFloat = 1 {
+    var mapZoom: Double = 1 {
         didSet {
             print("the zoom in the dataStore has changed \(mapZoom)")
         }

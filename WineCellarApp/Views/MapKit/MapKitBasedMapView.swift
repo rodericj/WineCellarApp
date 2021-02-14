@@ -10,21 +10,6 @@ import SwiftUI
 import WineRegionLib
 import Combine
 
-extension MapTypeSelection {
-    var mapType: MKMapType {
-        switch self.title {
-        case MapTypeSelection.normal.title:
-            return .standard
-        case MapTypeSelection.topo.title:
-            return .standard
-        case MapTypeSelection.sat.title:
-            return .satellite
-        default:
-            return .standard
-        }
-    }
-}
-
 extension MKMapItem: MKAnnotation {
     public var coordinate: CLLocationCoordinate2D { placemark.coordinate }
     public var title: String? { name }
@@ -36,7 +21,6 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
     var dataStore: WineRegionProviding
 
     private var finalRect: MKMapRect?
-    let tileRenderer = MKTileOverlayRenderer(tileOverlay: ExternalTileOverlay(source: .openstreetMap))
     private let padding: UIEdgeInsets = {
         let inset = UIScreen.main.bounds.size.width * 0.05
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
@@ -48,11 +32,13 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
         self.dataStore = dataStore
     }
 
-    var openStreetMapsRendererEnabled: Bool = false
-
-    func updateMapType(selection: MapTypeSelection) {
-        openStreetMapsRendererEnabled = selection.title == MapTypeSelection.topo.title
-        mapView.mapType = selection.mapType
+    func updateMapType(selection: WineMapType) {
+        switch selection {
+        case .MapKit(let type):
+            mapView.mapType = type
+        default:
+            break
+        }
 
         // A-ha, this is where we need to figure out the regions, maybe instead of getting the current overlays from a publisher somehow
         // This seems to be required in order to get the renderers to reload
@@ -100,24 +86,18 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        dataStore.region = mapView.region
-        let zoomWidth = mapView.visibleMapRect.size.width
-        let zoomFactor = CGFloat(log2(zoomWidth)) - 9
-        dataStore.mapZoom = zoomFactor
-        
+       
         if let finalRect = finalRect {
             self.finalRect = nil
             setMapRect(finalRect, on: mapView)
+        } else {
+            dataStore.region = mapView.region
+            dataStore.mapZoom =  log2(360 * (Double(mapView.visibleMapRect.size.width/256) / mapView.region.span.longitudeDelta)) + 1
         }
     }
 
     let colors: [UIColor] = [.red, .orange, .yellow, .green, .blue, .purple]
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        // use this tile renderer when the user selects it
-        if openStreetMapsRendererEnabled {
-            return tileRenderer
-        }
-
         if let overlay = overlay as? MKPolygon {
             let renderer = MKPolygonRenderer(polygon: overlay)
             let color = colors[overlay.pointCount % colors.count]
@@ -140,7 +120,7 @@ extension MKPolygon {
 
 struct MapKitBasedMapView: UIViewRepresentable {
     let mapView: MKMapView
-    @Binding var selectedMapType: MapTypeSelection
+    @Binding var selectedMapType: WineMapType
     @EnvironmentObject var dataStore: DataStore
 
     func makeUIView(context: Context) -> MKMapView {

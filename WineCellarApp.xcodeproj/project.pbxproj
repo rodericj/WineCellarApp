@@ -32,8 +32,6 @@
 		5F345CD425872AC000A88EF6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9A0B32570D98D00DB353B /* SearchBar.swift */; };
 		5F58CDCD257B61AF005C4F5A /* BottleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */; };
 		5F58CDD5257C9181005C4F5A /* WineMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDD4257C9180005C4F5A /* WineMapView.swift */; };
-		5F6B6AF525886EF80078CE7A /* ExternalTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AF425886EF80078CE7A /* ExternalTileOverlay.swift */; };
-		5F6B6AF625886EF80078CE7A /* ExternalTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AF425886EF80078CE7A /* ExternalTileOverlay.swift */; };
 		5F6B6AFE258879130078CE7A /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
 		5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835329256D96A600C2345F /* AppDelegate.swift */; };
 		5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83532B256D96A600C2345F /* SceneDelegate.swift */; };
@@ -55,7 +53,6 @@
 		5FB3DAC625BBFBE500CE392C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB3DAC525BBFBE500CE392C /* MapKit.framework */; };
 		5FB3DB0525BC0B7E00CE392C /* WineRegionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */; };
 		5FB3DB2625BC0C8900CE392C /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
-		5FB3DB2E25BC0C9500CE392C /* ExternalTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AF425886EF80078CE7A /* ExternalTileOverlay.swift */; };
 		5FB3DB7725BD31AD00CE392C /* MapKitBasedMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapKitBasedMapView.swift */; };
 		5FB3DB8725BD31FC00CE392C /* MapKitOverlayableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */; };
 		5FB3DB8825BD31FC00CE392C /* MapKitOverlayableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */; };
@@ -139,7 +136,6 @@
 		5F345CC62587219500A88EF6 /* RegionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionList.swift; sourceTree = "<group>"; };
 		5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleHelper.swift; sourceTree = "<group>"; };
 		5F58CDD4257C9180005C4F5A /* WineMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineMapView.swift; sourceTree = "<group>"; };
-		5F6B6AF425886EF80078CE7A /* ExternalTileOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalTileOverlay.swift; sourceTree = "<group>"; };
 		5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonPanel.swift; sourceTree = "<group>"; };
 		5F835326256D96A600C2345F /* Cellar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cellar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F835329256D96A600C2345F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -314,7 +310,6 @@
 			isa = PBXGroup;
 			children = (
 				5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */,
-				5F6B6AF425886EF80078CE7A /* ExternalTileOverlay.swift */,
 				5F05D21C25ABD014007C32E8 /* DataStore.swift */,
 				5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */,
 				5FB3DBAE25BD3C0000CE392C /* TestContent.swift */,
@@ -790,7 +785,6 @@
 				5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */,
 				5F835386256E1DAC00C2345F /* BottleTextContent.swift in Sources */,
 				5FE9A0B42570D98D00DB353B /* SearchBar.swift in Sources */,
-				5F6B6AF525886EF80078CE7A /* ExternalTileOverlay.swift in Sources */,
 				5F83532E256D96A600C2345F /* LoginView.swift in Sources */,
 				5F58CDD5257C9181005C4F5A /* WineMapView.swift in Sources */,
 				5F58CDCD257B61AF005C4F5A /* BottleHelper.swift in Sources */,
@@ -828,7 +822,6 @@
 				5FB3DB0525BC0B7E00CE392C /* WineRegionProviding.swift in Sources */,
 				5FB3DAB225BBF83D00CE392C /* ActionViewController.swift in Sources */,
 				5FB3DB2625BC0C8900CE392C /* ExpandableButtonPanel.swift in Sources */,
-				5FB3DB2E25BC0C9500CE392C /* ExternalTileOverlay.swift in Sources */,
 				5FB3DBB125BD3C0000CE392C /* TestContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -853,7 +846,6 @@
 				5FFBFF6B257EA27D0088BFE2 /* ContentView.swift in Sources */,
 				5F345CC72587219500A88EF6 /* RegionList.swift in Sources */,
 				5F223EB725D0F45800ABAF90 /* MapboxMapBasedViewRepresentable.swift in Sources */,
-				5F6B6AF625886EF80078CE7A /* ExternalTileOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

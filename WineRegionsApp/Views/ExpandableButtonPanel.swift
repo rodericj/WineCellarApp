@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct MapSelectionControl: View {
-    @Binding var selectedMapType: MapTypeSelection
+    @Binding var selectedMapType: WineMapType
     var body: some View {
         HStack {
             Spacer()
             VStack {
                 Spacer()
                 ExpandableButtonPanel(primaryItem: $selectedMapType,
-                                      secondaryItems: [.sat, .topo, .normal])
+                                      secondaryItems: [.MapKit(.standard), .MapBox(.shadows)])
                     .padding()
 
             }
@@ -23,32 +23,62 @@ struct MapSelectionControl: View {
     }
 }
 
-//import MapKit
-//enum WineMapType {
-//    enum MapBoxType {
-//        case shadows
-//        case bigMountains
-//        case colorful
-//    }
-//    case MapKit(MKMapType)
-//    case MapBox(MapBoxType)
-//}
-
-struct MapTypeSelection: Identifiable { // TODO potentially call this an enum with 2 types:
+import MapKit
+enum WineMapType: Identifiable {
+    var id: String {
+        switch self {
+        case .MapKit(let type):
+            return "MapKit" + String(type.rawValue)
+        case .MapBox(let type):
+            return "MapBox" + String(type.hashValue)
+        }
+    }
     
-    static let sat = MapTypeSelection(title: "satelite", image: Image("SateliteMap"))
-    static let topo = MapTypeSelection(title: "topo", image: Image("OpenStreetMap"))
-    static let normal = MapTypeSelection(title: "normal", image: Image("NormalMap"))
-    var id: UUID = UUID()
-    let title: String
-    let image: Image
-    private(set) var action: (() -> Void)? = nil
+    enum MapBoxType {
+        case shadows
+        case bigMountains
+        case colorful
+    }
+    case MapKit(MKMapType)
+    case MapBox(MapBoxType)
+    
+    var image: Image {
+        switch self {
+        case .MapBox:
+            return Image("OpenStreetMap")
+        case .MapKit:
+            return Image("NormalMap")
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .MapBox:
+            return "Terrain"
+        case .MapKit:
+            return "Standard"
+        }
+    }
+    var isMapKit: Bool {
+        switch self {
+        case .MapKit(_):
+            return true
+        case .MapBox(_):
+            return false
+        }
+    }
+    
+    var action: (() -> Void) {
+        return {
+            print(self.title)
+        }
+    }
 }
 
 struct ExpandableButtonPanel: View {
 
-    @Binding var primaryItem: MapTypeSelection
-    @State var secondaryItems: [MapTypeSelection]
+    @Binding var primaryItem: WineMapType
+    @State var secondaryItems: [WineMapType]
 
     private let noop: () -> Void = {}
     private let size: CGFloat = 70
@@ -68,7 +98,7 @@ struct ExpandableButtonPanel: View {
                     self.isExpanded.toggle()
                     primaryItem = item
                 }
-                self.primaryItem.action?()
+                self.primaryItem.action()
                 }) {
                     item.image
                         .resizable()
@@ -78,29 +108,39 @@ struct ExpandableButtonPanel: View {
                        height: self.isExpanded ? self.size : 0)
                 .cornerRadius(cornerRadius)
             }
+            
+            if self.isExpanded  {
+                Button(action: {
+                    withAnimation {
+                        self.isExpanded.toggle()
+                    }
+                    self.primaryItem.action()
+                }) {
+                    VStack {
+                        Image(systemName: "map.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding()
+                    }
+                    .frame(width: size, height: size)
+                }
+            } else {
+                Button(action: {
+                    withAnimation {
+                        self.isExpanded.toggle()
+                    }
+                    self.primaryItem.action()
+                }) {
+                    VStack {
+                        Image(systemName: "map")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding()
+                    }
+                    .frame(width: size, height: size)
 
-            // The current button
-            Button(action: { withAnimation {
-                self.isExpanded.toggle()
-            }
-            self.primaryItem.action?()
-            }) {
-                if self.isExpanded  {
-                    Image(systemName: "pencil")
-                        .resizable()
-                        .frame(width: size / 2, height: size / 2)
-
-                } else {
-                    self.primaryItem.image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: size, height: size)
-                        .cornerRadius(cornerRadius)
                 }
             }
-            .padding(2)
-            .background(Color.white)
-            .cornerRadius(cornerRadius)
         }
 
         .shadow(

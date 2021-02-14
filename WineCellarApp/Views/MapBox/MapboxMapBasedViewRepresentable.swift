@@ -8,13 +8,13 @@ class MapBoxMapCoordinator: NSObject, ObservableObject {
 struct MapboxMapBasedViewRepresentable: UIViewRepresentable {
     
     let mapView: MapboxMaps.MapView
-    @Binding var selectedMapType: MapTypeSelection
+    @Binding var selectedMapType: WineMapType
     
     @EnvironmentObject var dataStore: DataStore
 
     func makeUIView(context: Context) -> MapboxMaps.MapView {
         mapView.cameraManager.setCamera(centerCoordinate: dataStore.region.center,
-                                        zoom: dataStore.mapZoom)
+                                        zoom: CGFloat(dataStore.mapZoom))
         return mapView
     }
 

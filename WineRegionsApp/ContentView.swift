@@ -17,7 +17,7 @@ struct ContentView: View {
    
     var body: some View {
         ZStack {
-            if dataStore.selectedMapType.title != "topo" {
+            if dataStore.selectedMapType.isMapKit {
                 MapKitBasedMapView(mapView: wineMapView, selectedMapType: $dataStore.selectedMapType)
                     .edgesIgnoringSafeArea(.all)
             } else {

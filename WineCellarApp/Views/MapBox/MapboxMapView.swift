@@ -26,7 +26,7 @@ extension MapboxMapView: CameraViewDelegate {
         let lonDelta = bounds.northeast.longitude - bounds.southwest.longitude
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
         dataStore.region = MKCoordinateRegion(center: cameraView.centerCoordinate, span: span)
-        dataStore.mapZoom = cameraView.zoom
+        dataStore.mapZoom = Double(cameraView.zoom)
     }
 }
 
