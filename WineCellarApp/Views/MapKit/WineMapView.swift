@@ -21,6 +21,7 @@ class WineMapView: MKMapView, ObservableObject {
         self.dataStore = dataStore
         super.init(frame: .zero)
 
+        // and this is where we get the original map from 
         dataStore.wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
             .sink { _ in

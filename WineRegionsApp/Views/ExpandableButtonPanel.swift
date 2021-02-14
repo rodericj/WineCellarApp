@@ -23,7 +23,19 @@ struct MapSelectionControl: View {
     }
 }
 
-struct MapTypeSelection: Identifiable {
+//import MapKit
+//enum WineMapType {
+//    enum MapBoxType {
+//        case shadows
+//        case bigMountains
+//        case colorful
+//    }
+//    case MapKit(MKMapType)
+//    case MapBox(MapBoxType)
+//}
+
+struct MapTypeSelection: Identifiable { // TODO potentially call this an enum with 2 types:
+    
     static let sat = MapTypeSelection(title: "satelite", image: Image("SateliteMap"))
     static let topo = MapTypeSelection(title: "topo", image: Image("OpenStreetMap"))
     static let normal = MapTypeSelection(title: "normal", image: Image("NormalMap"))

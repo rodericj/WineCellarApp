@@ -54,6 +54,7 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
         openStreetMapsRendererEnabled = selection.title == MapTypeSelection.topo.title
         mapView.mapType = selection.mapType
 
+        // A-ha, this is where we need to figure out the regions, maybe instead of getting the current overlays from a publisher somehow
         // This seems to be required in order to get the renderers to reload
         let annotations = mapView.overlays
         mapView.removeOverlays(annotations)
@@ -79,10 +80,15 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
         }
     }
 
+    // i think this could work but really we want this coordinator to have access to the datastore, that's the real answer
+    var currentMappings: [MapKitOverlayable] = []
+    
     // Handles the zooming out to a common rect, before zooming to the final destination
     func handleNewMapping(features: [MapKitOverlayable], mapView: MKMapView) {
+        currentMappings = features
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
+        print("adding a mapping in mapKit")
         mapView.add(features: features)
         smoothePanRegion(mapView: mapView)
     }
@@ -146,7 +152,9 @@ struct MapKitBasedMapView: UIViewRepresentable {
     }
 
     func updateUIView(_ mapView: MKMapView, context: Context) {
-        context.coordinator.updateMapType(selection: selectedMapType)
+        print("We do however want to get the current overlay")
+//        dataStore.
+//        context.coordinator.updateMapType(selection: selectedMapType)
     }
 
     func makeCoordinator() -> Coordinator {
