@@ -15,7 +15,8 @@ struct MapSelectionControl: View {
             VStack {
                 Spacer()
                 ExpandableButtonPanel(primaryItem: $selectedMapType,
-                                      secondaryItems: [.MapKit(.standard), .MapBox(.shadows)])
+                                      secondaryItems: [.MapBox(.bigMountains),
+                                                       .MapBox(.shadows)])
                     .padding()
 
             }
@@ -23,54 +24,13 @@ struct MapSelectionControl: View {
     }
 }
 
-import MapKit
-enum WineMapType: Identifiable {
-    var id: String {
-        switch self {
-        case .MapKit(let type):
-            return "MapKit" + String(type.rawValue)
-        case .MapBox(let type):
-            return "MapBox" + String(type.hashValue)
-        }
-    }
-    
-    enum MapBoxType {
-        case shadows
-        case bigMountains
-        case colorful
-    }
-    case MapKit(MKMapType)
-    case MapBox(MapBoxType)
-    
+extension WineMapType {
     var image: Image {
         switch self {
         case .MapBox:
             return Image("OpenStreetMap")
         case .MapKit:
             return Image("NormalMap")
-        }
-    }
-    
-    var title: String {
-        switch self {
-        case .MapBox:
-            return "Terrain"
-        case .MapKit:
-            return "Standard"
-        }
-    }
-    var isMapKit: Bool {
-        switch self {
-        case .MapKit(_):
-            return true
-        case .MapBox(_):
-            return false
-        }
-    }
-    
-    var action: (() -> Void) {
-        return {
-            print(self.title)
         }
     }
 }

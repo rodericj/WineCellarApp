@@ -63,6 +63,10 @@
 		5FB3DBC725BD3E7300CE392C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20525A98DEF007C32E8 /* DataStore.swift */; };
 		5FB3DBDE25BD3F1700CE392C /* ChateauxSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */; };
 		5FE9A0B42570D98D00DB353B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9A0B32570D98D00DB353B /* SearchBar.swift */; };
+		5FF4FC6125ECBB9F000579F5 /* WineMapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */; };
+		5FF4FC6225ECBB9F000579F5 /* WineMapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */; };
+		5FF4FC6325ECBB9F000579F5 /* WineMapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */; };
+		5FF4FC6425ECBB9F000579F5 /* WineMapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */; };
 		5FFBFF67257EA27D0088BFE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFBFF66257EA27D0088BFE2 /* AppDelegate.swift */; };
 		5FFBFF69257EA27D0088BFE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFBFF68257EA27D0088BFE2 /* SceneDelegate.swift */; };
 		5FFBFF6B257EA27D0088BFE2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFBFF6A257EA27D0088BFE2 /* ContentView.swift */; };
@@ -169,6 +173,7 @@
 		5FC09FBC25CA7A2900C0DA97 /* NominatimConsumerActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NominatimConsumerActionExtension.entitlements; sourceTree = "<group>"; };
 		5FC09FD225CA7A8400C0DA97 /* WineRegionsApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WineRegionsApp.entitlements; sourceTree = "<group>"; };
 		5FE9A0B32570D98D00DB353B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineMapType.swift; sourceTree = "<group>"; };
 		5FFBFF64257EA27D0088BFE2 /* Regions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Regions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FFBFF66257EA27D0088BFE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5FFBFF68257EA27D0088BFE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -434,6 +439,7 @@
 				5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */,
 				5F05D20525A98DEF007C32E8 /* DataStore.swift */,
 				5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */,
+				5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */,
 			);
 			path = WineRegionsApp;
 			sourceTree = "<group>";
@@ -767,6 +773,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F33977025D63E8600587933 /* ContentView.swift in Sources */,
+				5FF4FC6425ECBB9F000579F5 /* WineMapType.swift in Sources */,
 				5F33979D25D6400C00587933 /* WineRegionProviding.swift in Sources */,
 				5F33979425D63FEB00587933 /* DataStore.swift in Sources */,
 				5F33976E25D63E8600587933 /* WineRegionEditorApp.swift in Sources */,
@@ -782,6 +789,7 @@
 				5F835366256D9B3100C2345F /* WineBottleNav.swift in Sources */,
 				5F05D21D25ABD014007C32E8 /* DataStore.swift in Sources */,
 				5F05D1FD25A982B9007C32E8 /* ChateauxSearch.swift in Sources */,
+				5FF4FC6125ECBB9F000579F5 /* WineMapType.swift in Sources */,
 				5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */,
 				5F835378256DC9EE00C2345F /* ContentView.swift in Sources */,
 				5FB2381F2572228400F69FE5 /* MapKitBasedMapView.swift in Sources */,
@@ -818,6 +826,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FB3DB8925BD31FC00CE392C /* MapKitOverlayableExtensions.swift in Sources */,
+				5FF4FC6325ECBB9F000579F5 /* WineMapType.swift in Sources */,
 				5FB3DBC725BD3E7300CE392C /* DataStore.swift in Sources */,
 				5F236C7425D1AABF007A3BD0 /* WineMapView.swift in Sources */,
 				5FB3DBDE25BD3F1700CE392C /* ChateauxSearch.swift in Sources */,
@@ -846,6 +855,7 @@
 				5F043E9625A59A9700100D5C /* ChateauxSearchControl.swift in Sources */,
 				5F6B6AFE258879130078CE7A /* ExpandableButtonPanel.swift in Sources */,
 				5F05D1FE25A982B9007C32E8 /* ChateauxSearch.swift in Sources */,
+				5FF4FC6225ECBB9F000579F5 /* WineMapType.swift in Sources */,
 				5FFBFF6B257EA27D0088BFE2 /* ContentView.swift in Sources */,
 				5F345CC72587219500A88EF6 /* RegionList.swift in Sources */,
 				5F223EB725D0F45800ABAF90 /* MapboxMapBasedViewRepresentable.swift in Sources */,

@@ -3,19 +3,6 @@ import Combine
 import MapKit // for MKGeoJSONDecoder()
 import Turf // for FeatureCollection
 
-private enum MapStyle {
-    case topo
-    case hillShader
-    
-    var url: URL {
-        switch self {
-        case .topo:
-            return URL(string: "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32")!
-        case .hillShader:
-            return URL(string: "mapbox://styles/roderic/ckkz10f4v0aos17jtqk3gnqpw")!
-        }
-    }
-}
 
 extension MapboxMapView: CameraViewDelegate {
     func cameraViewManipulated(for cameraView: CameraView) {
@@ -30,7 +17,34 @@ extension MapboxMapView: CameraViewDelegate {
     }
 }
 
+fileprivate extension WineMapType.MapBoxType {
+    var url: URL {
+        switch self {
+        case .shadows:
+            return URL(string: "mapbox://styles/roderic/ckkz10f4v0aos17jtqk3gnqpw")!
+        case .bigMountains:
+            return URL(string: "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32")!
+        }
+    }
+}
+
 class MapboxMapView: MapboxMaps.MapView, ObservableObject {
+    
+    // We need to use WineMapType
+    public enum MapStyle {
+        case topo
+        case hillShader
+        
+        var url: URL {
+            switch self {
+            case .topo:
+                return URL(string: "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32")!
+            case .hillShader:
+                return URL(string: "mapbox://styles/roderic/ckkz10f4v0aos17jtqk3gnqpw")!
+            }
+        }
+    }
+    
     var dataStore: WineRegionProviding
     var cancellables: [AnyCancellable] = []
     
@@ -42,6 +56,25 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         self.cameraView.delegate = self
 //        style.styleURL = StyleURL.custom(url: MapStyle.topo.url)
         style.styleURL = StyleURL.custom(url: MapStyle.hillShader.url)
+        
+        dataStore.$selectedMapType
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+            debugPrint("completed")
+        } receiveValue: { [weak self] mapType in
+            switch mapType {
+            
+            case .MapBox(let mapBoxType):
+                switch mapBoxType {
+                case .shadows:
+                    self?.style.styleURL = StyleURL.custom(url: MapStyle.hillShader.url)
+                case .bigMountains:
+                    self?.style.styleURL = StyleURL.custom(url: MapStyle.topo.url)
+                }
+            default:
+                break
+            }
+        }.store(in: &cancellables)
         
         dataStore.wineRegionLib.$regionMapsData
             .receive(on: DispatchQueue.main)
