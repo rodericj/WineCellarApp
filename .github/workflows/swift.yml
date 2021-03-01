@@ -8,8 +8,8 @@ jobs:
     strategy:
       matrix:
         run-config:
-          - { scheme: 'Regions', destination: 'platform=iOS Simulator,OS=14.2,name=iPhone 12' }
-          - { scheme: 'Cellar', destination: 'platform=iOS Simulator,OS=14.2,name=iPhone 12' }
+          - { scheme: 'Regions', destination: 'platform=iOS Simulator,OS=14.4,name=iPhone 12' }
+          #- { scheme: 'Cellar', destination: 'platform=iOS Simulator,OS=14.4,name=iPhone 12' }
 
     steps:
     - name: Checkout Project
