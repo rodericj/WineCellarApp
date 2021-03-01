@@ -19,7 +19,7 @@ jobs:
       run: xcode-select -p
 
     - name: Switch to Xcode 12
-      run: sudo xcode-select -s /Applications/Xcode_12.2.app
+      run: sudo xcode-select -s /Applications/Xcode_12.4.app
       
     - name: Set known hosts on build machine
       run: for ip in $(dig @8.8.8.8 github.com +short); do ssh-keyscan github.com,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts
