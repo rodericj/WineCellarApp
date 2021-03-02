@@ -52,7 +52,7 @@ class DataStore: ObservableObject, WineRegionProviding {
             print("the region in the dataStore has changed:\n \(region.center.latitude) \(region.center.longitude)\n\(region.span.latitudeDelta) \(region.span.longitudeDelta)")
         }
     }
-    var mapZoom: Double = 1 {
+    var mapZoom: CGFloat = 1 {
         didSet {
             print("the zoom in the dataStore has changed \(mapZoom)")
         }

@@ -14,6 +14,7 @@ struct RegionListNavButtons: View {
         HStack {
             if dataStore.regionTreeLoadingProgress < 1 && dataStore.regionTreeLoadingProgress > 0 {
                 ProgressView()
+                Spacer()
             } else {
                 EmptyView()
             }

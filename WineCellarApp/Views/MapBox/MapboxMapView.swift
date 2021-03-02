@@ -13,7 +13,7 @@ extension MapboxMapView: CameraViewDelegate {
         let lonDelta = bounds.northeast.longitude - bounds.southwest.longitude
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
         dataStore.region = MKCoordinateRegion(center: cameraView.centerCoordinate, span: span)
-        dataStore.mapZoom = Double(cameraView.zoom)
+        dataStore.mapZoom = cameraView.zoom
     }
 }
 
@@ -53,8 +53,8 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         let myResourceOptions = ResourceOptions(accessToken: "pk.eyJ1Ijoicm9kZXJpYyIsImEiOiJja2t2ajNtMXMxZjdjMm9wNmYyZHR1ZWN3In0.mM6CghYW2Uil53LD5uQrGw")
         self.dataStore = dataStore
         super.init(with: .zero, resourceOptions: myResourceOptions)
+        
         self.cameraView.delegate = self
-//        style.styleURL = StyleURL.custom(url: MapStyle.topo.url)
         style.styleURL = StyleURL.custom(url: MapStyle.hillShader.url)
         
         dataStore.$selectedMapType
@@ -109,9 +109,19 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
             }
         }.store(in: &cancellables)
         
-        on(.mapLoadingFinished) { event in
-            print(event)
-            self.cameraManager.setCamera(centerCoordinate: self.cameraView.centerCoordinate, zoom: 1)
+        on(.cameraDidChange) { event in
+            print("camera changed \(event)")
+            print(self.cameraView.camera)
+        }
+        
+        on(.sourceChanged) { [weak self] event in
+            print("the source changed. update the camera?")
+            self?.cameraView.zoom = dataStore.mapZoom
+        }
+        
+        on(.styleLoadingFinished) { style in
+            // The below line is used for internal testing purposes only.
+            print("done loading style \(style)")
         }
     }
     

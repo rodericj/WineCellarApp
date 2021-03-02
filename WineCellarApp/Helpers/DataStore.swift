@@ -11,6 +11,8 @@ import WineRegionLib
 import Combine
 
 class BottleDataStore: ObservableObject, WineRegionProviding {
+    var mapZoom: CGFloat = 1
+    
     var currentRegion: CurrentValueSubject<SelectedRegion, Never> = .init(.noneSelected)
     
     var wineRegionLib: WineRegion = WineRegion()

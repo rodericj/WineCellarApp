@@ -20,5 +20,5 @@ protocol WineRegionProviding {
     var wineRegionLib: WineRegion { get }
     var mapItemsPublisher: Published<[MKMapItem]>.Publisher { get }
     var region: MKCoordinateRegion { get set }
-    var mapZoom: Double { get set }
+    var mapZoom: CGFloat { get set }
 }

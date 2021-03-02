@@ -92,7 +92,8 @@ class Coordinator: NSObject, MKMapViewDelegate, ObservableObject {
             setMapRect(finalRect, on: mapView)
         } else {
             dataStore.region = mapView.region
-            dataStore.mapZoom =  log2(360 * (Double(mapView.visibleMapRect.size.width/256) / mapView.region.span.longitudeDelta)) + 1
+            // remove this for now
+            dataStore.mapZoom =  CGFloat(log2(360 * (mapView.visibleMapRect.size.width/256 / mapView.region.span.longitudeDelta)) + 1)
         }
     }
 
