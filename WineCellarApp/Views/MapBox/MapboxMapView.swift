@@ -32,8 +32,8 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         var url: URL {
             let urlString: String
             switch self {
-            case .hillShader(let magnification):
-                switch magnification {
+            case .hillShader(let exaggeration):
+                switch exaggeration {
                 case .realistic:
                     urlString = "mapbox://styles/roderic/cklt0q3fv1zp418p72ci8fd2n"
                 case .doubled:
