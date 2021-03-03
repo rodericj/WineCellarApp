@@ -17,31 +17,43 @@ extension MapboxMapView: CameraViewDelegate {
     }
 }
 
-fileprivate extension WineMapType.MapBoxType {
-    var url: URL {
-        switch self {
-        case .shadows:
-            return URL(string: "mapbox://styles/roderic/ckkz10f4v0aos17jtqk3gnqpw")!
-        case .bigMountains:
-            return URL(string: "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32")!
-        }
-    }
-}
-
 class MapboxMapView: MapboxMaps.MapView, ObservableObject {
     
     // We need to use WineMapType
-    public enum MapStyle {
-        case topo
-        case hillShader
+    public enum MapStyle: Hashable {
+        public enum TerrainExaggeration: Int {
+            case realistic
+            case doubled
+            case quadrupled
+        }
+        case topo(TerrainExaggeration)
+        case hillShader(TerrainExaggeration)
         
         var url: URL {
+            let urlString: String
             switch self {
-            case .topo:
-                return URL(string: "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32")!
-            case .hillShader:
-                return URL(string: "mapbox://styles/roderic/ckkz10f4v0aos17jtqk3gnqpw")!
+            case .hillShader(let magnification):
+                switch magnification {
+                case .realistic:
+                    urlString = "mapbox://styles/roderic/cklt0q3fv1zp418p72ci8fd2n"
+                case .doubled:
+                    urlString = "mapbox://styles/roderic/ckkz10f4v0aos17jtqk3gnqpw"
+                case .quadrupled:
+                    urlString = "mapbox://styles/roderic/cklt0gs331zo417ozobmeh4i1"
+                }
+            case .topo(let exaggeration):
+                switch exaggeration {
+                
+                case .realistic:
+                    urlString = "mapbox://styles/roderic/cklt1452v206317o2py1tbby0"
+                case .doubled:
+                    urlString = "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32"
+                case .quadrupled:
+                    urlString = "mapbox://styles/roderic/cklt16pgx0sxz17o1hjzs1fmi"
+                }
             }
+            return URL(string: urlString)!
+
         }
     }
     
@@ -55,7 +67,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         super.init(with: .zero, resourceOptions: myResourceOptions)
         
         self.cameraView.delegate = self
-        style.styleURL = StyleURL.custom(url: MapStyle.hillShader.url)
+        style.styleURL = StyleURL.custom(url: MapStyle.hillShader(.realistic).url)
         
         dataStore.$selectedMapType
             .receive(on: DispatchQueue.main)
@@ -65,12 +77,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
             switch mapType {
             
             case .MapBox(let mapBoxType):
-                switch mapBoxType {
-                case .shadows:
-                    self?.style.styleURL = StyleURL.custom(url: MapStyle.hillShader.url)
-                case .bigMountains:
-                    self?.style.styleURL = StyleURL.custom(url: MapStyle.topo.url)
-                }
+                self?.style.styleURL = StyleURL.custom(url: mapBoxType.url)
             default:
                 break
             }

@@ -16,14 +16,9 @@ enum WineMapType: Identifiable {
             return "MapBox" + String(type.hashValue)
         }
     }
-    
-    enum MapBoxType {
-        case shadows
-        case bigMountains
-    }
-    
+
     case MapKit(MKMapType)
-    case MapBox(MapBoxType)
+    case MapBox(MapboxMapView.MapStyle)
     
     var title: String {
         switch self {

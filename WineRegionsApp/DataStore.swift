@@ -45,7 +45,7 @@ class DataStore: ObservableObject, WineRegionProviding {
     @Published var mapItems: [MKMapItem] = []
     
     // Map View State
-    @Published var selectedMapType: WineMapType = WineMapType.MapBox(.bigMountains) // this changes defaults us to mapbox
+    @Published var selectedMapType: WineMapType = WineMapType.MapBox(.hillShader(.realistic)) // this changes defaults us to mapbox
     var mapItemsPublisher: Published<[MKMapItem]>.Publisher { $mapItems }
     var region: MKCoordinateRegion = .init() {
         didSet {

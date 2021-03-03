@@ -15,8 +15,12 @@ struct MapSelectionControl: View {
             VStack {
                 Spacer()
                 ExpandableButtonPanel(primaryItem: $selectedMapType,
-                                      secondaryItems: [.MapBox(.bigMountains),
-                                                       .MapBox(.shadows)])
+                                      secondaryItems: [.MapBox(.topo(.realistic)),
+                                                       .MapBox(.topo(.doubled)),
+                                                       .MapBox(.topo(.quadrupled)),
+                                                       .MapBox(.hillShader(.realistic)),
+                                                       .MapBox(.hillShader(.doubled)),
+                                                       .MapBox(.hillShader(.quadrupled))])
                     .padding()
 
             }
