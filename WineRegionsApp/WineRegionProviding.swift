@@ -13,6 +13,16 @@ import Combine
 enum SelectedRegion {
     case selected(RegionJson)
     case noneSelected
+    
+    var title: String? {
+        switch self {
+        
+        case .selected(let region):
+            return region.title
+        case .noneSelected:
+            return nil
+        }
+    }
 }
 
 protocol WineRegionProviding {

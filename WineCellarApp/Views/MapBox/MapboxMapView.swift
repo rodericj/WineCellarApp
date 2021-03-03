@@ -21,10 +21,22 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
     
     // We need to use WineMapType
     public enum MapStyle: Hashable {
-        public enum TerrainExaggeration: Int {
+        public enum TerrainExaggeration: CustomStringConvertible {
+            public var description: String {
+                switch self {
+                case .realistic:
+                    return ""
+                case .doubled:
+                    return "2x"
+                case .quadrupled:
+                    return "4x"
+                }
+            }
+            
             case realistic
             case doubled
             case quadrupled
+            
         }
         case topo(TerrainExaggeration)
         case hillShader(TerrainExaggeration)
@@ -43,7 +55,6 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
                 }
             case .topo(let exaggeration):
                 switch exaggeration {
-                
                 case .realistic:
                     urlString = "mapbox://styles/roderic/cklt1452v206317o2py1tbby0"
                 case .doubled:
@@ -53,7 +64,6 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
                 }
             }
             return URL(string: urlString)!
-
         }
     }
     

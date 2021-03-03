@@ -28,8 +28,9 @@ struct ContentView: View {
                 MapSelectionControl(selectedMapType: $dataStore.selectedMapType)
                 ChateauxSearchControl()
             }.padding() 
-        }
+        }.navigationBarTitle(Text(verbatim: dataStore.currentRegionNavTitle))
     }
+
 }
 
 struct ContentView_Previews: PreviewProvider {

@@ -21,6 +21,30 @@ class DataStore: ObservableObject, WineRegionProviding {
     var currentRegion: CurrentValueSubject<SelectedRegion, Never> = .init(.noneSelected)
     var newRegionOSMID: CurrentValueSubject<String, Never> = .init("")
     
+    var currentSelectedMapStyle: CurrentValueSubject<WineMapType?, Never> = .init(nil)
+    
+    var currentRegionNavTitle: String {
+        var exaggerationString = ""
+        switch selectedMapType {
+        case .MapKit(_):
+            return ""
+        case .MapBox(let mapboxType):
+            switch mapboxType {
+            
+            case .topo(let exaggeration):
+                exaggerationString = exaggeration.description
+            case .hillShader(let exaggeration):
+                exaggerationString = exaggeration.description
+            }
+        }
+
+        switch currentRegion.value {
+        case .selected(let region):
+            return region.title.appendingFormat(" %@", exaggerationString)
+        case .noneSelected:
+            return ""
+        }
+    }
     // Region List state
     var isLeafNodeRegion: Bool {
         switch currentRegion.value {
@@ -57,7 +81,7 @@ class DataStore: ObservableObject, WineRegionProviding {
             print("the zoom in the dataStore has changed \(mapZoom)")
         }
     }
-    
+        
     init() {
 //        filterCancellable = regionFilter.$filterString.combineLatest($regionTree)
 //            .receive(on: DispatchQueue.main)
@@ -66,6 +90,7 @@ class DataStore: ObservableObject, WineRegionProviding {
 //                print(self.filteredRegionTree.count)
 //            }
 
+        
         wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
             .sink { result in
