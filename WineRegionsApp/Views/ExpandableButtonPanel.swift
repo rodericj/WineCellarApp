@@ -15,12 +15,17 @@ struct MapSelectionControl: View {
             VStack {
                 Spacer()
                 ExpandableButtonPanel(primaryItem: $selectedMapType,
-                                      secondaryItems: [.MapBox(.topo(.realistic)),
-                                                       .MapBox(.topo(.doubled)),
-                                                       .MapBox(.topo(.quadrupled)),
-                                                       .MapBox(.hillShader(.realistic)),
-                                                       .MapBox(.hillShader(.doubled)),
-                                                       .MapBox(.hillShader(.quadrupled))])
+                                      secondaryItems: [
+                                        .MapBox(.satellite(.realistic)),
+                                        .MapBox(.satellite(.doubled)),
+                                        .MapBox(.satellite(.quadrupled)),
+                                        .MapBox(.topo(.realistic)),
+                                        .MapBox(.topo(.doubled)),
+                                        .MapBox(.topo(.quadrupled)),
+                                        .MapBox(.hillShader(.realistic)),
+                                        .MapBox(.hillShader(.doubled)),
+                                        .MapBox(.hillShader(.quadrupled))
+                                      ])
                     .padding()
 
             }
@@ -45,7 +50,7 @@ struct ExpandableButtonPanel: View {
     @State var secondaryItems: [WineMapType]
 
     private let noop: () -> Void = {}
-    private let size: CGFloat = 70
+    private let size: CGFloat = 50
     private var cornerRadius: CGFloat {
         get { size / 2 }
     }

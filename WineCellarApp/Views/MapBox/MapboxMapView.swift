@@ -40,10 +40,20 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         }
         case topo(TerrainExaggeration)
         case hillShader(TerrainExaggeration)
-        
+        case satellite(TerrainExaggeration)
+
         var url: URL {
             let urlString: String
             switch self {
+            case .satellite(let exaggeration):
+                switch exaggeration {
+                case .realistic:
+                    urlString = "mapbox://styles/roderic/cklt2u3s921wd17r1kbb0sa7g"
+                case .doubled:
+                    urlString = "mapbox://styles/roderic/cklt354jn00sy17qhn3b7srzd"
+                case .quadrupled:
+                    urlString = "mapbox://styles/roderic/cklt358m0225v17qszo8fwfgn"
+                }
             case .hillShader(let exaggeration):
                 switch exaggeration {
                 case .realistic:
@@ -132,7 +142,6 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         }
         
         on(.sourceChanged) { [weak self] event in
-            print("the source changed. update the camera?")
             self?.cameraView.zoom = dataStore.mapZoom
         }
         

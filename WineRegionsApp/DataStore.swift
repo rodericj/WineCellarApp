@@ -35,6 +35,8 @@ class DataStore: ObservableObject, WineRegionProviding {
                 exaggerationString = exaggeration.description
             case .hillShader(let exaggeration):
                 exaggerationString = exaggeration.description
+            case .satellite(let exaggeration):
+                exaggerationString = exaggeration.description
             }
         }
 
