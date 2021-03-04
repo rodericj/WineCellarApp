@@ -12,6 +12,13 @@ jobs:
           #- { scheme: 'Cellar', destination: 'platform=iOS Simulator,OS=14.4,name=iPhone 12' }
 
     steps:
+    - name: Setup netrc
+    - uses: extractions/netrc@v1
+      with:
+        machine: api.mapbox.com
+        username:  mapbox
+        password: ${{ secrets.MAPBOXSECRET }}
+
     - name: Checkout Project
       uses: actions/checkout@v1
 
