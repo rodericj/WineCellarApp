@@ -13,42 +13,39 @@ protocol HasImage: Identifiable {
 }
 
 extension MapboxMapView.MapStyle: HasImage {
-    public var id: Int {
+    public var id: String {
         switch self {
-        case .topo:
-            return 1
-        case .hillShader:
-            return 2
-        case .satellite:
-            return 3
+        case .topo(let exaggeration):
+            return "topo" + exaggeration.id
+        case .hillShader(let exaggeration):
+            return "hillShader" + exaggeration.id
+        case .satellite(let exaggeration):
+            return "satellite" + exaggeration.id
         }
     }
     
     var image: Image {
         switch self {
         case .topo:
-            return Image("OpenStreetMap")
+            return Image("OpenStreetMap") // TODO get the appropriate images for this
         case .hillShader:
-            return Image("OpenStreetMap")
+            return Image("NormalMap")
         case .satellite:
-            return Image("OpenStreetMap")
+            return Image("SateliteMap")
         }
     }
 }
 
 
 extension MapboxMapView.MapStyle.TerrainExaggeration: HasImage {
-    public var id: Int {
+    public var id: String {
         return rawValue
     }
-    
     var image: Image {
         switch self {
         case .realistic:
             return Image("NormalMap")
         case .doubled:
-            return Image("NormalMap")
-        case .quadrupled:
             return Image("NormalMap")
         }
     }
@@ -66,9 +63,8 @@ struct MapSelectionControl: View {
                                       secondaryItems: [
                                         .realistic,
                                         .doubled,
-                                        .quadrupled
                                       ],
-                                      imageName: "map.fill")
+                                      imageName: "plus.magnifyingglass")
                     .padding()
 
             }

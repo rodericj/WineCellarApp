@@ -21,21 +21,18 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
     
     // We need to use WineMapType
     public enum MapStyle: Hashable {
-        public enum TerrainExaggeration: Int, CustomStringConvertible {
+        public enum TerrainExaggeration: String, CustomStringConvertible {
             public var description: String {
                 switch self {
                 case .realistic:
                     return ""
                 case .doubled:
                     return "2x"
-                case .quadrupled:
-                    return "4x"
                 }
             }
             
             case realistic
             case doubled
-            case quadrupled
             
         }
         case topo(TerrainExaggeration)
@@ -51,8 +48,6 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
                     urlString = "mapbox://styles/roderic/cklt2u3s921wd17r1kbb0sa7g"
                 case .doubled:
                     urlString = "mapbox://styles/roderic/cklt354jn00sy17qhn3b7srzd"
-                case .quadrupled:
-                    urlString = "mapbox://styles/roderic/cklt358m0225v17qszo8fwfgn"
                 }
             case .hillShader(let exaggeration):
                 switch exaggeration {
@@ -60,8 +55,6 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
                     urlString = "mapbox://styles/roderic/cklt0q3fv1zp418p72ci8fd2n"
                 case .doubled:
                     urlString = "mapbox://styles/roderic/ckkz10f4v0aos17jtqk3gnqpw"
-                case .quadrupled:
-                    urlString = "mapbox://styles/roderic/cklt0gs331zo417ozobmeh4i1"
                 }
             case .topo(let exaggeration):
                 switch exaggeration {
@@ -69,8 +62,6 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
                     urlString = "mapbox://styles/roderic/cklt1452v206317o2py1tbby0"
                 case .doubled:
                     urlString = "mapbox://styles/roderic/ckkuobvtp14p117rxa87f2b32"
-                case .quadrupled:
-                    urlString = "mapbox://styles/roderic/cklt16pgx0sxz17o1hjzs1fmi"
                 }
             }
             return URL(string: urlString)!

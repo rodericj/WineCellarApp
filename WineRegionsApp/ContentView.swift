@@ -21,7 +21,7 @@ struct ContentView: View {
             VStack {
                 MapSelectionControl(selectedMapType: $dataStore.selectedMapType,
                                     selectedMapExaggeration: $dataStore.selectedExaggerationLevel)
-                ChateauxSearchControl()
+//                ChateauxSearchControl()
             }.padding() 
         }.navigationBarTitle(Text(verbatim: dataStore.currentRegionNavTitle))
     }

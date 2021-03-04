@@ -25,16 +25,13 @@ class DataStore: ObservableObject, WineRegionProviding {
     
     var currentRegionNavTitle: String {
         var exaggerationString = ""
-        switch selectedMapType {
+        switch selectedExaggerationLevel {
         
-        case .topo(let exaggeration):
-            exaggerationString = exaggeration.description
-        case .hillShader(let exaggeration):
-            exaggerationString = exaggeration.description
-        case .satellite(let exaggeration):
-            exaggerationString = exaggeration.description
+        case .realistic:
+            exaggerationString = ""
+        case .doubled:
+            exaggerationString = "2x"
         }
-        
 
         switch currentRegion.value {
         case .selected(let region):
