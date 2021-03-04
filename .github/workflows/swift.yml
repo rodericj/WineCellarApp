@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Setup netrc
-    - uses: extractions/netrc@v1
+      uses: extractions/netrc@v1
       with:
         machine: api.mapbox.com
         username:  mapbox
