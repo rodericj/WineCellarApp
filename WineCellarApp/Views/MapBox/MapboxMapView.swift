@@ -132,7 +132,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
             }
         }.store(in: &cancellables)
         
-        on(.cameraDidChange) { event in
+        on(.cameraChanged) { event in
             print("camera changed \(event)")
             print(self.cameraView.camera)
         }
