@@ -21,7 +21,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
     
     // We need to use WineMapType
     public enum MapStyle: Hashable {
-        public enum TerrainExaggeration: CustomStringConvertible {
+        public enum TerrainExaggeration: Int, CustomStringConvertible {
             public var description: String {
                 switch self {
                 case .realistic:
@@ -90,17 +90,22 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         style.styleURL = StyleURL.custom(url: MapStyle.hillShader(.realistic).url)
         
         dataStore.$selectedMapType
+            .combineLatest(dataStore.$selectedExaggerationLevel)
+            .map {style, exaggeration -> MapStyle in
+                switch style {
+                case .topo(_):
+                    return MapStyle.topo(exaggeration)
+                case .hillShader(_):
+                    return MapStyle.hillShader(exaggeration)
+                case .satellite(_):
+                    return MapStyle.satellite(exaggeration)
+                }
+            }.map { $0.url }
             .receive(on: DispatchQueue.main)
             .sink { _ in
             debugPrint("completed")
-        } receiveValue: { [weak self] mapType in
-            switch mapType {
-            
-            case .MapBox(let mapBoxType):
-                self?.style.styleURL = StyleURL.custom(url: mapBoxType.url)
-            default:
-                break
-            }
+        } receiveValue: { [weak self] url in
+            self?.style.styleURL = StyleURL.custom(url: url)
         }.store(in: &cancellables)
         
         dataStore.wineRegionLib.$regionMapsData

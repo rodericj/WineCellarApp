@@ -35,11 +35,5 @@ enum WineMapType: Identifiable {
         case .MapBox(_):
             return false
         }
-    }
-    
-    var action: (() -> Void) {
-        return {
-            print(self.title)
-        }
-    }
+    }    
 }

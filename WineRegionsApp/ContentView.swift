@@ -12,20 +12,15 @@ import MapboxMaps
 
 struct ContentView: View {
     @EnvironmentObject var dataStore: DataStore
-    @EnvironmentObject var wineMapView: WineMapView
     @EnvironmentObject var mapboxMapView: MapboxMapView
    
     var body: some View {
         ZStack {
-            if dataStore.selectedMapType.isMapKit {
-                MapKitBasedMapView(mapView: wineMapView, selectedMapType: $dataStore.selectedMapType)
-                    .edgesIgnoringSafeArea(.all)
-            } else {
-                MapboxMapBasedViewRepresentable(mapView: mapboxMapView,
-                                                selectedMapType: $dataStore.selectedMapType)
-            }
+            MapboxMapBasedViewRepresentable(mapView: mapboxMapView,
+                                            selectedMapType: $dataStore.selectedMapType)
             VStack {
-                MapSelectionControl(selectedMapType: $dataStore.selectedMapType)
+                MapSelectionControl(selectedMapType: $dataStore.selectedMapType,
+                                    selectedMapExaggeration: $dataStore.selectedExaggerationLevel)
                 ChateauxSearchControl()
             }.padding() 
         }.navigationBarTitle(Text(verbatim: dataStore.currentRegionNavTitle))

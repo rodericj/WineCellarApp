@@ -7,25 +7,80 @@
 
 import SwiftUI
 
+
+protocol HasImage: Identifiable {
+    var image: Image { get }
+}
+
+extension MapboxMapView.MapStyle: HasImage {
+    public var id: Int {
+        switch self {
+        case .topo:
+            return 1
+        case .hillShader:
+            return 2
+        case .satellite:
+            return 3
+        }
+    }
+    
+    var image: Image {
+        switch self {
+        case .topo:
+            return Image("OpenStreetMap")
+        case .hillShader:
+            return Image("OpenStreetMap")
+        case .satellite:
+            return Image("OpenStreetMap")
+        }
+    }
+}
+
+
+extension MapboxMapView.MapStyle.TerrainExaggeration: HasImage {
+    public var id: Int {
+        return rawValue
+    }
+    
+    var image: Image {
+        switch self {
+        case .realistic:
+            return Image("NormalMap")
+        case .doubled:
+            return Image("NormalMap")
+        case .quadrupled:
+            return Image("NormalMap")
+        }
+    }
+}
+
 struct MapSelectionControl: View {
-    @Binding var selectedMapType: WineMapType
+    @Binding var selectedMapType: MapboxMapView.MapStyle
+    @Binding var selectedMapExaggeration: MapboxMapView.MapStyle.TerrainExaggeration
     var body: some View {
         HStack {
             Spacer()
             VStack {
                 Spacer()
+                ExpandableButtonPanel(primaryItem: $selectedMapExaggeration,
+                                      secondaryItems: [
+                                        .realistic,
+                                        .doubled,
+                                        .quadrupled
+                                      ],
+                                      imageName: "map.fill")
+                    .padding()
+
+            }
+            VStack {
+                Spacer()
                 ExpandableButtonPanel(primaryItem: $selectedMapType,
                                       secondaryItems: [
-                                        .MapBox(.satellite(.realistic)),
-                                        .MapBox(.satellite(.doubled)),
-                                        .MapBox(.satellite(.quadrupled)),
-                                        .MapBox(.topo(.realistic)),
-                                        .MapBox(.topo(.doubled)),
-                                        .MapBox(.topo(.quadrupled)),
-                                        .MapBox(.hillShader(.realistic)),
-                                        .MapBox(.hillShader(.doubled)),
-                                        .MapBox(.hillShader(.quadrupled))
-                                      ])
+                                        .satellite(.realistic),
+                                        .topo(.realistic),
+                                        .hillShader(.realistic),
+                                      ],
+                                      imageName: "map")
                     .padding()
 
             }
@@ -33,22 +88,31 @@ struct MapSelectionControl: View {
     }
 }
 
-extension WineMapType {
-    var image: Image {
-        switch self {
-        case .MapBox:
-            return Image("OpenStreetMap")
-        case .MapKit:
-            return Image("NormalMap")
+fileprivate struct ButtonPanel: View {
+    let size: CGFloat
+    let imageName: String
+    @Binding var isExpanded: Bool
+    var body: some View {
+        Button(action: {
+            withAnimation {
+                self.isExpanded.toggle()
+            }
+        }) {
+            VStack {
+                Image(systemName: imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+            }
+            .frame(width: size, height: size)
         }
     }
 }
+struct ExpandableButtonPanel<T: Identifiable & HasImage>: View {
 
-struct ExpandableButtonPanel: View {
-
-    @Binding var primaryItem: WineMapType
-    @State var secondaryItems: [WineMapType]
-
+    @Binding var primaryItem: T
+    @State var secondaryItems: [T]
+    let imageName: String
     private let noop: () -> Void = {}
     private let size: CGFloat = 50
     private var cornerRadius: CGFloat {
@@ -67,7 +131,6 @@ struct ExpandableButtonPanel: View {
                     self.isExpanded.toggle()
                     primaryItem = item
                 }
-                self.primaryItem.action()
                 }) {
                     item.image
                         .resizable()
@@ -79,36 +142,13 @@ struct ExpandableButtonPanel: View {
             }
             
             if self.isExpanded  {
-                Button(action: {
-                    withAnimation {
-                        self.isExpanded.toggle()
-                    }
-                    self.primaryItem.action()
-                }) {
-                    VStack {
-                        Image(systemName: "map.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .padding()
-                    }
-                    .frame(width: size, height: size)
-                }
+                ButtonPanel(size: size,
+                            imageName: "\(imageName).fill",
+                            isExpanded: $isExpanded)
             } else {
-                Button(action: {
-                    withAnimation {
-                        self.isExpanded.toggle()
-                    }
-                    self.primaryItem.action()
-                }) {
-                    VStack {
-                        Image(systemName: "map")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .padding()
-                    }
-                    .frame(width: size, height: size)
-
-                }
+                ButtonPanel(size: size,
+                            imageName: "\(imageName)",
+                            isExpanded: $isExpanded)
             }
         }
 

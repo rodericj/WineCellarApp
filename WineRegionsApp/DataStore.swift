@@ -26,19 +26,15 @@ class DataStore: ObservableObject, WineRegionProviding {
     var currentRegionNavTitle: String {
         var exaggerationString = ""
         switch selectedMapType {
-        case .MapKit(_):
-            return ""
-        case .MapBox(let mapboxType):
-            switch mapboxType {
-            
-            case .topo(let exaggeration):
-                exaggerationString = exaggeration.description
-            case .hillShader(let exaggeration):
-                exaggerationString = exaggeration.description
-            case .satellite(let exaggeration):
-                exaggerationString = exaggeration.description
-            }
+        
+        case .topo(let exaggeration):
+            exaggerationString = exaggeration.description
+        case .hillShader(let exaggeration):
+            exaggerationString = exaggeration.description
+        case .satellite(let exaggeration):
+            exaggerationString = exaggeration.description
         }
+        
 
         switch currentRegion.value {
         case .selected(let region):
@@ -71,7 +67,8 @@ class DataStore: ObservableObject, WineRegionProviding {
     @Published var mapItems: [MKMapItem] = []
     
     // Map View State
-    @Published var selectedMapType: WineMapType = WineMapType.MapBox(.hillShader(.realistic)) // this changes defaults us to mapbox
+    @Published var selectedMapType: MapboxMapView.MapStyle = .hillShader(.realistic)
+    @Published var selectedExaggerationLevel: MapboxMapView.MapStyle.TerrainExaggeration = .realistic
     var mapItemsPublisher: Published<[MKMapItem]>.Publisher { $mapItems }
     var region: MKCoordinateRegion = .init() {
         didSet {

@@ -8,7 +8,7 @@ class MapBoxMapCoordinator: NSObject, ObservableObject {
 struct MapboxMapBasedViewRepresentable: UIViewRepresentable {
     
     let mapView: MapboxMaps.MapView
-    @Binding var selectedMapType: WineMapType
+    @Binding var selectedMapType: MapboxMapView.MapStyle
     
     @EnvironmentObject var dataStore: DataStore
 
