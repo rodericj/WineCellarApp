@@ -1,18 +1,10 @@
 import MapboxMaps
 import Combine
-import MapKit // for MKGeoJSONDecoder()
 import Turf // for FeatureCollection
 
 
 extension MapboxMapView: CameraViewDelegate {
     func cameraViewManipulated(for cameraView: CameraView) {
-        print("the camera view changed \(cameraView.visibleCoordinateBounds)")
-        
-        let bounds = cameraView.visibleCoordinateBounds
-        let latDelta = bounds.northeast.latitude - bounds.southwest.latitude
-        let lonDelta = bounds.northeast.longitude - bounds.southwest.longitude
-        let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        dataStore.region = MKCoordinateRegion(center: cameraView.centerCoordinate, span: span)
         dataStore.mapZoom = cameraView.zoom
     }
 }
@@ -151,7 +143,6 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
 
 private extension MapboxMapView {
     private func removeSource(sourceID: String) {

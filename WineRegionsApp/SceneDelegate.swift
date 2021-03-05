@@ -17,7 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     let dataStore = DataStore()
-    var wineMapView: WineMapView?
     var mapboxMapView: MapboxMapView?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -25,23 +24,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        wineMapView = WineMapView(dataStore: dataStore)
         mapboxMapView = MapboxMapView(dataStore: dataStore)
-        guard let wineMapView = wineMapView else {
-            print("the wine map view was not created.")
-            return
-        }
         
         guard let mapboxMapView = mapboxMapView else {
             print("the mapbox map view was not created.")
             return
         }
 
-        wineMapView.translatesAutoresizingMaskIntoConstraints = false
         // Create the SwiftUI view that provides the window contents.
         let contentView = RegionNavigation()
             .environmentObject(dataStore.wineRegionLib)
-            .environmentObject(wineMapView)
             .environmentObject(mapboxMapView)
             .environmentObject(dataStore)
 

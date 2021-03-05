@@ -7,16 +7,14 @@
 
 import Combine
 import Foundation
-import MapKit
 import WineRegionLib
-
+import UIKit
 class DataStore: ObservableObject, WineRegionProviding {
     var cancellables: [AnyCancellable] = []
     var chateauxSearch = ChateauxSearch()
     var regionFilter = RegionFilter()
     
     let wineRegionLib = WineRegion()
-    var currentSearch: MKLocalSearch?
     
     var currentRegion: CurrentValueSubject<SelectedRegion, Never> = .init(.noneSelected)
     var newRegionOSMID: CurrentValueSubject<String, Never> = .init("")
@@ -61,22 +59,12 @@ class DataStore: ObservableObject, WineRegionProviding {
     @Published var regionTree: [RegionJson] = []
     @Published var filteredRegionTree: [RegionJson] = []
     @Published var regionTreeLoadingProgress: Float = 0
-    @Published var mapItems: [MKMapItem] = []
     
     // Map View State
     @Published var selectedMapType: MapboxMapView.MapStyle = .hillShader(.realistic)
     @Published var selectedExaggerationLevel: MapboxMapView.MapStyle.TerrainExaggeration = .realistic
-    var mapItemsPublisher: Published<[MKMapItem]>.Publisher { $mapItems }
-    var region: MKCoordinateRegion = .init() {
-        didSet {
-            print("the region in the dataStore has changed:\n \(region.center.latitude) \(region.center.longitude)\n\(region.span.latitudeDelta) \(region.span.longitudeDelta)")
-        }
-    }
-    var mapZoom: CGFloat = 1 {
-        didSet {
-            print("the zoom in the dataStore has changed \(mapZoom)")
-        }
-    }
+    
+    var mapZoom: CGFloat = 1.0
         
     init() {
 //        filterCancellable = regionFilter.$filterString.combineLatest($regionTree)
@@ -125,11 +113,11 @@ class DataStore: ObservableObject, WineRegionProviding {
                 }
             }.store(in: &cancellables)
         
-        chateauxSearch.$searchString
-            .debounce(for: 0.2, scheduler: DispatchQueue.main)
-            .sink { string in
-                self.performLocalSearch(query: string)
-            }.store(in: &cancellables)
+//        chateauxSearch.$searchString
+//            .debounce(for: 0.2, scheduler: DispatchQueue.main)
+//            .sink { string in
+//                self.performLocalSearch(query: string)
+//            }.store(in: &cancellables)
         
         currentRegion
             .sink { [weak self] selectedRegion in
@@ -187,24 +175,5 @@ class DataStore: ObservableObject, WineRegionProviding {
             } receiveValue: { regionJson in
                 print("regionJson")
             }.store(in: &cancellables)
-    }
-    
-    func performLocalSearch(query: String? = nil) {
-        let request = MKLocalSearch.Request()
-        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.winery])
-        if let query = query, !query.isEmpty {
-            request.naturalLanguageQuery = query
-        }
-        request.region = region
-        currentSearch = MKLocalSearch(request: request)
-        currentSearch?.start { [weak self]  (response, error) in
-            if let error = error {
-                debugPrint("we got an error searching locally in new method \(error)")
-                return
-            }
-            if let response = response, let strongSelf = self {
-                strongSelf.mapItems = response.mapItems
-            }
-        }
     }
 }

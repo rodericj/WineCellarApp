@@ -4,11 +4,10 @@
 //
 //  Created by Roderic Campbell on 1/10/21.
 //
-
-import Foundation
-import MapKit
-import WineRegionLib
 import Combine
+import Foundation
+import WineRegionLib
+import UIKit
 
 enum SelectedRegion {
     case selected(RegionJson)
@@ -28,7 +27,8 @@ enum SelectedRegion {
 protocol WineRegionProviding {
     var currentRegion: CurrentValueSubject<SelectedRegion, Never> { get }
     var wineRegionLib: WineRegion { get }
-    var mapItemsPublisher: Published<[MKMapItem]>.Publisher { get }
-    var region: MKCoordinateRegion { get set }
+    // TODO put these back in when we want to add items to the map
+//    var mapItemsPublisher: Published<[MKMapItem]>.Publisher { get }
+//    var region: MKCoordinateRegion { get set }
     var mapZoom: CGFloat { get set }
 }

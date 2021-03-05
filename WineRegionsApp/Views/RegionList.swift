@@ -32,7 +32,6 @@ struct RegionList: View {
 }
 
 struct RegionRow: View {
-    @EnvironmentObject var wineMapView: WineMapView
     @EnvironmentObject var dataStore: DataStore
     let region: RegionJson
     let title: String
