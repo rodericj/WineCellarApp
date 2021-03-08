@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 import WineRegionLib
 import MapboxMaps
-
+import CoreSpotlight
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -70,6 +70,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
     }
 
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if userActivity.activityType == CSSearchableItemActionType,
+           let userInfo = userActivity.userInfo,
+           let itemIdentifier = userInfo[CSSearchableItemActivityIdentifier] as? String,
+           let regionUUID = UUID(uuidString: itemIdentifier) {
+            // Assuming we have loaded the region tree, we should be able to update the dataStore
+            // TODO it is possible that we do not actually have the data loaded as this is all stored in memory.
+            // In this case we would need to have some kind of "on deck" region json which would be picked up by the datastore
+            let regionsWithThisUUID = dataStore.regionTree.compactMap { regionJson in
+                regionJson.findRegion(with: regionUUID)
+            }
+            if let matchingRegion = regionsWithThisUUID.first {
+                dataStore.currentRegion.send(.selected(matchingRegion))
+            }
+        }
+    }
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information

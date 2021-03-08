@@ -32,6 +32,7 @@
 		5F58CDCD257B61AF005C4F5A /* BottleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */; };
 		5F58CDD5257C9181005C4F5A /* WineMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDD4257C9180005C4F5A /* WineMapView.swift */; };
 		5F6B6AFE258879130078CE7A /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
+		5F6E51A425F5F7AE0066E47D /* RegionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6E519225F5F6D50066E47D /* RegionHelpers.swift */; };
 		5F83532A256D96A600C2345F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F835329256D96A600C2345F /* AppDelegate.swift */; };
 		5F83532C256D96A600C2345F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83532B256D96A600C2345F /* SceneDelegate.swift */; };
 		5F83532E256D96A600C2345F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83532D256D96A600C2345F /* LoginView.swift */; };
@@ -139,6 +140,7 @@
 		5F58CDCC257B61AF005C4F5A /* BottleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleHelper.swift; sourceTree = "<group>"; };
 		5F58CDD4257C9180005C4F5A /* WineMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineMapView.swift; sourceTree = "<group>"; };
 		5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonPanel.swift; sourceTree = "<group>"; };
+		5F6E519225F5F6D50066E47D /* RegionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionHelpers.swift; sourceTree = "<group>"; };
 		5F835326256D96A600C2345F /* Cellar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cellar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F835329256D96A600C2345F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F83532B256D96A600C2345F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -321,6 +323,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		5F6E519125F5F6CB0066E47D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5F6E519225F5F6D50066E47D /* RegionHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		5F83531D256D96A600C2345F = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +434,7 @@
 		5FFBFF65257EA27D0088BFE2 /* WineRegionsApp */ = {
 			isa = PBXGroup;
 			children = (
+				5F6E519125F5F6CB0066E47D /* Helpers */,
 				5FC09FD225CA7A8400C0DA97 /* WineRegionsApp.entitlements */,
 				5FFBFF66257EA27D0088BFE2 /* AppDelegate.swift */,
 				5FFBFF68257EA27D0088BFE2 /* SceneDelegate.swift */,
@@ -847,6 +858,7 @@
 				5FFBFF69257EA27D0088BFE2 /* SceneDelegate.swift in Sources */,
 				5F345CD425872AC000A88EF6 /* SearchBar.swift in Sources */,
 				5F043E9625A59A9700100D5C /* ChateauxSearchControl.swift in Sources */,
+				5F6E51A425F5F7AE0066E47D /* RegionHelpers.swift in Sources */,
 				5F6B6AFE258879130078CE7A /* ExpandableButtonPanel.swift in Sources */,
 				5F05D1FE25A982B9007C32E8 /* ChateauxSearch.swift in Sources */,
 				5FF4FC6225ECBB9F000579F5 /* WineMapType.swift in Sources */,

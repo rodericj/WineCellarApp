@@ -101,6 +101,7 @@ class DataStore: ObservableObject, WineRegionProviding {
                     print("Got \(tree.count) items")
                     self.regionTree = tree.sorted { $0.title < $1.title }
                     self.regionTreeLoadingProgress = 0
+                    self.regionTree.storeInCoreSpotlight()
                 case .loading(let progress):
                     self.regionTreeLoadingProgress = progress
                     print("loading from scene delegate \(progress)")
