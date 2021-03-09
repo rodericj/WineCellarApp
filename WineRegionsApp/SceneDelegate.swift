@@ -75,15 +75,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
            let userInfo = userActivity.userInfo,
            let itemIdentifier = userInfo[CSSearchableItemActivityIdentifier] as? String,
            let regionUUID = UUID(uuidString: itemIdentifier) {
-            // Assuming we have loaded the region tree, we should be able to update the dataStore
-            // TODO it is possible that we do not actually have the data loaded as this is all stored in memory.
-            // In this case we would need to have some kind of "on deck" region json which would be picked up by the datastore
-            let regionsWithThisUUID = dataStore.regionTree.compactMap { regionJson in
-                regionJson.findRegion(with: regionUUID)
-            }
-            if let matchingRegion = regionsWithThisUUID.first {
-                dataStore.currentRegion.send(.selected(matchingRegion))
-            }
+            dataStore.queuedRegionUUID.send(regionUUID)
         }
     }
     func sceneDidEnterBackground(_ scene: UIScene) {

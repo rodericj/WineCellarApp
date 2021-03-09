@@ -17,9 +17,7 @@ class DataStore: ObservableObject, WineRegionProviding {
     let wineRegionLib = WineRegion()
     
     var currentRegion: CurrentValueSubject<SelectedRegion, Never> = .init(.noneSelected)
-    var newRegionOSMID: CurrentValueSubject<String, Never> = .init("")
-    
-    var currentSelectedMapStyle: CurrentValueSubject<WineMapType?, Never> = .init(nil)
+    var queuedRegionUUID: CurrentValueSubject<UUID?, Never> = .init(nil)
     
     var currentRegionNavTitle: String {
         var exaggerationString = ""
@@ -47,17 +45,9 @@ class DataStore: ObservableObject, WineRegionProviding {
             return false
         }
     }
-    var hasSelectedRegion: Bool {
-        switch currentRegion.value {
-        case .selected:
-            return true
-        case .noneSelected:
-            return false
-        }
-    }
     
     @Published var regionTree: [RegionJson] = []
-    @Published var filteredRegionTree: [RegionJson] = []
+//    @Published var filteredRegionTree: [RegionJson] = []
     @Published var regionTreeLoadingProgress: Float = 0
     
     // Map View State
@@ -73,7 +63,6 @@ class DataStore: ObservableObject, WineRegionProviding {
 //                self.filteredRegionTree = self.regionTree.filter(searchString: filterString)
 //                print(self.filteredRegionTree.count)
 //            }
-
         
         wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
@@ -95,21 +84,23 @@ class DataStore: ObservableObject, WineRegionProviding {
         
         wineRegionLib.$regionsTree
             .receive(on: DispatchQueue.main)
-            .sink { result in
+            .sink { [weak self] result in
                 switch result {
                 case .regions(let tree):
-                    print("Got \(tree.count) items")
-                    self.regionTree = tree.sorted { $0.title < $1.title }
-                    self.regionTreeLoadingProgress = 0
-                    self.regionTree.storeInCoreSpotlight()
+                    self?.regionTree = tree.sorted { $0.title < $1.title }
+                    if let queuedUUID = self?.queuedRegionUUID.value {
+                        self?.selectQueuedRegion(with: queuedUUID)
+                    }
+                    self?.regionTreeLoadingProgress = 0
+                    self?.regionTree.storeInCoreSpotlight()
                 case .loading(let progress):
-                    self.regionTreeLoadingProgress = progress
+                    self?.regionTreeLoadingProgress = progress
                     print("loading from scene delegate \(progress)")
                 case .none:
-                    self.regionTreeLoadingProgress = 0
+                    self?.regionTreeLoadingProgress = 0
                     print("no state for the tree")
                 case .error(let error, let string):
-                    self.regionTreeLoadingProgress = 0
+                    self?.regionTreeLoadingProgress = 0
                     print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No Error")")
                 }
             }.store(in: &cancellables)
@@ -131,33 +122,6 @@ class DataStore: ObservableObject, WineRegionProviding {
                     break
                 }
             }.store(in: &cancellables)
-        
-        // With the new osmID and a selected region,
-        // 1. create a new region,
-        // 2. then update with the selected region as the parent,
-        // 3. finally update the tree
-        newRegionOSMID
-            .dropFirst()
-            .combineLatest(currentRegion
-                            .dropFirst()
-                            .compactMap({ selection in
-                                switch selection {
-                                case .selected(let region):
-                                    print("current region has changed \(region.title)")
-                                    return region
-                                case .noneSelected:
-                                    return nil
-                                }
-                            }
-                            )).eraseToAnyPublisher()
-            .flatMap { osmIDToAdd, selectedRegion in
-                //            print("we got new osmid and parent \(selectedRegion.title)")
-                return self.wineRegionLib.createRegion(osmID: osmIDToAdd, asChildTo: selectedRegion)
-            }.sink { completionValue in
-                print("completionValue \(completionValue)")
-            } receiveValue: { regionJson in
-                self.wineRegionLib.getRegionTree()
-            }.store(in: &cancellables)
     }
     public func getRegionTree() {
         wineRegionLib.getRegionTree()
@@ -176,5 +140,15 @@ class DataStore: ObservableObject, WineRegionProviding {
             } receiveValue: { regionJson in
                 print("regionJson")
             }.store(in: &cancellables)
+    }
+    
+    private func selectQueuedRegion(with uuid: UUID) {
+        let regionsWithThisUUID = self.regionTree.compactMap { regionJson in
+            regionJson.findRegion(with: uuid)
+        }
+        if let matchingRegion = regionsWithThisUUID.first {
+            self.currentRegion.send(.selected(matchingRegion))
+        }
+        self.queuedRegionUUID.send(nil)
     }
 }
