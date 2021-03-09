@@ -16,7 +16,6 @@
 		5F05D21525AB7AB8007C32E8 /* WineRegionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */; };
 		5F05D21D25ABD014007C32E8 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D21C25ABD014007C32E8 /* DataStore.swift */; };
 		5F223EB725D0F45800ABAF90 /* MapboxMapBasedViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F223EAE25D0F44300ABAF90 /* MapboxMapBasedViewRepresentable.swift */; };
-		5F236C7425D1AABF007A3BD0 /* WineMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58CDD4257C9180005C4F5A /* WineMapView.swift */; };
 		5F2AB7A02589E65B00E776D2 /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
 		5F2FBB2525D0FBCD00D7F5CA /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 5F2FBB2425D0FBCD00D7F5CA /* MapboxMaps */; };
 		5F2FBB3C25D1071000D7F5CA /* MapboxMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2FBB3B25D1071000D7F5CA /* MapboxMapView.swift */; };
@@ -49,19 +48,10 @@
 		5F91DD1525EC7FF0008B8540 /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5F91DD1425EC7FF0008B8540 /* WineRegionLib */; };
 		5F91DD1F25EC8006008B8540 /* WineRegionLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5F91DD1E25EC8006008B8540 /* WineRegionLib */; };
 		5FB2381F2572228400F69FE5 /* MapKitBasedMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapKitBasedMapView.swift */; };
-		5FB3DAC625BBFBE500CE392C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB3DAC525BBFBE500CE392C /* MapKit.framework */; };
-		5FB3DB0525BC0B7E00CE392C /* WineRegionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20D25AB7A72007C32E8 /* WineRegionProviding.swift */; };
-		5FB3DB2625BC0C8900CE392C /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B6AFD258879130078CE7A /* ExpandableButtonPanel.swift */; };
-		5FB3DB7725BD31AD00CE392C /* MapKitBasedMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2381E2572228300F69FE5 /* MapKitBasedMapView.swift */; };
 		5FB3DB8725BD31FC00CE392C /* MapKitOverlayableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */; };
-		5FB3DB8925BD31FC00CE392C /* MapKitOverlayableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */; };
-		5FB3DBB125BD3C0000CE392C /* TestContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB3DBAE25BD3C0000CE392C /* TestContent.swift */; };
-		5FB3DBC725BD3E7300CE392C /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D20525A98DEF007C32E8 /* DataStore.swift */; };
-		5FB3DBDE25BD3F1700CE392C /* ChateauxSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F05D1FC25A982B9007C32E8 /* ChateauxSearch.swift */; };
 		5FE9A0B42570D98D00DB353B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9A0B32570D98D00DB353B /* SearchBar.swift */; };
 		5FF4FC6125ECBB9F000579F5 /* WineMapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */; };
 		5FF4FC6225ECBB9F000579F5 /* WineMapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */; };
-		5FF4FC6325ECBB9F000579F5 /* WineMapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */; };
 		5FF4FC6425ECBB9F000579F5 /* WineMapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF4FC6025ECBB9F000579F5 /* WineMapType.swift */; };
 		5FFBFF67257EA27D0088BFE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFBFF66257EA27D0088BFE2 /* AppDelegate.swift */; };
 		5FFBFF69257EA27D0088BFE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFBFF68257EA27D0088BFE2 /* SceneDelegate.swift */; };
@@ -158,7 +148,6 @@
 		5F835380256E1B1C00C2345F /* BottleDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleDetail.swift; sourceTree = "<group>"; };
 		5F835385256E1DAC00C2345F /* BottleTextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleTextContent.swift; sourceTree = "<group>"; };
 		5FB2381E2572228300F69FE5 /* MapKitBasedMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitBasedMapView.swift; sourceTree = "<group>"; };
-		5FB3DAAD25BBF83D00CE392C /* NominatimConsumerActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NominatimConsumerActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FB3DAC525BBFBE500CE392C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5FB3DB8625BD31FC00CE392C /* MapKitOverlayableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitOverlayableExtensions.swift; sourceTree = "<group>"; };
 		5FB3DBAE25BD3C0000CE392C /* TestContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestContent.swift; sourceTree = "<group>"; };
@@ -209,14 +198,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5FB3DAAA25BBF83D00CE392C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5FB3DAC625BBFBE500CE392C /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +328,6 @@
 				5FFBFF64257EA27D0088BFE2 /* Regions.app */,
 				5FFBFF79257EA27E0088BFE2 /* WineRegionsAppTests.xctest */,
 				5FFBFF84257EA27E0088BFE2 /* WineRegionsAppUITests.xctest */,
-				5FB3DAAD25BBF83D00CE392C /* NominatimConsumerActionExtension.appex */,
 				5F33976B25D63E8600587933 /* WineRegionEditor.app */,
 			);
 			name = Products;
@@ -537,25 +517,6 @@
 			productReference = 5F835347256D96AA00C2345F /* WineCellarAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		5FB3DAAC25BBF83D00CE392C /* NominatimConsumerActionExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5FB3DABD25BBF83D00CE392C /* Build configuration list for PBXNativeTarget "NominatimConsumerActionExtension" */;
-			buildPhases = (
-				5FB3DAA925BBF83D00CE392C /* Sources */,
-				5FB3DAAA25BBF83D00CE392C /* Frameworks */,
-				5FB3DAAB25BBF83D00CE392C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = NominatimConsumerActionExtension;
-			packageProductDependencies = (
-			);
-			productName = NominatimConsumerActionExtension;
-			productReference = 5FB3DAAD25BBF83D00CE392C /* NominatimConsumerActionExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		5FFBFF63257EA27D0088BFE2 /* Regions */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5FFBFF91257EA27E0088BFE2 /* Build configuration list for PBXNativeTarget "Regions" */;
@@ -639,9 +600,6 @@
 						CreatedOnToolsVersion = 12.2;
 						TestTargetID = 5F835325256D96A600C2345F;
 					};
-					5FB3DAAC25BBF83D00CE392C = {
-						CreatedOnToolsVersion = 12.3;
-					};
 					5FFBFF63257EA27D0088BFE2 = {
 						CreatedOnToolsVersion = 12.2;
 					};
@@ -679,7 +637,6 @@
 				5FFBFF63257EA27D0088BFE2 /* Regions */,
 				5FFBFF78257EA27E0088BFE2 /* WineRegionsAppTests */,
 				5FFBFF83257EA27E0088BFE2 /* WineRegionsAppUITests */,
-				5FB3DAAC25BBF83D00CE392C /* NominatimConsumerActionExtension */,
 				5F33976A25D63E8600587933 /* WineRegionEditor */,
 			);
 		};
@@ -713,13 +670,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5F835345256D96AA00C2345F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5FB3DAAB25BBF83D00CE392C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -803,22 +753,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F83534C256D96AA00C2345F /* WineCellarAppUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5FB3DAA925BBF83D00CE392C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5FB3DB8925BD31FC00CE392C /* MapKitOverlayableExtensions.swift in Sources */,
-				5FF4FC6325ECBB9F000579F5 /* WineMapType.swift in Sources */,
-				5FB3DBC725BD3E7300CE392C /* DataStore.swift in Sources */,
-				5F236C7425D1AABF007A3BD0 /* WineMapView.swift in Sources */,
-				5FB3DBDE25BD3F1700CE392C /* ChateauxSearch.swift in Sources */,
-				5FB3DB7725BD31AD00CE392C /* MapKitBasedMapView.swift in Sources */,
-				5FB3DB0525BC0B7E00CE392C /* WineRegionProviding.swift in Sources */,
-				5FB3DB2625BC0C8900CE392C /* ExpandableButtonPanel.swift in Sources */,
-				5FB3DBB125BD3C0000CE392C /* TestContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1195,52 +1129,6 @@
 			};
 			name = Release;
 		};
-		5FB3DABB25BBF83D00CE392C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = NominatimConsumerActionExtension/NominatimConsumerActionExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F4WTN36U2F;
-				INFOPLIST_FILE = NominatimConsumerActionExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.thumbworks.WineRegionsApp.NominatimConsumerActionExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
-			};
-			name = Debug;
-		};
-		5FB3DABC25BBF83D00CE392C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = NominatimConsumerActionExtension/NominatimConsumerActionExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F4WTN36U2F;
-				INFOPLIST_FILE = NominatimConsumerActionExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.thumbworks.WineRegionsApp.NominatimConsumerActionExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
-			};
-			name = Release;
-		};
 		5FFBFF8B257EA27E0088BFE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1417,15 +1305,6 @@
 			buildConfigurations = (
 				5F835357256D96AA00C2345F /* Debug */,
 				5F835358256D96AA00C2345F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5FB3DABD25BBF83D00CE392C /* Build configuration list for PBXNativeTarget "NominatimConsumerActionExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5FB3DABB25BBF83D00CE392C /* Debug */,
-				5FB3DABC25BBF83D00CE392C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
