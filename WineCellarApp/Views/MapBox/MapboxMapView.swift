@@ -123,12 +123,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
 
             }
         }.store(in: &cancellables)
-        
-        on(.cameraChanged) { event in
-            print("camera changed \(event)")
-            print(self.cameraView.camera)
-        }
-        
+
         on(.sourceChanged) { [weak self] event in
             self?.cameraView.zoom = dataStore.mapZoom
         }
