@@ -101,6 +101,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
 
             case .regions(let mapArrayOfData):
                 self?.addRegion(mapArrayOfData: mapArrayOfData)
+                self?.updateLayer(mapArrayOfData: mapArrayOfData)
             default:
                 break
 
@@ -116,7 +117,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
             self?.logger.debug("done loading style \(style)")
             switch dataStore.wineRegionLib.regionMapsData {
             case .regions(let mapArrayOfData):
-                self?.addRegion(mapArrayOfData: mapArrayOfData)
+                self?.updateLayer(mapArrayOfData: mapArrayOfData)
             default:
                 break
             }
@@ -140,16 +141,29 @@ private extension MapboxMapView {
                 self?.logger.error("unable to get the feature \(error as NSObject).")
                 return
             }
-
-            let geoJSONDataSourceIdentifier = "geoJSON-data-source"
-            self?.removeStyleLayer(layerID: "fill-layer")
-            self?.removeSource(sourceID: geoJSONDataSourceIdentifier)
-          
-            // Add the source and style layers to the map style.
-            self?.addSource(source: geoJSONSource, sourceIdentifier: geoJSONDataSourceIdentifier)
-            self?.addLayer(sourceIdentifier: geoJSONDataSourceIdentifier)
         }
     }
+    
+    private func updateLayer(mapArrayOfData: [Data]) {
+        mapArrayOfData.forEach { [weak self] data in
+            do {
+                var geoJSONSource = GeoJSONSource()
+                let parsedFeature = try GeoJSON.parse(FeatureCollection.self, from: data)
+                geoJSONSource.data = .featureCollection(parsedFeature)
+                let geoJSONDataSourceIdentifier = "geoJSON-data-source"
+                removeStyleLayer(layerID: "fill-layer")
+                removeSource(sourceID: geoJSONDataSourceIdentifier)
+              
+                // Add the source and style layers to the map style.
+                addSource(source: geoJSONSource, sourceIdentifier: geoJSONDataSourceIdentifier)
+                addLayer(sourceIdentifier: geoJSONDataSourceIdentifier)
+            } catch {
+                self?.logger.error("unable to get the feature \(error as NSObject).")
+                return
+            }
+        }
+    }
+    
     private func removeSource(sourceID: String) {
         let removeSourceResult = style.removeSource(for: sourceID)
         switch removeSourceResult {
