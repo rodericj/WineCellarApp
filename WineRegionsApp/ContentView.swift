@@ -23,7 +23,9 @@ struct ContentView: View {
                                     selectedMapExaggeration: $dataStore.selectedExaggerationLevel)
 //                ChateauxSearchControl()
             }.padding() 
-        }.navigationBarTitle(Text(verbatim: dataStore.currentRegionNavTitle))
+        }
+        .navigationBarTitle(Text(verbatim: dataStore.currentRegionNavTitle))
+        .ignoresSafeArea()
     }
 
 }
