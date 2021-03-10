@@ -1,18 +1,10 @@
-//
-//  SceneDelegate.swift
-//  WineRegionsApp
-//
-//  Created by Roderic Campbell on 12/7/20.
-//
-
-import UIKit
-import SwiftUI
 import Combine
-import WineRegionLib
-import MapboxMaps
 import CoreSpotlight
-
+import MapboxMaps
 import OSLog
+import SwiftUI
+import UIKit
+import WineRegionLib
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

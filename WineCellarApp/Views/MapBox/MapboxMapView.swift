@@ -1,7 +1,7 @@
-import MapboxMaps
 import Combine
+import MapboxMaps
+import OSLog
 import Turf // for FeatureCollection
-
 
 extension MapboxMapView: CameraViewDelegate {
     func cameraViewManipulated(for cameraView: CameraView) {
@@ -62,7 +62,8 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
     
     var dataStore: WineRegionProviding
     var cancellables: [AnyCancellable] = []
-    
+    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "MapboxMapView")
+
     init(dataStore: DataStore) {
         
         let myResourceOptions = ResourceOptions(accessToken: "pk.eyJ1Ijoicm9kZXJpYyIsImEiOiJja2t2ajNtMXMxZjdjMm9wNmYyZHR1ZWN3In0.mM6CghYW2Uil53LD5uQrGw")
@@ -85,16 +86,16 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
                 }
             }.map { $0.url }
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            debugPrint("completed")
+            .sink { [weak self] _ in
+                self?.logger.debug("completed")
         } receiveValue: { [weak self] url in
             self?.style.styleURL = StyleURL.custom(url: url)
         }.store(in: &cancellables)
         
         dataStore.wineRegionLib.$regionMapsData
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-            debugPrint("completed")
+            .sink { [weak self] _ in
+                self?.logger.debug("completed")
         } receiveValue: { [weak self] mapMappingData in
             switch mapMappingData {
 
@@ -112,7 +113,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         
         on(.styleLoadingFinished) { [weak self] style in
             // The below line is used for internal testing purposes only.
-            print("done loading style \(style)")
+            self?.logger.debug("done loading style \(style)")
             switch dataStore.wineRegionLib.regionMapsData {
             case .regions(let mapArrayOfData):
                 self?.addRegion(mapArrayOfData: mapArrayOfData)
@@ -136,7 +137,7 @@ private extension MapboxMapView {
                 geoJSONSource.data = .featureCollection(parsedFeature)
                 self?.showRegion(featurecollection: parsedFeature)
             } catch {
-                print("unable to get the feature \(error).")
+                self?.logger.error("unable to get the feature \(error as NSObject).")
                 return
             }
 
@@ -153,9 +154,9 @@ private extension MapboxMapView {
         let removeSourceResult = style.removeSource(for: sourceID)
         switch removeSourceResult {
         case .success(let successBool):
-            print("Did succeed removing source \(successBool)")
+            logger.debug("Did succeed removing source \(successBool)")
         case .failure(let error):
-            print("Error removing source \(error)")
+            logger.error("Error removing source \(error as NSObject)")
         }
     }
     
@@ -163,9 +164,9 @@ private extension MapboxMapView {
         let removeStyleLayerResult = style.removeStyleLayer(forLayerId: layerID)
         switch removeStyleLayerResult {
         case .success(let successBool):
-            print("Did succeed removing layer \(successBool)")
+            logger.debug("Did succeed removing layer \(successBool)")
         case .failure(let error):
-            print("Error removing style layer \(error)")
+            logger.error("Error removing style layer \(error as NSObject)")
         }
 
     }
@@ -182,24 +183,18 @@ private extension MapboxMapView {
                 let unionSouthWestLat = currentBounds.southwest.latitude < newBounds.southwest.latitude ? currentBounds.southwest.latitude : newBounds.southwest.latitude
                 let unionSouthWestLon = currentBounds.southwest.longitude > newBounds.southwest.longitude ? currentBounds.southwest.longitude : newBounds.southwest.longitude
                 
-                
                 let unionBounds = CoordinateBounds(southwest: CLLocationCoordinate2D(latitude: unionSouthWestLat, longitude: unionSouthWestLon),
                                                    northeast: CLLocationCoordinate2D(latitude: unionNorthEastLat, longitude: unionNorthEastLon))
-                // Animate to unionBounds first
-                // Animate to newBounds second
-
-                print("animate to \(unionBounds)")
                 let cam = self.cameraManager.camera(for: unionBounds)
                 cameraManager.setCamera(to: cam,
                                         animated: true,
                                         duration: 2.0) { completed in
                     let finalCamera = self.cameraManager.camera(for: newBounds)
-                    print("now animate to \(finalCamera)")
                     self.cameraManager.setCamera(to: finalCamera, animated: true, duration: 2, completion: nil)
                 }
             
             default:
-                print("not a polygon or multipolygon")
+                logger.debug("not a polygon or multipolygon")
                 break
             }
         }
@@ -209,9 +204,9 @@ private extension MapboxMapView {
         let addSourceResult = self.style.addSource(source: source, identifier: sourceIdentifier)
         switch addSourceResult {
         case .success(let successBool):
-            print("Did succeed adding source \(successBool)")
+            logger.debug("Did succeed adding source \(successBool)")
         case .failure(let error):
-            print("Error adding source \(error)")
+            logger.error("Error adding source \(error as NSObject)")
         }
     }
     
@@ -228,9 +223,9 @@ private extension MapboxMapView {
         let addLayerResponse = style.addLayer(layer: polygonLayer, layerPosition: nil)
         switch addLayerResponse {
         case .success(let successBool):
-            print("Did succeed adding layer \(successBool)")
+            logger.debug("Did succeed adding layer \(successBool)")
         case .failure(let error):
-            print("Error adding layer \(error)")
+            logger.error("Error adding layer \(error as NSObject)")
         }
     }
 }
