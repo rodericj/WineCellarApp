@@ -44,9 +44,9 @@ extension MapboxMapView.MapStyle.TerrainExaggeration: HasImage {
     var image: Image {
         switch self {
         case .realistic:
-            return Image("NormalMap")
+            return Image(systemName: "minus.magnifyingglass")
         case .doubled:
-            return Image("NormalMap")
+            return Image(systemName: "plus.magnifyingglass")
         }
     }
 }
@@ -61,10 +61,10 @@ struct MapSelectionControl: View {
                 Spacer()
                 ExpandableButtonPanel(primaryItem: $selectedMapExaggeration,
                                       secondaryItems: [
-                                        .realistic,
                                         .doubled,
+                                        .realistic
                                       ],
-                                      imageName: "plus.magnifyingglass")
+                                      imageName: "a.magnify")
                     .padding()
 
             }
