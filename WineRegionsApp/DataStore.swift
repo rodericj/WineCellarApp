@@ -85,15 +85,24 @@ class DataStore: ObservableObject, WineRegionProviding {
                 }
             }.store(in: &cancellables)
         
+        queuedRegionUUID.sink { [weak self] uuid in
+            guard let self = self else { return }
+            guard let uuid = uuid else {
+                self.logger.debug("no UUID")
+                return
+            }
+            self.logger.debug("we have a queuedRegionUUID \(uuid)")
+            self.regionTree.publisher.sink { [weak self] regionJson in
+                self?.selectQueuedRegion(with: uuid)
+            }.store(in: &self.cancellables)
+        }.store(in: &cancellables)
+        
         wineRegionLib.$regionsTree
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 switch result {
                 case .regions(let tree):
                     self?.regionTree = tree.sorted { $0.title < $1.title }
-                    if let queuedUUID = self?.queuedRegionUUID.value {
-                        self?.selectQueuedRegion(with: queuedUUID)
-                    }
                     self?.regionTreeLoadingProgress = 0
                     self?.regionTree.storeInCoreSpotlight()
                 case .loading(let progress):
