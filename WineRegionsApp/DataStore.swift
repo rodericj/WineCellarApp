@@ -9,6 +9,8 @@ import Combine
 import Foundation
 import WineRegionLib
 import UIKit
+import OSLog
+
 class DataStore: ObservableObject, WineRegionProviding {
     var cancellables: [AnyCancellable] = []
     var chateauxSearch = ChateauxSearch()
@@ -18,7 +20,8 @@ class DataStore: ObservableObject, WineRegionProviding {
     
     var currentRegion: CurrentValueSubject<SelectedRegion, Never> = .init(.noneSelected)
     var queuedRegionUUID: CurrentValueSubject<UUID?, Never> = .init(nil)
-    
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "RegionDataStore")
+
     var currentRegionNavTitle: String {
         var exaggerationString = ""
         switch selectedExaggerationLevel {
@@ -63,7 +66,7 @@ class DataStore: ObservableObject, WineRegionProviding {
 //                self.filteredRegionTree = self.regionTree.filter(searchString: filterString)
 //                print(self.filteredRegionTree.count)
 //            }
-        
+        logger.debug("Initialize dataStore")
         wineRegionLib.$regionMaps
             .receive(on: DispatchQueue.main)
             .sink { result in
@@ -72,13 +75,13 @@ class DataStore: ObservableObject, WineRegionProviding {
                     self.regionTreeLoadingProgress = 0
                 case .loading(let progress):
                     self.regionTreeLoadingProgress = progress
-                    print("loading from scene delegate \(progress)")
+                    self.logger.debug("loading from scene delegate \(progress)")
                 case .none:
                     self.regionTreeLoadingProgress = 0
-                    print("no state for the tree")
+                    self.logger.debug("no state for the tree")
                 case let .error(error, string):
                     self.regionTreeLoadingProgress = 0
-                    print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No error")")
+                    self.logger.error("Error fetching regions tree, probably need to bubble this up \(error as NSObject): \(string ?? "No error")")
                 }
             }.store(in: &cancellables)
         
@@ -95,13 +98,13 @@ class DataStore: ObservableObject, WineRegionProviding {
                     self?.regionTree.storeInCoreSpotlight()
                 case .loading(let progress):
                     self?.regionTreeLoadingProgress = progress
-                    print("loading from scene delegate \(progress)")
+                    self?.logger.debug("loading from scene delegate \(progress)")
                 case .none:
                     self?.regionTreeLoadingProgress = 0
-                    print("no state for the tree")
+                    self?.logger.debug("no state for the tree")
                 case .error(let error, let string):
                     self?.regionTreeLoadingProgress = 0
-                    print("Error fetching regions tree, probably need to bubble this up \(error): \(string ?? "No Error")")
+                    self?.logger.error("Error fetching regions tree, probably need to bubble this up \(error as NSObject): \(string ?? "No Error")")
                 }
             }.store(in: &cancellables)
         
@@ -115,9 +118,7 @@ class DataStore: ObservableObject, WineRegionProviding {
             .sink { [weak self] selectedRegion in
                 switch selectedRegion {
                 case .selected(let region):
-                    print("current region: \(region.title)")
                     self?.wineRegionLib.loadMap(for: region)
-
                 case .noneSelected:
                     break
                 }
