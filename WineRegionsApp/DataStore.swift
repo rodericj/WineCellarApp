@@ -49,6 +49,8 @@ class DataStore: ObservableObject, WineRegionProviding {
         }
     }
     
+    @Published var isRegionColorOn: Bool = true
+    
     @Published var regionTree: [RegionJson] = []
 //    @Published var filteredRegionTree: [RegionJson] = []
     @Published var regionTreeLoadingProgress: Float = 0

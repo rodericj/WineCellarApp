@@ -10,7 +10,6 @@ extension MapboxMapView: CameraViewDelegate {
 }
 
 class MapboxMapView: MapboxMaps.MapView, ObservableObject {
-    
     // We need to use WineMapType
     public enum MapStyle: Hashable {
         public enum TerrainExaggeration: String, CustomStringConvertible {
@@ -92,6 +91,14 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
             self?.style.styleURL = StyleURL.custom(url: url)
         }.store(in: &cancellables)
         
+        dataStore.$isRegionColorOn.sink { [weak self] isOn in
+            if isOn {
+                self?.readStateUpdateLayer()
+            } else {
+                self?.removeStyleLayer(layerID: "fill-layer")
+            }
+        }.store(in: &cancellables)
+        
         dataStore.wineRegionLib.$regionMapsData
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -115,12 +122,7 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
         on(.styleLoadingFinished) { [weak self] style in
             // The below line is used for internal testing purposes only.
             self?.logger.debug("done loading style \(style)")
-            switch dataStore.wineRegionLib.regionMapsData {
-            case .regions(let mapArrayOfData):
-                self?.updateLayer(mapArrayOfData: mapArrayOfData)
-            default:
-                break
-            }
+            self?.readStateUpdateLayer()
         }
     }
     
@@ -130,6 +132,15 @@ class MapboxMapView: MapboxMaps.MapView, ObservableObject {
 }
 
 private extension MapboxMapView {
+    private func readStateUpdateLayer() {
+        switch dataStore.wineRegionLib.regionMapsData {
+        case .regions(let mapArrayOfData):
+            self.updateLayer(mapArrayOfData: mapArrayOfData)
+        default:
+            break
+        }
+    }
+    
     private func addRegion(mapArrayOfData: [Data]) {
         mapArrayOfData.forEach { [weak self] data in
             var geoJSONSource = GeoJSONSource()

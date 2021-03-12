@@ -54,32 +54,38 @@ extension MapboxMapView.MapStyle.TerrainExaggeration: HasImage {
 struct MapSelectionControl: View {
     @Binding var selectedMapType: MapboxMapView.MapStyle
     @Binding var selectedMapExaggeration: MapboxMapView.MapStyle.TerrainExaggeration
+    @Binding var isRegionColorOn: Bool
+
     var body: some View {
         HStack {
             Spacer()
             VStack {
                 Spacer()
-                ExpandableButtonPanel(primaryItem: $selectedMapExaggeration,
-                                      secondaryItems: [
-                                        .doubled,
-                                        .realistic
-                                      ],
-                                      imageName: "a.magnify")
+                Toggle("Region Color", isOn: $isRegionColorOn)
                     .padding()
-
             }
             VStack {
                 Spacer()
-                ExpandableButtonPanel(primaryItem: $selectedMapType,
-                                      secondaryItems: [
-                                        .satellite(.realistic),
-                                        .topo(.realistic),
-                                        .hillShader(.realistic),
-                                      ],
-                                      imageName: "map")
-                    .padding()
-
+                ExpandableButtonPanel(
+                    primaryItem: $selectedMapExaggeration,
+                    secondaryItems: [
+                        .doubled,
+                        .realistic
+                    ],
+                    imageName: "a.magnify")
             }
+            VStack {
+                Spacer()
+                ExpandableButtonPanel(
+                    primaryItem: $selectedMapType,
+                    secondaryItems: [
+                        .satellite(.realistic),
+                        .topo(.realistic),
+                        .hillShader(.realistic),
+                    ],
+                    imageName: "map")
+            }
+            Spacer(minLength: 30)
         }
     }
 }

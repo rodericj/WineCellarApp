@@ -13,14 +13,14 @@ import MapboxMaps
 struct ContentView: View {
     @EnvironmentObject var dataStore: DataStore
     @EnvironmentObject var mapboxMapView: MapboxMapView
-   
+
     var body: some View {
         ZStack {
-            MapboxMapBasedViewRepresentable(mapView: mapboxMapView,
-                                            selectedMapType: $dataStore.selectedMapType)
+            MapboxMapBasedViewRepresentable(mapView: mapboxMapView)
             VStack {
                 MapSelectionControl(selectedMapType: $dataStore.selectedMapType,
-                                    selectedMapExaggeration: $dataStore.selectedExaggerationLevel)
+                                    selectedMapExaggeration: $dataStore.selectedExaggerationLevel,
+                                    isRegionColorOn: $dataStore.isRegionColorOn)
 //                ChateauxSearchControl()
             }.padding() 
         }
